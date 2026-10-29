@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Uday Saha — Frontend Developer &amp; Computer Science Student | Obsidian Monolith</title>
+  <meta name="description" content="Personal portfolio and engineering ledger of Uday Saha — Frontend Developer, Competitive Programmer, and B.Tech CS & AI student at Newton School of Technology / Rishihood University. 98.93 percentile in JEE Main." />
+  <meta name="author" content="Uday Saha" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Uday Saha — Frontend Developer &amp; CS Student" />
+  <meta property="og:description" content="Building for the web. Training my problem-solving skills. Exploring AI. 98.93%ile in JEE Main." />
+  <meta property="og:image" content="/assets/og-preview.svg" />
+  <meta property="og:url" content="https://udaysaha.dev/" />
+  <meta property="og:site_name" content="Uday Saha — Obsidian Monolith" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Uday Saha — Frontend Developer &amp; CS Student" />
+  <meta name="twitter:description" content="Building for the web. Training my problem-solving skills. Exploring AI." />
+  <meta name="twitter:image" content="/assets/og-preview.svg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+
+  <!-- Typography: Google Fonts with display=swap and zero layout shift -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Design System Stylesheet -->
+  <link rel="stylesheet" href="/css/styles.css" />
+
+  <!-- Bulletproof Zero-JS Fallback -->
+  <noscript>
+    <style>
+      #monolith-portal { display: none !important; }
+      .hero-fade-in { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
+
+  <!-- JSON-LD Structured Metadata -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Uday Saha",
+    "url": "https://udaysaha.dev/",
+    "email": "us8.dev@gmail.com",
+    "jobTitle": "Frontend Developer & Computer Science Student",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Newton School of Technology / Rishihood University"
+    },
+    "sameAs": [
+      "https://github.com/imuday8",
+      "https://www.linkedin.com/in/imuday08/",
+      "https://leetcode.com/u/Imuday08__/",
+      "https://codeforces.com/profile/Imuday08_"
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <!-- ====================================================================
+       ACCESSIBILITY SKIP LINK
+       ==================================================================== -->
+  <a href="#main-content" class="sr-only" style="position:fixed;top:1rem;left:1rem;z-index:100000;padding:0.6rem 1.2rem;background:var(--accent-orange);color:#030305;font-family:var(--font-mono);font-weight:700;text-decoration:none;">
+    Skip to main content [ENTER]
+  </a>
+
+  <!-- Persistent Cosmic Background Starfield Canvas -->
+  <canvas id="cosmic-bg-canvas" class="cosmic-bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- Interactive Cursor Glow Follower for Liquid Glass Cards -->
+  <div id="cursor-glow" class="cursor-glow-follower" aria-hidden="true"></div>
+
+  <!-- Ambient Floating Glow Layer (Hidden for Pure Deep Space) -->
+  <div class="ambient-glow-layer" aria-hidden="true" style="display:none !important;">
+    <div class="ambient-glow-orb orb-primary"></div>
+    <div class="ambient-glow-orb orb-secondary"></div>
+    <div class="ambient-glow-orb orb-tertiary"></div>
+    <div class="ambient-glow-orb orb-quaternary"></div>
+  </div>
+
+  <!-- ====================================================================
+       THE WHITE DWARF SINGULARITY (14-Second Deep Space Virtual Scroll)
+       ==================================================================== -->
+  <div id="monolith-portal" class="monolith-portal warp-portal-screen" role="dialog" aria-modal="true" aria-label="Portal: White Dwarf Singularity — Uday Saha">
+    <!-- Full-Screen 3D WebGL / Canvas Deep Space & White Dwarf Engine -->
+    <canvas id="warp-tunnel-canvas" class="warp-tunnel-canvas"></canvas>
+
+    <!-- Persistent Top-Right Skip Trigger -->
+    <button id="btn-skip-intro" class="portal-skip-trigger font-mono" type="button" aria-label="Skip introductory animation (ESC)">
+      <span>SKIP INTRO ⎋ [ESC]</span>
+    </button>
+
+    <!-- 5 Choreographed 3D Camera Chapters in 3D Perspective Space -->
+    <div class="warp-chapters-container" aria-live="polite">
+      <!-- Chapter 1: Pulsing Scroll Cue -->
+      <div class="warp-scroll-cue font-mono" id="warp-scroll-cue">
+        <div class="mouse-icon">
+          <div class="mouse-wheel-dot"></div>
+        </div>
+        <span>SCROLL OR RELAX TO ENTER DEEP SPACE · 14s WHITE DWARF DRIFT</span>
+      </div>
+
+      <!-- Chapter 2: "UDAY SAHA" Huge 3D Flying Typography -->
+      <div class="warp-chapter" id="warp-chapter-2">
+        <h1 class="warp-title font-display">UDAY SAHA</h1>
+      </div>
+
+      <!-- Chapter 3: Holographic Subtitle in Champagne Gold & Platinum Starlight -->
+      <div class="warp-chapter" id="warp-chapter-3">
+        <p class="warp-subtitle font-mono">
+          FRONTEND DEVELOPER · COMPETITIVE PROGRAMMER · AI EXPLORER
+        </p>
+      </div>
+
+      <!-- Chapter 4: Floating Glass HUD Tags -->
+      <div class="warp-chapter" id="warp-chapter-4">
+        <div class="warp-hud-badges">
+          <span class="warp-badge font-mono">98.93%ILE JEE MAIN</span>
+          <span class="warp-badge font-mono">1045 CODEFORCES</span>
+          <span class="warp-badge font-mono">MEDMATCH AI</span>
+        </div>
+      </div>
+
+      <!-- Chapter 5: Singularity Burst Flash -->
+      <div class="warp-singularity-flash" id="warp-singularity-flash"></div>
+    </div>
+  </div>
+
+  <!-- Synchronous Inline Watchdog Guard (17.0s Max Timeout Failsafe) -->
+  <script>
+    (function() {
+      // Force scroll restoration to manual so browser lands squarely on Hero profile on load
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+
+      var portal = document.getElementById('monolith-portal');
+      if (!portal) return;
+
+      var dismissed = false;
+      function forceDismiss() {
+        if (dismissed) return;
+        dismissed = true;
+        try {
+          sessionStorage.setItem('obsidian_monolith_intro_v3', 'calibrated');
+        } catch(e) {}
+        portal.classList.add('dismissed');
+        portal.style.opacity = '0';
+        portal.style.pointerEvents = 'none';
+        document.body.classList.add('portal-unlocked');
+        window.scrollTo(0, 0);
+        setTimeout(function() {
+          portal.style.display = 'none';
+        }, 300);
+      }
+
+      // Check bypass: If ?intro=1 or ?intro=true in URL, NEVER bypass
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var forceIntro = params.get('intro') === '1' || params.get('intro') === 'true';
+        if (!forceIntro) {
+          if (sessionStorage.getItem('obsidian_monolith_intro_v3') === 'calibrated' ||
+              (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+            portal.style.display = 'none';
+            document.body.classList.add('portal-unlocked');
+            return;
+          }
+        }
+      } catch(e) {}
+
+      // Direct fallback bindings
+      var btnSkip = document.getElementById('btn-skip-intro');
+      if (btnSkip) {
+        btnSkip.onclick = function(e) {
+          e.preventDefault();
+          forceDismiss();
+        };
+      }
+
+      window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          var tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+          if (tag !== 'input' && tag !== 'textarea' && tag !== 'select') {
+            forceDismiss();
+          }
+        }
+      });
+
+      // 17.0s emergency watchdog timer for 14s cinematic journey
+      setTimeout(forceDismiss, 17000);
+    })();
+  </script>
+
+  <!-- ====================================================================
+       SECTION 01 // STICKY ARCHITECTURAL HEADER
+       ==================================================================== -->
+  <header class="site-header" role="banner">
+    <div class="structural-container header-inner">
+      <!-- Left: Brand Monogram -->
+      <a href="#hero" class="brand-link" aria-label="Uday Saha — Return to top">
+        <span class="brand-monogram">UDAY SAHA</span>
+        <span class="brand-accent-dot" aria-hidden="true"></span>
+      </a>
+
+      <!-- Center: Section Jump Anchors -->
+      <nav class="header-nav-links" aria-label="Primary navigation">
+        <a href="#hero" class="nav-link-item">01. Profile</a>
+        <a href="#telemetry" class="nav-link-item">02. Algorithms</a>
+        <a href="#projects" class="nav-link-item">03. Selected Work</a>
+        <a href="#capabilities" class="nav-link-item">04. Capabilities</a>
+        <a href="#about" class="nav-link-item">05. Pedigree</a>
+        <a href="#contact" class="nav-link-item">06. Contact</a>
+      </nav>
+
+      <!-- Right: Controls -->
+      <div class="header-controls">
+        <!-- Sound Toggle with Animated Equalizer Bars -->
+        <button class="sound-toggle-btn audio-telemetry-toggle" type="button" aria-label="Toggle ambient sound (Shortcut: M)" aria-pressed="false">
+          <span class="eq-bars" aria-hidden="true">
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+          </span>
+          <span class="sound-label">SOUND OFF</span>
+        </button>
+
+        <!-- Replay Intro Trigger -->
+        <button id="btn-replay-intro" class="btn-replay-intro" type="button" aria-label="Replay 4.5s opening sequence">
+          <span>↻ REPLAY</span>
+        </button>
+
+        <!-- Mobile Menu Hamburger Button -->
+        <button class="mobile-menu-btn" type="button" aria-label="Open navigation menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====================================================================
+       MOBILE NAVIGATION DRAWER & OVERLAY
+       ==================================================================== -->
+  <div class="mobile-nav-overlay" aria-hidden="true"></div>
+  <aside class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation" aria-hidden="true">
+    <div class="mobile-drawer-header">
+      <span class="brand-monogram">NAVIGATION</span>
+      <button class="mobile-drawer-close" type="button" aria-label="Close navigation menu">✕</button>
+    </div>
+    <nav class="mobile-nav-list" aria-label="Mobile section links">
+      <a href="#hero" class="mobile-nav-link">01. Profile</a>
+      <a href="#telemetry" class="mobile-nav-link">02. Algorithms</a>
+      <a href="#projects" class="mobile-nav-link">03. Selected Work</a>
+      <a href="#capabilities" class="mobile-nav-link">04. Capabilities</a>
+      <a href="#about" class="mobile-nav-link">05. Pedigree</a>
+      <a href="#contact" class="mobile-nav-link">06. Contact</a>
+    </nav>
+  </aside>
+
+  <!-- ====================================================================
+       MAIN EDITORIAL CONTENT
+       ==================================================================== -->
+  <main id="main-content">
+
+    <!-- ==================================================================
+         SECTION 02 // HERO — BROADSHEET NARRATIVE & 3D MONOLITH
+         ================================================================== -->
+    <section id="hero" class="hero-section is-visible in-view" aria-labelledby="hero-heading">
+      <div class="structural-container hero-broadsheet-grid">
+        <!-- Left: Typographic Focus Column -->
+        <div class="hero-text-column">
+          <div class="hero-status-pill">
+            <span class="status-dot-pulse" aria-hidden="true"></span>
+            <span>AVAILABLE FOR FRONTEND &amp; SOFTWARE ENGINEERING ROLES · BATCH OF 2026 – 2030</span>
+          </div>
+
+          <h1 id="hero-heading" class="hero-display-name">Uday Saha</h1>
+          <p class="hero-role-title">Frontend Developer &amp; Computer Science Student</p>
+          <p class="hero-institution-meta">B.Tech in CS &amp; AI · Newton School of Technology / Rishihood University, Delhi NCR</p>
+
+          <!-- Action Triggers -->
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn btn-monolith-primary font-mono">
+              <span>EXPLORE SELECTED WORK</span>
+              <span aria-hidden="true">↓</span>
+            </a>
+            <a href="https://github.com/imuday8" target="_blank" rel="noopener noreferrer" class="btn btn-monolith-outline font-mono" aria-label="Inspect GitHub Archive in a new tab">
+              <span>GITHUB ARCHIVE</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a href="#contact" class="btn btn-monolith-outline font-mono">
+              <span>INITIATE CONTACT</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: 3D Holographic Orbital Core / Cybernetic Astrolabe -->
+        <div class="hero-visual-column" aria-label="Interactive 3D Holographic Orbital Core with cursor parallax">
+          <div class="monolith-3d-scene orbital-astrolabe-scene">
+            <div class="monolith-core-mesh orbital-core-mesh">
+              <!-- Radiant Pulsing Stellar Nucleus -->
+              <div class="stellar-nucleus">
+                <div class="nucleus-core"></div>
+                <div class="nucleus-corona"></div>
+                <div class="nucleus-flare flare-horizontal"></div>
+                <div class="nucleus-flare flare-vertical"></div>
+              </div>
+
+              <!-- 4 Rotating Concentric 3D Gyroscopic Rings with Satellites -->
+              <div class="orbital-ring ring-1">
+                <div class="ring-track"></div>
+                <div class="orbital-satellite satellite-gold"></div>
+              </div>
+
+              <div class="orbital-ring ring-2">
+                <div class="ring-track"></div>
+                <div class="orbital-satellite satellite-white"></div>
+                <div class="satellite-pulse"></div>
+              </div>
+
+              <div class="orbital-ring ring-3">
+                <div class="ring-track"></div>
+                <div class="orbital-satellite satellite-gold-small"></div>
+              </div>
+
+              <div class="orbital-ring ring-4">
+                <div class="ring-track"></div>
+                <div class="orbital-satellite satellite-white-node"></div>
+              </div>
+
+              <!-- 3 Floating Transparent Glass HUD Pills in 3D Parallax Space -->
+              <div class="orbital-hud-pill hud-pill-1" data-depth="1.5">
+                <span class="hud-pill-icon">⚡</span>
+                <span class="hud-pill-text font-mono">98.93%ILE JEE MAIN</span>
+              </div>
+
+              <div class="orbital-hud-pill hud-pill-2" data-depth="1.8">
+                <span class="hud-pill-icon">🏆</span>
+                <span class="hud-pill-text font-mono">1045 CF MAX</span>
+              </div>
+
+              <div class="orbital-hud-pill hud-pill-3" data-depth="1.2">
+                <span class="hud-pill-icon">🔥</span>
+                <span class="hud-pill-stacked font-mono">
+                  <span class="hud-pill-line1">450+ LC SUBMISSIONS</span>
+                  <span class="hud-pill-line2">102 Days Streak</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SECTION 03 // COMPETITIVE PROGRAMMING — TELEMETRY LEDGER
+         ================================================================== -->
+    <section id="telemetry" class="monolith-section" aria-labelledby="telemetry-heading">
+      <div class="structural-container">
+        <div class="section-spec-header">
+          <span class="section-eyebrow-tag font-mono">01 // ALGORITHMIC RIGOR &amp; PROBLEM SOLVING</span>
+          <h2 id="telemetry-heading" class="section-spec-title">Engineering Telemetry Ledger</h2>
+          <p class="section-spec-subtitle">
+            Transparent, verifiable performance metrics from daily algorithmic training across major competitive platforms.
+          </p>
+        </div>
+
+        <div id="telemetry-ledger-container" class="telemetry-grid" aria-label="Competitive programming performance telemetry">
+          <!-- Dynamically populated by js/renderer.js with static SSR fallback -->
+          <div class="monolith-stat-card cp-card">
+            <div class="card-meta">
+              <span class="meta-platform font-mono">CODEFORCES</span>
+              <span class="meta-badge badge-orange">Contestant</span>
+            </div>
+            <div class="card-title-group">
+              <h3 class="card-heading">Competitive Programming</h3>
+              <span class="card-handle font-mono">@Imuday08_</span>
+            </div>
+            <div class="stat-metrics-row">
+              <div class="metric-cell">
+                <span class="metric-label font-mono">CURRENT RATING</span>
+                <span class="metric-value font-mono accent-orange" data-counter-target="1016" data-counter-decimals="0" data-counter-suffix="">1016</span>
+                <span class="metric-footnote">Active Competition Rating</span>
+              </div>
+              <div class="metric-cell">
+                <span class="metric-label font-mono">MAX RATING</span>
+                <span class="metric-value font-mono" data-counter-target="1045" data-counter-decimals="0" data-counter-suffix="">1045</span>
+                <span class="metric-footnote">Peak Rating Archive</span>
+              </div>
+            </div>
+            <div class="card-action-bar">
+              <a href="https://codeforces.com/profile/Imuday08_" target="_blank" rel="noopener noreferrer" class="monolith-link-btn font-mono">
+                <span>Verify on Codeforces</span>
+                <span class="link-arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="monolith-stat-card cp-card">
+            <div class="card-meta">
+              <span class="meta-platform font-mono">LEETCODE</span>
+              <span class="meta-badge badge-amber">102 Days Streak</span>
+            </div>
+            <div class="card-title-group">
+              <h3 class="card-heading">Consistency &amp; Submissions</h3>
+              <span class="card-handle font-mono">@Imuday08__</span>
+            </div>
+            <div class="stat-metrics-row">
+              <div class="metric-cell">
+                <span class="metric-label font-mono">TOTAL SUBMISSIONS</span>
+                <span class="metric-value font-mono accent-orange" data-counter-target="450" data-counter-decimals="0" data-counter-suffix="+">450+</span>
+                <span class="metric-footnote">450+ Total Submissions Evaluated</span>
+              </div>
+              <div class="metric-cell">
+                <span class="metric-label font-mono">ACTIVE STREAK</span>
+                <span class="metric-value font-mono accent-amber" data-counter-target="102" data-counter-decimals="0" data-counter-suffix=" Days">102 Days</span>
+                <span class="metric-footnote">102 Days Streak · Daily Practice</span>
+              </div>
+            </div>
+            <div class="card-action-bar">
+              <a href="https://leetcode.com/u/Imuday08__/" target="_blank" rel="noopener noreferrer" class="monolith-link-btn font-mono">
+                <span>Verify on LeetCode</span>
+                <span class="link-arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SECTION 04 // FEATURED CASE STUDY — MEDMATCH AI
+         ================================================================== -->
+    <section id="projects" class="monolith-section" aria-labelledby="case-study-title-header">
+      <div class="structural-container">
+        <div class="section-spec-header">
+          <span class="section-eyebrow-tag font-mono">02 // SELECTED ENGINEERING WORK</span>
+          <h2 id="case-study-title-header" class="section-spec-title">Flagship Case Study Spread</h2>
+          <p class="section-spec-subtitle">
+            In-depth architectural review of real-world prototype systems solving critical workflow bottlenecks.
+          </p>
+        </div>
+
+        <div id="case-study-container" aria-label="MedMatch AI case study spread">
+          <!-- Dynamically populated by js/renderer.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SECTION 05 // CAPABILITIES & LEARNING MATRIX
+         ================================================================== -->
+    <section id="capabilities" class="monolith-section" aria-labelledby="capabilities-heading">
+      <div class="structural-container">
+        <div class="section-spec-header">
+          <span class="section-eyebrow-tag font-mono">03 // TECHNICAL SPECIFICATION</span>
+          <h2 id="capabilities-heading" class="section-spec-title">Capabilities &amp; Learning Matrix</h2>
+          <p class="section-spec-subtitle">
+            Categorized technical stack and active curriculum study areas without arbitrary percentage meters.
+          </p>
+        </div>
+
+        <div id="capabilities-matrix-container" class="capabilities-grid" aria-label="Technical skills 4-column specification table">
+          <!-- Dynamically populated by js/renderer.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SECTION 06 // ACADEMIC PEDIGREE & CREDENTIALS
+         ================================================================== -->
+    <section id="about" class="monolith-section" aria-labelledby="pedigree-heading">
+      <div class="structural-container">
+        <div class="section-spec-header">
+          <span class="section-eyebrow-tag font-mono">04 // CREDENTIALS &amp; NARRATIVE</span>
+          <h2 id="pedigree-heading" class="section-spec-title">Academic Pedigree</h2>
+        </div>
+
+        <div class="pedigree-grid">
+          <!-- Narrative Column -->
+          <div class="pedigree-narrative">
+            <h3 class="cred-headline">Engineering Discipline &amp; Rigor</h3>
+            <p>
+              I am an undergraduate Computer Science &amp; Artificial Intelligence student who treats frontend development as both an engineering discipline and a visual craft. Rather than relying on superficial templates, I focus on clean component architectures, accessible semantics, responsive CSS grids, and daily algorithmic problem solving in C++.
+            </p>
+            <p>
+              My approach is grounded in measurable rigor: training data structures daily, maintaining consistent problem-solving streaks, and building production-oriented prototypes that address real human needs.
+            </p>
+          </div>
+
+          <!-- Credentials Ledger Column -->
+          <div class="pedigree-credentials-col">
+            <div class="cred-card">
+              <span class="cred-title font-mono">Curriculum Candidacy</span>
+              <strong class="cred-headline">B.Tech in CS &amp; Artificial Intelligence · Batch of 2026 – 2030</strong>
+              <span class="hero-institution-meta">Newton School of Technology / Rishihood University, Delhi NCR</span>
+            </div>
+
+            <div class="cred-card">
+              <span class="cred-title font-mono">Scholastic Standing</span>
+              <div class="cred-badge-box">
+                <span data-counter-target="98.93" data-counter-decimals="2" data-counter-suffix="%ile">⚡ 98.93 PERCENTILE — JEE MAIN</span>
+              </div>
+              <span class="hero-institution-meta">
+                Top 1.07% nationwide standing among over 1.2 million engineering candidates in India's premier national entrance examination.
+              </span>
+            </div>
+
+            <div class="cred-card">
+              <span class="cred-title font-mono">Academic Timeline</span>
+              <strong class="cred-headline font-mono">2026 — 2030</strong>
+              <span class="hero-institution-meta">Active Full-Time Undergraduate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         SECTION 07 // CONTACT DISPATCH & DIRECTORY
+         ================================================================== -->
+    <section id="contact" class="monolith-section" aria-labelledby="contact-heading">
+      <div class="structural-container">
+        <div class="contact-monolith-box">
+          <h2 id="contact-heading" class="contact-display-heading">
+            Initiate a conversation or inspect the code.
+          </h2>
+
+          <div class="contact-actions-row">
+            <span class="contact-email-badge">us8.dev@gmail.com</span>
+            <button id="btn-copy-email" class="btn btn-monolith-primary font-mono" type="button" aria-label="Copy email address to clipboard">
+              <span>COPY EMAIL ADDRESS</span>
+            </button>
+            <a href="mailto:us8.dev@gmail.com" class="btn btn-monolith-outline font-mono" aria-label="Open default mail client">
+              <span>OPEN MAIL CLIENT ↗</span>
+            </a>
+          </div>
+
+          <!-- Verified External Profiles Directory Matrix -->
+          <div class="social-directory-row" aria-label="Verified external developer profiles">
+            <a href="https://github.com/imuday8" target="_blank" rel="noopener noreferrer" class="social-tag-link">
+              <span>GitHub</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://www.linkedin.com/in/imuday08/" target="_blank" rel="noopener noreferrer" class="social-tag-link">
+              <span>LinkedIn</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://codeforces.com/profile/Imuday08_" target="_blank" rel="noopener noreferrer" class="social-tag-link">
+              <span>Codeforces</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://leetcode.com/u/Imuday08__/" target="_blank" rel="noopener noreferrer" class="social-tag-link">
+              <span>LeetCode</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       COLOPHON FOOTER
+       ==================================================================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="structural-container footer-inner-flex">
+      <span>EDITION // OBSIDIAN MONOLITH &copy; 2026–2030 UDAY SAHA</span>
+      <button class="btn-replay-intro" type="button" aria-label="Replay intro animation">
+        [ ↻ REPLAY INTRO ]
+      </button>
+      <button id="btn-return-datum" class="back-to-top-trigger font-mono" type="button">
+        [ ↑ RETURN TO TOP ]
+      </button>
+    </div>
+  </footer>
+
+  <!-- ====================================================================
+       ACCESSIBLE TOAST CONTAINER
+       ==================================================================== -->
+  <div class="tectonic-toast" role="status" aria-live="polite"></div>
+
+  <!-- ====================================================================
+       ES MODULE BOOTSTRAP
+       ==================================================================== -->
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

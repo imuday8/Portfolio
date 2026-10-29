@@ -1,0 +1,23 @@
+{
+  "name": "uday-saha-portfolio",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Production-ready, cinematic personal portfolio for Uday Saha — Obsidian Monolith 3.0",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 3457",
+    "serve": "npx serve .",
+    "test": "node verify-monolith.js && node test-browser-simulation.js",
+    "start": "python3 -m http.server 3457"
+  },
+  "keywords": [
+    "portfolio",
+    "developer",
+    "frontend",
+    "creative-dev",
+    "accessible",
+    "high-performance"
+  ],
+  "author": "Uday Saha <us8.dev@gmail.com>",
+  "license": "MIT"
+}
