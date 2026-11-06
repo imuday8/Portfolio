@@ -28,4 +28,4 @@ Then open `http://localhost:3000`.
 
 ## Deployment
 
-The existing production site is `https://portfolio-hexamindhealth.vercel.app`. When this source is pushed to the connected public GitHub repository, Vercel can build it as a static site.
+The public portfolio is at `https://imuday8.github.io/Portfolio/`. The existing Vercel URL currently redirects visitors to Vercel sign-in, so use the GitHub Pages address for judging.
