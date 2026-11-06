@@ -1,31 +1,44 @@
-# Uday Saha — Portfolio
+# Uday Saha — Beyond the ordinary
 
-A lightweight portfolio for the One Who Codes challenge, centered on software security, problem solving, and thoughtful interfaces.
+A cinematic, interactive portfolio built for the One Who Codes portfolio challenge. The page pairs a custom procedural Three.js sculpture with a clear story about Uday’s work, contributions, and learning.
 
 ## Run locally
 
-Open `index.html`, or serve the folder with Python:
-
 ```sh
-python3 -m http.server 3000
+npm install
+npm run dev
 ```
 
-Then open `http://localhost:3000`.
+Open the local URL printed by Vite. To create the static GitHub Pages build:
 
-## Project details
+```sh
+npm run build
+```
 
-- PyReach's team README credits Uday with frontend and platform work, the CLI reporter, fixtures, sample projects, and GitHub Actions CI.
-- MedMatch AI is a concept prototype built with Team Hexamind. It is described as a prototype and is not connected to live hospitals or medical guidance.
-- The PyReach trace is based on an explanatory sample fixture. It does not scan files or execute code.
-- The B.Tech program, JEE Main percentile, skills, and public profile links are taken from the existing public portfolio repository.
+Vite builds to `dist/`, then `scripts/sync-build.mjs` copies the entry page and hashed assets into the repository root, which is the publishing source for GitHub Pages.
 
-## Implementation
+## Stack
 
-- Semantic HTML, responsive CSS, vanilla JavaScript, and inline SVG.
-- No external fonts, trackers, packages, or runtime services.
-- Honors `prefers-reduced-motion`; the interactive evidence explainer works with button controls.
-- Styles and behavior live in `css/styles.css` and `js/portfolio.js`; the social preview is `assets/og-card.svg`.
+- React + Vite
+- Three.js with React Three Fiber and a custom GLSL shader
+- GSAP ScrollTrigger + Lenis
+- Tailwind CSS v4 build integration and custom responsive styles
+- Lucide icons and locally bundled fonts
 
-## Deployment
+## Accessibility and performance
 
-The public portfolio is at `https://imuday8.github.io/Portfolio/`. The existing Vercel URL currently redirects visitors to Vercel sign-in, so use the GitHub Pages address for judging.
+- Semantic sections, skip link, accessible mobile navigation, keyboard-operable skill tabs, and visible focus outlines
+- Honors `prefers-reduced-motion`; the decorative WebGL canvas pauses when the tab is hidden
+- WebGL remains in a lazy-loaded chunk and uses capped device pixel ratio, reduced mobile geometry cost, and a CSS fallback
+- No external runtime font or tracker requests
+
+## Project notes
+
+- PyReach team work is credited to Team CodeSins. Uday’s contribution includes the frontend and platform work, dashboard, CLI reporter, fixtures, sample projects, and GitHub Actions CI. The showcased trace is an explanatory fixture, not a live scan; PyReach statically parses code and does not execute scanned code.
+- MedMatch AI is a Team Hexamind concept prototype. It is not connected to live hospitals and is not medical guidance.
+- Education, JEE Main percentile, skills, and public profile links are carried over from Uday’s existing public portfolio.
+
+## Links
+
+- Live site: https://imuday8.github.io/Portfolio/
+- Source: https://github.com/imuday8/Portfolio
