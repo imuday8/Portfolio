@@ -1,12 +1,10 @@
-import { useEffect, useRef } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { MeshReflectorMaterial, Sparkles } from '@react-three/drei';
-import * as THREE from 'three';
-import { sceneMotion } from '../sceneState.js';
+import { useEffect, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
+import { sceneMotion } from "../sceneState.js";
 
 const vertexShader = `
 uniform float uTime;
-uniform vec2 uPointer;
 varying vec3 vNormalView;
 varying vec3 vViewPosition;
 varying vec3 vObjectPosition;
@@ -40,13 +38,13 @@ void main(){
   float fresnel=pow(1.0-max(dot(n,v),0.0),2.4);
   vec3 violet=vec3(.50,.38,.76);
   vec3 cyan=vec3(.58,.84,.83);
-  vec3 rose=vec3(.70,.48,.62);
+  vec3 rose=vec3(.66,.57,.62);
   vec3 silver=vec3(.78,.80,.84);
   vec3 deep=vec3(.055,.048,.075);
   vec3 tidal=mix(vec3(.10,.22,.27),cyan,smoothstep(-.2,.9,bands+field*.28));
   vec3 solar=mix(vec3(.30,.15,.13),vec3(.88,.61,.43),smoothstep(-.1,1.0,bands+field*.32));
   vec3 dream=mix(violet,cyan,smoothstep(-.7,.9,bands));
-  dream=mix(dream,rose,smoothstep(.38,.94,field)*.65);
+  dream=mix(dream,rose,smoothstep(.38,.94,field)*.28);
   dream=mix(dream,silver,smoothstep(.74,1.0,fresnel)*.72);
   vec3 color=mix(dream,tidal,step(.5,uPalette));
   color=mix(color,solar,step(1.5,uPalette));
@@ -66,56 +64,111 @@ function HolographicSculpture() {
   const root = useRef(null);
   const shader = useRef(null);
   const rings = useRef(null);
-  const { viewport } = useThree();
-
   useFrame((state, delta) => {
     if (!sceneMotion.visible) return;
     const t = state.clock.elapsedTime;
     const scroll = sceneMotion.scroll;
-    const mobile = viewport.width < 7.2;
-    const targetX = mobile ? 0.48 : 1.28 * Math.sin(Math.min(scroll, 1) * Math.PI * .82);
+    const mobile = window.innerWidth <= 680;
+    const narrow = window.innerWidth <= 390;
+    const targetX = mobile
+      ? narrow
+        ? 0.88
+        : 1.7
+      : 2.55 - 0.35 * Math.sin(Math.min(scroll, 1) * Math.PI * 0.72);
     if (root.current) {
-      root.current.position.x = THREE.MathUtils.damp(root.current.position.x, targetX, 1.25, delta);
-      root.current.position.y = THREE.MathUtils.damp(root.current.position.y, .06 + Math.sin(t * .48) * .12 - scroll * .1, 1.1, delta);
-      const scale = THREE.MathUtils.damp(root.current.scale.x, 1.0 - scroll * .22, 1.0, delta);
+      root.current.position.x = THREE.MathUtils.damp(
+        root.current.position.x,
+        targetX,
+        1.25,
+        delta,
+      );
+      root.current.position.y = THREE.MathUtils.damp(
+        root.current.position.y,
+        0.06 + Math.sin(t * 0.48) * 0.12 - scroll * 0.1,
+        1.1,
+        delta,
+      );
+      const targetScale = mobile ? (narrow ? 0.3 : 0.52) : 0.84 - scroll * 0.12;
+      const scale = THREE.MathUtils.damp(
+        root.current.scale.x,
+        targetScale,
+        1.0,
+        delta,
+      );
       root.current.scale.setScalar(scale);
       if (!sceneMotion.reducedMotion) {
-        root.current.rotation.y = THREE.MathUtils.damp(root.current.rotation.y, t * .14 + sceneMotion.pointerX * .16, 1.2, delta);
-        root.current.rotation.x = THREE.MathUtils.damp(root.current.rotation.x, sceneMotion.pointerY * .12 + Math.sin(t * .2) * .05, 1.2, delta);
+        root.current.rotation.y = THREE.MathUtils.damp(
+          root.current.rotation.y,
+          t * 0.14 + sceneMotion.pointerX * 0.16,
+          1.2,
+          delta,
+        );
+        root.current.rotation.x = THREE.MathUtils.damp(
+          root.current.rotation.x,
+          sceneMotion.pointerY * 0.12 + Math.sin(t * 0.2) * 0.05,
+          1.2,
+          delta,
+        );
       }
     }
     if (shader.current) {
       shader.current.uniforms.uTime.value = sceneMotion.reducedMotion ? 0 : t;
-      shader.current.uniforms.uPalette.value = THREE.MathUtils.damp(shader.current.uniforms.uPalette.value, sceneMotion.palette, 1.8, delta);
+      shader.current.uniforms.uPalette.value = THREE.MathUtils.damp(
+        shader.current.uniforms.uPalette.value,
+        sceneMotion.palette,
+        1.8,
+        delta,
+      );
       shader.current.uniforms.uScroll.value = scroll;
     }
-    if (rings.current && !sceneMotion.reducedMotion) rings.current.rotation.z = THREE.MathUtils.damp(rings.current.rotation.z, t * .055, .8, delta);
+    if (rings.current && !sceneMotion.reducedMotion)
+      rings.current.rotation.z = THREE.MathUtils.damp(
+        rings.current.rotation.z,
+        t * 0.055,
+        0.8,
+        delta,
+      );
   });
 
   return (
     <group ref={root}>
       <mesh castShadow>
-        <sphereGeometry args={[1.33, 112, 112]} />
-        <shaderMaterial ref={shader} vertexShader={vertexShader} fragmentShader={fragmentShader} uniforms={{ uTime: { value: 0 }, uPalette: { value: 0 }, uScroll: { value: 0 }, uPointer: { value: new THREE.Vector2() } }} />
+        <sphereGeometry
+          args={[
+            1.33,
+            window.innerWidth <= 680 ? 52 : 88,
+            window.innerWidth <= 680 ? 52 : 88,
+          ]}
+        />
+        <shaderMaterial
+          ref={shader}
+          vertexShader={vertexShader}
+          fragmentShader={fragmentShader}
+          uniforms={{
+            uTime: { value: 0 },
+            uPalette: { value: 0 },
+            uScroll: { value: 0 },
+          }}
+        />
       </mesh>
-      <mesh ref={rings} rotation={[.88,.2,-.5]}>
-        <torusGeometry args={[1.56,.006,5,180]} />
-        <meshBasicMaterial color="#c6f4f1" transparent opacity={.58} />
+      <mesh ref={rings} rotation={[0.88, 0.2, -0.5]}>
+        <torusGeometry args={[1.56, 0.006, 5, 180]} />
+        <meshBasicMaterial color="#c6f4f1" transparent opacity={0.58} />
       </mesh>
-      <mesh rotation={[-.55,.25,.78]}>
-        <torusGeometry args={[1.73,.003,5,180]} />
-        <meshBasicMaterial color="#bba8f7" transparent opacity={.45} />
+      <mesh rotation={[-0.55, 0.25, 0.78]}>
+        <torusGeometry args={[1.73, 0.003, 5, 180]} />
+        <meshBasicMaterial color="#bba8f7" transparent opacity={0.45} />
       </mesh>
-      <mesh rotation={[.16,.85,.2]}>
-        <torusGeometry args={[1.91,.002,4,180]} />
-        <meshBasicMaterial color="#f4f4f0" transparent opacity={.2} />
+      <mesh rotation={[0.16, 0.85, 0.2]}>
+        <torusGeometry args={[1.91, 0.002, 4, 180]} />
+        <meshBasicMaterial color="#f4f4f0" transparent opacity={0.2} />
       </mesh>
-      <mesh position={[1.45,.78,.15]}>
-        <sphereGeometry args={[.035,12,12]} />
+      <mesh position={[1.45, 0.78, 0.15]}>
+        <sphereGeometry args={[0.035, 12, 12]} />
         <meshBasicMaterial color="#e7dcff" />
       </mesh>
-      <mesh position={[-1.34,-.72,.4]}>
-        <sphereGeometry args={[.022,10,10]} />
+      <mesh position={[-1.34, -0.72, 0.4]}>
+        <sphereGeometry args={[0.022, 10, 10]} />
         <meshBasicMaterial color="#c6f4f1" />
       </mesh>
     </group>
@@ -123,36 +176,50 @@ function HolographicSculpture() {
 }
 
 function GalleryGround() {
-  return <mesh rotation={[-Math.PI/2,0,0]} position={[0,-2.02,0]} receiveShadow>
-    <planeGeometry args={[48,48]} />
-    <MeshReflectorMaterial
-      blur={[260,70]}
-      resolution={256}
-      mixBlur={1}
-      mixStrength={.72}
-      roughness={.42}
-      metalness={.72}
-      color="#19171e"
-      mirror={.45}
-      depthScale={1.2}
-      minDepthThreshold={.28}
-      maxDepthThreshold={1.2}
-      transparent
-      opacity={.62}
-    />
-  </mesh>;
+  return (
+    <mesh
+      rotation={[-Math.PI / 2, 0, 0]}
+      position={[0, -2.02, 0]}
+      receiveShadow
+    >
+      <planeGeometry args={[48, 48]} />
+      <meshBasicMaterial
+        color="#17151c"
+        transparent
+        opacity={0.28}
+        depthWrite={false}
+      />
+    </mesh>
+  );
 }
 
 function Scene() {
-  return <>
-    <ambientLight intensity={.48} />
-    <pointLight position={[-3.5,3.6,4.5]} intensity={32} color="#c5b4ff" distance={12} />
-    <pointLight position={[3.4,-.4,2.7]} intensity={18} color="#a8ece7" distance={9} />
-    <spotLight position={[0,5,-2]} angle={.42} penumbra={.8} intensity={45} color="#f5efff" castShadow />
-    <HolographicSculpture />
-    <GalleryGround />
-    <Sparkles count={82} scale={[11,6,8]} size={1.25} speed={.1} opacity={.5} color="#bca9f7" />
-  </>;
+  return (
+    <>
+      <ambientLight intensity={0.48} />
+      <pointLight
+        position={[-3.5, 3.6, 4.5]}
+        intensity={32}
+        color="#c5b4ff"
+        distance={12}
+      />
+      <pointLight
+        position={[3.4, -0.4, 2.7]}
+        intensity={18}
+        color="#a8ece7"
+        distance={9}
+      />
+      <spotLight
+        position={[0, 5, -2]}
+        angle={0.42}
+        penumbra={0.8}
+        intensity={22}
+        color="#f5efff"
+      />
+      <HolographicSculpture />
+      <GalleryGround />
+    </>
+  );
 }
 
 export default function SceneEnvironment({ onReady }) {
@@ -166,15 +233,26 @@ export default function SceneEnvironment({ onReady }) {
 
   return (
     <Canvas
-      dpr={window.innerWidth < 720 ? 1 : [1,1.45]}
-      camera={{ position: [0,.42,8.8], fov: 34, near: .1, far: 60 }}
-      gl={{ alpha: true, antialias: window.innerWidth > 720, powerPreference: 'high-performance', stencil: false, depth: true }}
-      shadows={window.innerWidth > 720}
-      fallback={<div className="orb-fallback" role="img" aria-label="An abstract holographic sculpture; 3D preview is unavailable in this browser." />}
+      dpr={window.innerWidth < 720 ? 1 : [1, 1.3]}
+      camera={{ position: [0, 0.42, 8.8], fov: 34, near: 0.1, far: 60 }}
+      gl={{
+        alpha: true,
+        antialias: window.innerWidth > 720,
+        powerPreference: "high-performance",
+        stencil: false,
+        depth: true,
+      }}
+      shadows={false}
+      fallback={
+        <div
+          className="orb-fallback"
+          role="img"
+          aria-label="An abstract holographic sculpture; 3D preview is unavailable in this browser."
+        />
+      }
       onCreated={() => onReady()}
     >
       <Scene />
     </Canvas>
   );
 }
-

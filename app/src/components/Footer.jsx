@@ -1,6 +1,24 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from "lucide-react";
+import { portfolioData } from "../data/portfolioData.js";
 
 export default function Footer() {
-  return <footer className="site-footer section-frame"><a className="brand-mark" href="#top" aria-label="Back to top">US<i>.</i></a><span className="mono-label">MADE WITH CURIOSITY / UDAY SAHA / 2026</span><a className="footer-link mono-label" href="https://github.com/imuday8" target="_blank" rel="noreferrer">SOURCE / GITHUB <ArrowUpRight size={12} aria-hidden="true" /></a></footer>;
+  return (
+    <footer className="site-footer section-frame">
+      <a className="brand-mark" href="#top" aria-label="Back to top">
+        {portfolioData.identity.monogram}
+        <i>.</i>
+      </a>
+      <span className="mono-label">
+        MADE WITH CURIOSITY / {portfolioData.identity.name.toUpperCase()} / 2026
+      </span>
+      <a
+        className="footer-link mono-label"
+        href={portfolioData.profiles.github.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        SOURCE / GITHUB <ArrowUpRight size={12} aria-hidden="true" />
+      </a>
+    </footer>
+  );
 }
-

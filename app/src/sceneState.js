@@ -4,6 +4,5 @@ export const sceneMotion = {
   scroll: 0,
   palette: 0,
   visible: true,
-  reducedMotion: false
+  reducedMotion: false,
 };
-

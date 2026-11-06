@@ -1,6 +1,6 @@
 # Uday Saha — Beyond the ordinary
 
-A cinematic, interactive portfolio built for the One Who Codes portfolio challenge. The page pairs a custom procedural Three.js sculpture with a clear story about Uday’s work, contributions, and learning.
+A cinematic, editorial portfolio for the One Who Codes challenge. It puts verified coding profiles and credited team projects ahead of the decorative 3D scene.
 
 ## Run locally
 
@@ -9,36 +9,30 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite. To create the static GitHub Pages build:
+Build the static GitHub Pages release with `npm run build`. Vite writes to `dist/`; `scripts/sync-build.mjs` copies its entry point and hashed assets to the publishing root.
 
-```sh
-npm run build
-```
+## Verified profiles
 
-Vite builds to `dist/`, then `scripts/sync-build.mjs` copies the entry page and hashed assets into the repository root, which is the publishing source for GitHub Pages.
+- LeetCode `Imuday08__`: 139 solved (45 Easy, 65 Medium, 29 Hard), 43-day current streak, 103 active days in 2026, global rank 1,284,422. Snapshot checked 7 November 2026 through LeetCode's public GraphQL profile.
+- Codeforces `Imuday08_`: 1,016 rating, 1,025 max rating, Newbie rank, 8 rated contests. Initial snapshot checked 7 November 2026; the page refreshes from Codeforces' public API and caches successful results for six hours.
+- GitHub `imuday8`: 7 public repositories and 1 follower. Initial snapshot checked 7 November 2026; the page refreshes from GitHub's public API and caches successful results for six hours.
 
-## Stack
+No CodeChef or GeeksforGeeks card is shown because no username was supplied. The previously supplied 110+ LeetCode streak conflicts with the current public profile value of 43, so the page uses the current value.
 
-- React + Vite
-- Three.js with React Three Fiber and a custom GLSL shader
-- GSAP ScrollTrigger + Lenis
-- Tailwind CSS v4 build integration and custom responsive styles
-- Lucide icons and locally bundled fonts
+## Projects
 
-## Accessibility and performance
-
-- Semantic sections, skip link, accessible mobile navigation, keyboard-operable skill tabs, and visible focus outlines
-- Honors `prefers-reduced-motion`; the decorative WebGL canvas pauses when the tab is hidden
-- WebGL remains in a lazy-loaded chunk and uses capped device pixel ratio, reduced mobile geometry cost, and a CSS fallback
-- No external runtime font or tracker requests
-
-## Project notes
-
-- PyReach team work is credited to Team CodeSins. Uday’s contribution includes the frontend and platform work, dashboard, CLI reporter, fixtures, sample projects, and GitHub Actions CI. The showcased trace is an explanatory fixture, not a live scan; PyReach statically parses code and does not execute scanned code.
+- PyReach is credited to Team CodeSins. Uday’s contribution: frontend and platform work, dashboard, CLI reporter, fixtures, sample projects, and GitHub Actions CI. The visual is an explanatory sample, not a live scan; PyReach analyzes source statically and does not execute scanned code.
 - MedMatch AI is a Team Hexamind concept prototype. It is not connected to live hospitals and is not medical guidance.
-- Education, JEE Main percentile, skills, and public profile links are carried over from Uday’s existing public portfolio.
+
+## Implementation
+
+React, Vite, Three.js / React Three Fiber, a custom GLSL iridescence shader, GSAP ScrollTrigger, Lenis, Tailwind CSS integration, Simple Icons brand marks, and local fonts. The sculpture uses a capped device pixel ratio, lower mobile geometry, no continuous sparkle field or planar reflection render pass, and a WebGL fallback. Intro and scroll reveals honor reduced motion. Profile cards show cached verified snapshots if public API refresh fails.
+
+## Quality checks
+
+`npm run build` creates and syncs the production static build. `npm run test:responsive` uses the installed Google Chrome executable to check 320, 375, 768, 1024, 1440, and 1920px widths, horizontal overflow, heading bounds, profile links and logos, navigation, reduced motion, and intro skip/revisit behavior.
 
 ## Links
 
-- Live site: https://imuday8.github.io/Portfolio/
+- Live: https://imuday8.github.io/Portfolio/
 - Source: https://github.com/imuday8/Portfolio
