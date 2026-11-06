@@ -21,7 +21,7 @@ export default function Navigation() {
       <button className="menu-toggle" type="button" aria-label={open ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={open} aria-controls="mobile-nav" onClick={() => setOpen(!open)}>
         {open ? <X size={19} /> : <Menu size={19} />}
       </button>
-      <nav className="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" inert={!open ? '' : undefined}>
+      <nav className="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" inert={!open}>
         {links.map(([label, href], index) => <a href={href} key={href} onClick={close}><span>0{index+1} /</span>{label}<ArrowUpRight size={16} aria-hidden="true" /></a>)}
         <a href="https://github.com/imuday8" target="_blank" rel="noreferrer" onClick={close}><span>↗</span>GitHub</a>
       </nav>
