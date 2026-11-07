@@ -61,8 +61,6 @@ try {
     await page
       .locator("#profiles")
       .waitFor({ state: "attached", timeout: 10000 });
-    const skip = page.getByRole("button", { name: /skip intro/i });
-    if (await skip.isVisible().catch(() => false)) await skip.click();
     await page.waitForTimeout(260);
     await page.evaluate(() => document.fonts.ready);
     if ([320, 375, 1440].includes(width))
@@ -119,13 +117,14 @@ try {
         navigation: [...document.querySelectorAll(".desktop-nav a")].map(
           (link) => link.textContent.trim(),
         ),
-        navigationReplay: Boolean(
-          document.querySelector(
-            '[aria-label="Replay cinematic introduction"]',
-          ),
-        ),
+        hasIntro: Boolean(document.querySelector(".cinematic-intro")),
+        dashboardProjects: [
+          ...document.querySelectorAll(".dashboard-project strong"),
+        ].map((node) => node.textContent.trim()),
+        dashboardMetrics: document.querySelectorAll(".dashboard-metric").length,
+        capabilityCards: document.querySelectorAll(".capability-card").length,
         mobileNavigation: Boolean(document.querySelector("#mobile-nav")),
-        scrollCue: document.querySelector(".scroll-cue")?.textContent.trim(),
+        scrollCue: document.querySelector(".hero-primary")?.textContent.trim(),
         hasExploreButton: [...document.querySelectorAll("button")].some(
           (button) => /explore my universe/i.test(button.textContent),
         ),
@@ -225,17 +224,14 @@ try {
         JSON.stringify(expectedProjects) &&
       !initial.projectTextOverlapsArtwork &&
       JSON.stringify(initial.navigation) ===
-        JSON.stringify([
-          "Home",
-          "Projects",
-          "Achievements",
-          "Coding",
-          "About",
-          "Contact",
-        ]) &&
-      initial.navigationReplay &&
+        JSON.stringify(["Work", "Approach", "Signals", "About", "Contact"]) &&
+      !initial.hasIntro &&
+      initial.dashboardMetrics === 3 &&
+      JSON.stringify(initial.dashboardProjects) ===
+        JSON.stringify(["PyReach", "Portfolio", "Hexamind"]) &&
+      initial.capabilityCards === 6 &&
       initial.navigationWorks &&
-      initial.scrollCue.includes("SCROLL TO DISCOVER") &&
+      initial.scrollCue.includes("Explore my work") &&
       !initial.hasExploreButton &&
       initial.hasEarthCanvas &&
       initial.jeePercentile.includes("98.93") &&
@@ -265,131 +261,92 @@ try {
     titleVisible:
       getComputedStyle(document.querySelector(".hero-title")).visibility !==
       "hidden",
-    replayDisabled: document.querySelector(".nav-replay")?.disabled,
+    capabilityTransition: getComputedStyle(
+      document.querySelector(".capability-card"),
+    ).transitionDuration,
     scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
   }));
   record("reduced-motion", {
     ...reduced,
     passed:
-      !reduced.introVisible && reduced.titleVisible && reduced.replayDisabled,
+      !reduced.introVisible &&
+      reduced.titleVisible &&
+      Number.parseFloat(reduced.capabilityTransition) <= 0.0001,
   });
   await motionContext.close();
 
-  const introContext = await browser.newContext({
+  const referenceContext = await browser.newContext({
     viewport: { width: 1440, height: 1000 },
   });
-  const introPage = await introContext.newPage();
-  const introMonitor = await monitor(introPage);
-  await introPage.goto(baseUrl, { waitUntil: "domcontentloaded" });
-  const skipIntro = introPage.getByRole("button", { name: /skip intro/i });
-  await skipIntro.waitFor({ state: "visible", timeout: 5000 });
-  const initialCounter = await introPage
-    .locator(".intro-counter strong")
-    .textContent();
-  await introPage.waitForFunction(
-    () =>
-      document.querySelector(".intro-counter strong")?.textContent === "50%",
-    undefined,
-    { timeout: 22000 },
-  );
-  const flipState = await introPage
-    .locator(".cinematic-letter")
-    .evaluateAll((letters) => {
-      const transforms = letters.map(
-        (letter) => getComputedStyle(letter).transform,
-      );
-      return {
-        count: letters.length,
-        distinctTransforms: new Set(transforms).size,
-      };
-    });
-  const hasExploreBefore = await introPage
-    .getByRole("button", { name: /explore/i })
-    .count();
-  await introPage.waitForFunction(
-    () =>
-      document.querySelector(".intro-counter strong")?.textContent === "100%",
-    undefined,
-    { timeout: 16000 },
-  );
-  await introPage
-    .locator(".hero-title")
-    .waitFor({ state: "visible", timeout: 3000 });
-  const sequenceResult = await introPage.evaluate(() => ({
-    introGone: !document.querySelector(".cinematic-intro"),
-    scrollCue: document.querySelector(".scroll-cue")?.textContent.trim(),
-    sessionRecorded: sessionStorage.getItem("uday-intro-seen") === "1",
-    sceneStatus:
-      document.querySelector(".intro-status")?.textContent ??
-      "handoff complete",
+  const referencePage = await referenceContext.newPage();
+  const referenceMonitor = await monitor(referencePage);
+  await referencePage.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  await referencePage.locator(".hero-dashboard").waitFor({ state: "visible" });
+  await referencePage
+    .locator(".scene-stage canvas")
+    .waitFor({ state: "visible", timeout: 15000 })
+    .catch(() => {});
+  const landing = await referencePage.evaluate(() => ({
+    title: document
+      .querySelector(".hero-title")
+      ?.innerText.replace(/\s+/g, " ")
+      .trim(),
+    introVisible: Boolean(document.querySelector(".cinematic-intro")),
+    projectNames: [
+      ...document.querySelectorAll(".dashboard-project strong"),
+    ].map((node) => node.textContent.trim()),
+    verifiedMetricCount: document.querySelectorAll(".dashboard-metric").length,
+    entryButtons: [...document.querySelectorAll(".hero-actions a")].map(
+      (node) => node.textContent.trim(),
+    ),
+    cardCount: document.querySelectorAll(".capability-card").length,
+    earthCanvas: Boolean(document.querySelector("canvas")),
   }));
-  const earthOpacityBefore = await introPage
+  const sceneOpacityBefore = await referencePage
     .locator(".scene-stage")
     .evaluate((node) => getComputedStyle(node).opacity);
-  await introPage.mouse.wheel(0, 900);
-  await introPage.waitForTimeout(750);
-  const scrollResult = await introPage.evaluate(() => ({
+  await referencePage.mouse.wheel(0, 850);
+  await referencePage.waitForTimeout(700);
+  const scrollResult = await referencePage.evaluate(() => ({
     y: window.scrollY,
-    hash: location.hash,
     sceneOpacity: getComputedStyle(document.querySelector(".scene-stage"))
       .opacity,
   }));
-  await introPage.reload({ waitUntil: "domcontentloaded" });
-  await introPage.locator("#profiles").waitFor({ state: "attached" });
-  const returningVisit =
-    (await introPage.locator(".cinematic-intro").count()) === 0;
-  await introPage
-    .getByRole("button", { name: /replay cinematic introduction/i })
-    .click();
-  await introPage.locator(".cinematic-intro").waitFor({ state: "visible" });
-  await introPage.getByRole("button", { name: /skip intro/i }).click();
-  const replayAndSkip =
-    (await introPage.locator(".cinematic-intro").count()) === 0;
-  await introPage
-    .getByRole("button", { name: /replay cinematic introduction/i })
-    .click();
-  await introPage.locator(".cinematic-intro").waitFor({ state: "visible" });
-  await introPage.keyboard.press("PageDown");
-  await introPage
-    .locator(".cinematic-intro")
-    .waitFor({ state: "detached", timeout: 3000 });
-  await introPage
-    .waitForFunction(() => window.scrollY > 500, undefined, { timeout: 5000 })
-    .catch(() => {});
-  const keyboardFastForward = await introPage.evaluate(
-    () =>
-      window.scrollY > 500 && sessionStorage.getItem("uday-intro-seen") === "1",
-  );
-  const introPassed =
-    initialCounter === "1%" &&
-    flipState.count > 5 &&
-    flipState.distinctTransforms > 2 &&
-    hasExploreBefore === 0 &&
-    sequenceResult.introGone &&
-    sequenceResult.sessionRecorded &&
-    sequenceResult.scrollCue.includes("SCROLL TO DISCOVER") &&
-    scrollResult.y > 0 &&
-    Math.abs(Number(earthOpacityBefore) - Number(scrollResult.sceneOpacity)) >
-      0.05 &&
-    returningVisit &&
-    replayAndSkip &&
-    keyboardFastForward &&
-    introMonitor.errors.length === 0;
-  record("cinematic-and-scroll", {
-    initialCounter,
-    flipState,
-    hasExploreBefore,
-    ...sequenceResult,
+  const landingPassed =
+    landing.title === "I build tools with intent." &&
+    !landing.introVisible &&
+    JSON.stringify(landing.projectNames) ===
+      JSON.stringify(["PyReach", "Portfolio", "Hexamind"]) &&
+    landing.verifiedMetricCount === 3 &&
+    landing.entryButtons.length === 2 &&
+    landing.cardCount === 6 &&
+    landing.earthCanvas &&
+    scrollResult.y > 100 &&
+    Number(scrollResult.sceneOpacity) > 0 &&
+    Number(scrollResult.sceneOpacity) <= 1 &&
+    referenceMonitor.errors.length === 0;
+  record("reference-landing-and-scroll", {
+    ...landing,
+    sceneOpacityBefore,
     scrollResult,
-    earthOpacityBefore,
-    returningVisit,
-    replayAndSkip,
-    keyboardFastForward,
-    errors: introMonitor.errors,
-    unavailableApis: introMonitor.unavailableApis,
-    passed: introPassed,
+    errors: referenceMonitor.errors,
+    passed: landingPassed,
   });
-  await introContext.close();
+  const keyboardStart = await referencePage.evaluate(() => window.scrollY);
+  await referencePage.keyboard.press("PageDown");
+  await referencePage
+    .waitForFunction(
+      (previous) => window.scrollY > previous + 100,
+      keyboardStart,
+      { timeout: 3000 },
+    )
+    .catch(() => {});
+  const keyboardScroll = await referencePage.evaluate(
+    (previous) => window.scrollY > previous + 100,
+    keyboardStart,
+  );
+  record("keyboard-scroll", { keyboardScroll, passed: keyboardScroll });
+  await referenceContext.close();
 
   const touchContext = await browser.newContext({
     viewport: { width: 375, height: 850 },
@@ -397,51 +354,23 @@ try {
   });
   const touchPage = await touchContext.newPage();
   await touchPage.goto(baseUrl, { waitUntil: "domcontentloaded" });
-  await touchPage
-    .getByRole("button", { name: /skip intro/i })
-    .waitFor({ state: "visible" });
-  await touchPage.evaluate(() => {
-    const root = document.querySelector(".cinematic-intro");
-    const makeTouch = (y) =>
-      new Touch({
-        identifier: 1,
-        target: root,
-        clientX: 180,
-        clientY: y,
-        pageX: 180,
-        pageY: y,
-        screenX: 180,
-        screenY: y,
-      });
-    root.dispatchEvent(
-      new TouchEvent("touchstart", {
-        touches: [makeTouch(260)],
-        bubbles: true,
-      }),
-    );
-    root.dispatchEvent(
-      new TouchEvent("touchmove", {
-        touches: [makeTouch(170)],
-        bubbles: true,
-        cancelable: true,
-      }),
-    );
+  await touchPage.locator(".hero-dashboard").waitFor({ state: "visible" });
+  const touchSession = await touchContext.newCDPSession(touchPage);
+  await touchSession.send("Input.dispatchTouchEvent", {
+    type: "touchStart",
+    touchPoints: [{ x: 180, y: 700, radiusX: 1, radiusY: 1, force: 1 }],
   });
-  await touchPage
-    .locator(".cinematic-intro")
-    .waitFor({ state: "detached", timeout: 3000 });
-  await touchPage
-    .waitForFunction(() => window.scrollY > 500, undefined, { timeout: 5000 })
-    .catch(() => {});
-  const touchResult = await touchPage.evaluate(() => ({
-    touchFastForward: window.scrollY > 500,
-    scrollY: window.scrollY,
-    introSeen: sessionStorage.getItem("uday-intro-seen") === "1",
-  }));
-  record("touch-fast-forward", {
-    ...touchResult,
-    passed: touchResult.touchFastForward && touchResult.introSeen,
+  await touchSession.send("Input.dispatchTouchEvent", {
+    type: "touchMove",
+    touchPoints: [{ x: 180, y: 320, radiusX: 1, radiusY: 1, force: 1 }],
   });
+  await touchSession.send("Input.dispatchTouchEvent", {
+    type: "touchEnd",
+    touchPoints: [],
+  });
+  await touchPage.waitForTimeout(600);
+  const touchScroll = await touchPage.evaluate(() => window.scrollY > 0);
+  record("touch-scroll", { touchScroll, passed: touchScroll });
   await touchContext.close();
 
   const fallbackBrowser = await chromium.launch({

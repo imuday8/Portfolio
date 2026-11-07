@@ -1,30 +1,59 @@
-import { useState } from "react";
-import { ArrowUpRight } from "lucide-react";
-import { portfolioData } from "../data/portfolioData.js";
+import {
+  ArrowUpRight,
+  Code2,
+  GitBranch,
+  Orbit,
+  Search,
+  Shapes,
+  Workflow,
+} from "lucide-react";
+
+const capabilities = [
+  {
+    icon: Code2,
+    title: "Interfaces",
+    copy: "Responsive React experiences with clear hierarchy and useful detail.",
+    tools: "REACT / JAVASCRIPT / CSS",
+    tone: "violet",
+  },
+  {
+    icon: Search,
+    title: "Systems thinking",
+    copy: "Follow a problem from its inputs to an explanation someone can inspect.",
+    tools: "PYTHON / AST / ALGORITHMS",
+    tone: "blue",
+  },
+  {
+    icon: Workflow,
+    title: "Useful tooling",
+    copy: "Small workflows, dashboards, and automations shaped around real tasks.",
+    tools: "NODE.JS / FASTAPI / GITHUB ACTIONS",
+    tone: "indigo",
+  },
+  {
+    icon: Orbit,
+    title: "Visual computing",
+    copy: "Explore motion, depth, and data as part of an interactive interface.",
+    tools: "THREE.JS / REACT THREE FIBER",
+    tone: "cyan",
+  },
+  {
+    icon: Shapes,
+    title: "Product exploration",
+    copy: "Turn early ideas into flows people can understand and try.",
+    tools: "PROTOTYPING / UI ENGINEERING",
+    tone: "pink",
+  },
+  {
+    icon: GitBranch,
+    title: "Team building",
+    copy: "Share work, clarify contributions, and learn through collaboration.",
+    tools: "GIT / CODE REVIEW / ITERATION",
+    tone: "violet",
+  },
+];
 
 export default function Toolkit() {
-  const [active, setActive] = useState("Build");
-  const skillGroups = portfolioData.skills;
-  const group = skillGroups[active];
-  const selectWithArrow = (event) => {
-    if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
-    event.preventDefault();
-    const names = Object.keys(skillGroups);
-    const current = names.indexOf(active);
-    const next =
-      event.key === "Home"
-        ? 0
-        : event.key === "End"
-          ? names.length - 1
-          : (current + (event.key === "ArrowRight" ? 1 : names.length - 1)) %
-            names.length;
-    setActive(names[next]);
-    requestAnimationFrame(() =>
-      document
-        .getElementById(`skill-tab-${names[next].toLowerCase()}`)
-        ?.focus(),
-    );
-  };
   return (
     <section
       className="toolkit section-frame content-section"
@@ -32,75 +61,42 @@ export default function Toolkit() {
       aria-labelledby="toolkit-title"
     >
       <div className="section-eyebrow" data-reveal>
-        <span className="mono-label">07 / A FEW TOOLS IN THE KIT</span>
-        <span className="section-count mono-label">07 — 08</span>
+        <span className="mono-label">03 / HOW I LIKE TO BUILD</span>
+        <span className="section-count mono-label">03 — 08</span>
       </div>
-      <div className="section-title-row" data-reveal>
-        <h2 className="section-title" id="toolkit-title">
-          Tools for the <em>in-between.</em>
-        </h2>
+      <div className="capabilities-heading" data-reveal>
+        <div>
+          <p className="capabilities-overline">CURIOSITY, PUT TO WORK</p>
+          <h2 className="section-title" id="toolkit-title">
+            A few useful <em>directions.</em>
+          </h2>
+        </div>
         <p className="section-deck">
-          Not a list of scores. Just the tools I reach for, and the things I’m
-          still learning to do with them.
+          Different projects call for different tools. These are the areas I’m
+          practicing, building, and learning in.
         </p>
       </div>
-      <div className="toolkit-panel" data-reveal>
-        <div className="toolkit-index">
-          <span className="mono-label">CHOOSE A MODE</span>
-          <span className="toolkit-asterisk" aria-hidden="true">
-            ✳
-          </span>
-          <div
-            className="skill-tabs"
-            role="tablist"
-            aria-label="Explore Uday’s toolkit"
+      <div className="capability-grid">
+        {capabilities.map(({ icon: Icon, title, copy, tools, tone }, index) => (
+          <article
+            className={"capability-card capability-" + tone}
+            data-reveal
+            key={title}
           >
-            {Object.keys(skillGroups).map((name, i) => (
-              <button
-                key={name}
-                type="button"
-                role="tab"
-                id={`skill-tab-${name.toLowerCase()}`}
-                aria-selected={active === name}
-                aria-controls="skill-panel"
-                tabIndex={active === name ? 0 : -1}
-                onKeyDown={selectWithArrow}
-                onClick={() => setActive(name)}
-              >
-                <span>0{i + 1}</span>
-                {name}
-                <ArrowUpRight size={14} aria-hidden="true" />
-              </button>
-            ))}
-          </div>
-        </div>
-        <div
-          className="skill-panel"
-          id="skill-panel"
-          role="tabpanel"
-          aria-labelledby={`skill-tab-${active.toLowerCase()}`}
-          key={active}
-        >
-          <p className="mono-label skill-eyebrow">{group.eyebrow}</p>
-          <p className="skill-description">{group.copy}</p>
-          <ul className="skill-list">
-            {group.items.map((item, i) => (
-              <li key={item}>
-                <span className="skill-seq mono-label">0{i + 1}</span>
-                {item}
-                <span className="skill-spark" aria-hidden="true">
-                  ✳
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="toolkit-foot mono-label" data-reveal>
-        <span>GIT / GITHUB / VS CODE</span>
-        <span>
-          LEARNING IS PART OF THE BUILD <i>↗</i>
-        </span>
+            <div className="capability-card-top">
+              <span className="capability-icon">
+                <Icon size={20} strokeWidth={1.5} aria-hidden="true" />
+              </span>
+              <span className="capability-index">0{index + 1}</span>
+            </div>
+            <h3>{title}</h3>
+            <p>{copy}</p>
+            <div className="capability-card-foot">
+              <span>{tools}</span>
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

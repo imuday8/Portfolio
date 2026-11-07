@@ -10,8 +10,8 @@ export default function AcademicJourney() {
       aria-labelledby="academic-title"
     >
       <div className="section-eyebrow" data-reveal>
-        <span className="mono-label">03 / ACHIEVEMENTS & EDUCATION</span>
-        <span className="section-count mono-label">03 — 06</span>
+        <span className="mono-label">06 / ACHIEVEMENTS & EDUCATION</span>
+        <span className="section-count mono-label">06 — 08</span>
       </div>
       <div className="academic-stage" data-reveal data-motion="orbit">
         <div className="academic-orbit" aria-hidden="true">

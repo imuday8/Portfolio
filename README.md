@@ -1,6 +1,6 @@
-# Uday Saha — Beyond the Horizon
+# Uday Saha — Developer Portfolio
 
-A cinematic, editorial portfolio that moves from a black-hole-inspired introduction to a true 3D Earth-at-night scene, then into three credited projects, real coding profiles, education, and contact.
+A violet-lit, interactive portfolio shaped by a cinematic product landing page: an immediate introduction, a glass dashboard with verified public stats, featured work, capability cards, and a softly illuminated 3D Earth.
 
 ## Run locally
 
@@ -13,10 +13,10 @@ Build the GitHub Pages release with `npm run build`. Vite writes to `dist/`, the
 
 ## The visual experience
 
-- The approximately 11-second opening is a timed cinematic sequence, not an asset-loading estimate. It moves from stars and an accretion-disk study to a letter-by-letter name reveal and the Earth horizon. It skips with wheel, upward touch swipe, Arrow Down, Page Down, Escape, or the visible Skip Intro control. After the intro, scrolling is normal and reveals the portfolio.
-- The interactive 3D Earth uses NASA Earth Observatory's 3600 × 1800 Black Marble 2016 global map as an equirectangular texture. Three.js draws it on a rotating sphere with procedural clouds and an atmospheric rim. Scroll changes the globe rotation and camera path; stars move with restrained parallax. The map is under 800 KB.
+- The portfolio opens directly on the hero. A glass dashboard summarizes genuine coding and GitHub data and links to three featured projects. The following sections carry the violet light, soft beams, restrained motion, and rounded capability cards through the page.
+- The ambient 3D Earth uses NASA Earth Observatory's 3600 × 1800 Black Marble 2016 global map as an equirectangular texture. Three.js draws it on a rotating sphere with procedural clouds and an atmospheric rim. The map is under 800 KB.
 - The bundled texture is NASA Earth Observatory imagery by Joshua Stevens, using Suomi NPP VIIRS data from Miguel Román, NASA GSFC. The [NASA source page](https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps/) documents the map, resolutions, and underlying observations.
-- Unsupported WebGL gets a labeled static Earth texture fallback. Reduced-motion settings skip the cinematic intro and stop automatic globe and cloud motion.
+- Unsupported WebGL gets a labeled static Earth texture fallback. Reduced-motion settings stop automatic globe and cloud motion.
 
 ## Featured projects
 
@@ -39,7 +39,7 @@ The separate searchable GitHub archive is an account view, not a fourth featured
 
 ## Quality checks
 
-`npm run build` creates and syncs the static release. `npm run test:responsive` uses installed Google Chrome to check 320, 375, 768, 1024, 1440, and 1920 px, overflow, navigation, the project count/order, archive filters, profile links, reduced motion, cinematic completion, scroll fast-forward, and replay.
+`npm run build` creates and syncs the static release. `npm run test:responsive` uses installed Google Chrome to check 320, 375, 768, 1024, 1440, and 1920 px, overflow, navigation, the project count/order, archive filters, profile links, reduced motion, scrolling, reduced motion, and the WebGL fallback.
 
 ## Links
 

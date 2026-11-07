@@ -1,4 +1,4 @@
-import{r as e}from"./rolldown-runtime-XKyaHtl9.js";import{r as t,t as n}from"./three-runtime~index-DqlbP2cJ.js";import{t as r}from"./three-runtime~SceneEnvironment-DBQlhKjl.js";import{A as i,Ma as a,Qi as o,j as s,tr as c}from"./three-runtime~SceneEnvironment-BF58tRDi.js";import{c as l,d as u}from"./three-runtime~SceneEnvironment-BPllWKf8.js";import{t as d}from"./index-r77GWBw-.js";var f=e(t(),1),p=new URL(`earth-night-black-marble-NjS93Ed1.jpg`,import.meta.url).href,m=n(),h=`
+import{r as e}from"./rolldown-runtime-XKyaHtl9.js";import{r as t,t as n}from"./three-runtime~index-DqlbP2cJ.js";import{t as r}from"./three-runtime~SceneEnvironment-DBQlhKjl.js";import{A as i,Ma as a,Qi as o,j as s,tr as c}from"./three-runtime~SceneEnvironment-BF58tRDi.js";import{c as l,d as u}from"./three-runtime~SceneEnvironment-BPllWKf8.js";import{t as d}from"./index-Bv7n3ULj.js";var f=e(t(),1),p=new URL(`earth-night-black-marble-NjS93Ed1.jpg`,import.meta.url).href,m=n(),h=`
 varying vec2 vUv;
 varying vec3 vNormalWorld;
 varying vec3 vPositionWorld;

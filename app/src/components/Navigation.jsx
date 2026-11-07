@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Menu, RotateCcw, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 
 const links = [
-  ["Home", "#home"],
-  ["Projects", "#work"],
-  ["Achievements", "#journey"],
-  ["Coding", "#profiles"],
+  ["Work", "#work"],
+  ["Approach", "#toolkit"],
+  ["Signals", "#profiles"],
   ["About", "#about"],
   ["Contact", "#contact"],
 ];
 
-export default function Navigation({ onReplayIntro }) {
+export default function Navigation() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
   const toggleRef = useRef(null);
@@ -63,24 +62,9 @@ export default function Navigation({ onReplayIntro }) {
         ))}
       </nav>
       <a className="nav-contact" href="#contact">
-        Start a conversation{" "}
+        Let’s connect{" "}
         <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden="true" />
       </a>
-      <button
-        className="nav-replay"
-        type="button"
-        onClick={(event) => onReplayIntro?.(event.currentTarget)}
-        disabled={!onReplayIntro}
-        aria-label="Replay cinematic introduction"
-        title={
-          onReplayIntro
-            ? "Replay intro"
-            : "Intro animation is off while reduced motion is enabled"
-        }
-      >
-        <RotateCcw size={14} aria-hidden="true" />
-        <span>Replay</span>
-      </button>
       <button
         ref={toggleRef}
         className="menu-toggle"
@@ -110,18 +94,6 @@ export default function Navigation({ onReplayIntro }) {
             <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         ))}
-        <button
-          className="mobile-replay"
-          type="button"
-          disabled={!onReplayIntro}
-          onClick={(event) => {
-            close();
-            onReplayIntro?.(event.currentTarget);
-          }}
-        >
-          <span aria-hidden="true">↺</span>
-          Replay the intro
-        </button>
       </nav>
     </header>
   );

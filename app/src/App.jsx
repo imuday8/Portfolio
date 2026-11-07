@@ -17,39 +17,24 @@ import About from "./components/About.jsx";
 import Toolkit from "./components/Toolkit.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
-import CinematicIntro from "./components/CinematicIntro.jsx";
+import TechnologyStrip from "./components/TechnologyStrip.jsx";
 import GitHubArchive from "./components/GitHubArchive.jsx";
 import AcademicJourney from "./components/AcademicJourney.jsx";
 import { sceneMotion } from "./sceneState.js";
-import { portfolioData } from "./data/portfolioData.js";
 
 const SceneEnvironment = lazy(
   () => import("./components/SceneEnvironment.jsx"),
 );
 gsap.registerPlugin(ScrollTrigger);
 
-function hasSeenIntro() {
-  try {
-    return sessionStorage.getItem("uday-intro-seen") === "1";
-  } catch {
-    return false;
-  }
-}
-
 function userPrefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 export default function App() {
-  const firstVisit = useRef(!hasSeenIntro() && !userPrefersReducedMotion());
   const rootRef = useRef(null);
-  const introReturnFocus = useRef(null);
   const [sceneReady, setSceneReady] = useState(false);
-  const [sceneStatus, setSceneStatus] = useState("WAITING FOR WEBGL SCENE");
   const [reducedMotion, setReducedMotion] = useState(userPrefersReducedMotion);
-  const [introDone, setIntroDone] = useState(
-    () => hasSeenIntro() || userPrefersReducedMotion(),
-  );
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -57,9 +42,7 @@ export default function App() {
       sceneMotion.reducedMotion = query.matches;
       setReducedMotion(query.matches);
       if (query.matches) {
-        firstVisit.current = false;
         setSceneReady(true);
-        setIntroDone(true);
       }
     };
     syncMotion();
@@ -68,17 +51,8 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    sceneMotion.introActive = firstVisit.current;
-    sceneMotion.introProgress = firstVisit.current ? 0 : 1;
-    const updateIntroProgress = (event) => {
-      sceneMotion.introProgress = event.detail;
-    };
-    window.addEventListener("portfolio:entry-progress", updateIntroProgress);
-    return () =>
-      window.removeEventListener(
-        "portfolio:entry-progress",
-        updateIntroProgress,
-      );
+    sceneMotion.introActive = false;
+    sceneMotion.introProgress = 1;
   }, []);
 
   useEffect(() => {
@@ -172,97 +146,24 @@ export default function App() {
   useEffect(() => {
     if (reducedMotion || sceneReady) return undefined;
     const fallback = window.setTimeout(() => {
-      setSceneStatus("3D PREVIEW UNAVAILABLE · CONTINUING IN 2D");
       setSceneReady(true);
     }, 12000);
     return () => window.clearTimeout(fallback);
   }, [reducedMotion, sceneReady]);
 
-  const enterExperience = useCallback((options = {}) => {
-    firstVisit.current = false;
-    sceneMotion.introActive = false;
-    sceneMotion.introProgress = 1;
-    try {
-      sessionStorage.setItem("uday-intro-seen", "1");
-    } catch {}
-    setSceneReady(true);
-    setIntroDone(true);
-    requestAnimationFrame(() => {
-      const target =
-        introReturnFocus.current || document.querySelector("#hero-title");
-      target?.focus?.({ preventScroll: true });
-      introReturnFocus.current = null;
-      if (options.toProjects)
-        document.querySelector("#work")?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-    });
-  }, []);
-
-  const replayIntro = useCallback(
-    (trigger) => {
-      if (reducedMotion) return;
-      introReturnFocus.current = trigger || null;
-      sceneMotion.introActive = true;
-      sceneMotion.introProgress = 0;
-      setIntroDone(false);
-    },
-    [reducedMotion],
-  );
-
   const markSceneReady = useCallback(() => {
-    setSceneStatus("3D ENVIRONMENT READY");
     setSceneReady(true);
   }, []);
 
   const markSceneFallback = useCallback(() => {
-    setSceneStatus("3D PREVIEW UNAVAILABLE · CONTINUING IN 2D");
     setSceneReady(true);
   }, []);
 
-  useEffect(() => {
-    if (!introDone || !firstVisit.current || reducedMotion) return undefined;
-    firstVisit.current = false;
-    const context = gsap.context(() => {
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .fromTo(
-          ".intro-kicker",
-          { autoAlpha: 0, y: 12 },
-          { autoAlpha: 1, y: 0, duration: 0.35 },
-          0,
-        )
-        .fromTo(
-          ".hero-title-line",
-          { yPercent: 106, rotate: 2 },
-          { yPercent: 0, rotate: 0, duration: 0.75, stagger: 0.07 },
-          0.06,
-        )
-        .fromTo(
-          ".hero-description, .hero-actions, .site-header",
-          { autoAlpha: 0, y: 10 },
-          { autoAlpha: 1, y: 0, duration: 0.48, stagger: 0.06 },
-          0.35,
-        );
-    }, rootRef);
-    return () => context.revert();
-  }, [introDone, reducedMotion]);
-
   return (
     <div className="app-root" ref={rootRef}>
-      {!introDone && !reducedMotion && (
-        <CinematicIntro
-          identity={portfolioData.identity}
-          sceneStatus={sceneStatus}
-          ready={sceneReady}
-          onEnter={enterExperience}
-        />
-      )}
       <div
-        className={`scene-stage${sceneReady ? " scene-ready" : ""}`}
+        className={"scene-stage" + (sceneReady ? " scene-ready" : "")}
         aria-hidden="true"
-        inert={!introDone && !reducedMotion}
       >
         <Suspense
           fallback={<div className="orb-fallback scene-loading-fallback" />}
@@ -275,19 +176,17 @@ export default function App() {
         <div className="scene-grain" />
         <div className="scene-vignette" />
       </div>
-      <div
-        className={`site-shell${introDone || reducedMotion ? " intro-complete" : ""}`}
-        inert={!introDone && !reducedMotion}
-      >
-        <Navigation onReplayIntro={reducedMotion ? undefined : replayIntro} />
+      <div className="site-shell intro-complete">
+        <Navigation />
         <main className="site-main" id="main">
           <Hero />
+          <TechnologyStrip />
           <Projects />
-          <AcademicJourney />
+          <Toolkit />
           <CompetitiveProfiles />
           <GitHubArchive />
+          <AcademicJourney />
           <About />
-          <Toolkit />
           <Contact />
         </main>
         <Footer />
