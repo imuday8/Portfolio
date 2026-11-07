@@ -64,7 +64,7 @@ export default function CinematicIntro({
         )
         .fromTo(
           ".cinematic-letter",
-          { autoAlpha: 0, rotateY: 100, rotateX: 12, z: -90, y: 12 },
+          { autoAlpha: 0, rotateY: 90, rotateX: 10, z: -70, y: 12 },
           {
             autoAlpha: 1,
             rotateY: 0,
@@ -72,10 +72,10 @@ export default function CinematicIntro({
             z: 0,
             y: 0,
             duration: 0.68,
-            stagger: 0.12,
+            stagger: 0.045,
             ease: "power3.out",
           },
-          4.85,
+          1.35,
         )
         .to(
           ".intro-particle",
@@ -88,25 +88,25 @@ export default function CinematicIntro({
             stagger: { each: 0.025, from: "random" },
             ease: "power3.inOut",
           },
-          5.15,
+          1.75,
         )
         .fromTo(
           ".intro-role",
           { autoAlpha: 0, y: 12 },
           { autoAlpha: 1, y: 0, duration: 0.7 },
-          7.6,
+          2.8,
         )
         .fromTo(
           ".intro-arrival",
           { autoAlpha: 0, y: 10 },
           { autoAlpha: 1, y: 0, duration: 0.6 },
-          9.25,
+          3.65,
         )
         .to(
           sequence,
           {
             progress: 100,
-            duration: 11,
+            duration: 5.2,
             ease: "none",
             onUpdate: () => {
               const progress = sequence.progress / 100;
@@ -123,10 +123,10 @@ export default function CinematicIntro({
         )
         .to(
           ".intro-progress-fill",
-          { scaleX: 1, duration: 11, ease: "none" },
+          { scaleX: 1, duration: 5.2, ease: "none" },
           0,
         )
-        .to(rootRef.current, { autoAlpha: 0, duration: 0.72 }, 10.28);
+        .to(rootRef.current, { autoAlpha: 0, duration: 0.52 }, 4.68);
     }, rootRef);
     return () => context.revert();
   }, [onEnter, ready]);

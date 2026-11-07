@@ -225,6 +225,10 @@ function BlackHole() {
     const visible = sceneMotion.introActive
       ? 1 - THREE.MathUtils.smoothstep(progress, 0.48, 0.78)
       : 0;
+    if (visible < 0.008) {
+      if (group.current) group.current.visible = false;
+      return;
+    }
     if (group.current) {
       group.current.visible = visible > 0.008;
       group.current.scale.setScalar(
@@ -407,6 +411,26 @@ function Earth({ onReady }) {
           depthWrite={false}
         />
       </mesh>
+      <mesh rotation={[0.94, 0.12, -0.28]} scale={1.02}>
+        <torusGeometry args={[1.2, 0.004, 8, 192]} />
+        <meshBasicMaterial
+          color="#a99aff"
+          transparent
+          opacity={0.46}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
+      </mesh>
+      <mesh rotation={[0.6, -0.62, 0.54]} scale={1.02}>
+        <torusGeometry args={[1.27, 0.0025, 6, 160]} />
+        <meshBasicMaterial
+          color="#78bfff"
+          transparent
+          opacity={0.3}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
+      </mesh>
     </group>
   );
 }
@@ -524,7 +548,7 @@ export default function SceneEnvironment({ onReady, onUnavailable }) {
     <>
       {webglSupported && (
         <Canvas
-          dpr={window.innerWidth < 720 ? 1 : [1, 1.25]}
+          dpr={window.innerWidth < 720 ? 1 : [1, 1.2]}
           camera={{ position: [0, 0.12, 8.5], fov: 40, near: 0.1, far: 70 }}
           gl={{
             alpha: false,

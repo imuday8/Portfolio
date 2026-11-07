@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, RotateCcw, X } from "lucide-react";
 
 const links = [
   ["Work", "#work"],
@@ -9,7 +9,7 @@ const links = [
   ["Contact", "#contact"],
 ];
 
-export default function Navigation() {
+export default function Navigation({ onReplayIntro }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
   const toggleRef = useRef(null);
@@ -66,6 +66,17 @@ export default function Navigation() {
         <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden="true" />
       </a>
       <button
+        className="nav-replay"
+        type="button"
+        onClick={(event) => onReplayIntro?.(event.currentTarget)}
+        disabled={!onReplayIntro}
+        aria-label="Replay cinematic introduction"
+        title="Replay cinematic introduction"
+      >
+        <RotateCcw size={14} aria-hidden="true" />
+        <span>Intro</span>
+      </button>
+      <button
         ref={toggleRef}
         className="menu-toggle"
         type="button"
@@ -94,6 +105,18 @@ export default function Navigation() {
             <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         ))}
+        <button
+          className="mobile-replay"
+          type="button"
+          onClick={(event) => {
+            close();
+            onReplayIntro?.(event.currentTarget);
+          }}
+          disabled={!onReplayIntro}
+        >
+          <RotateCcw size={15} aria-hidden="true" />
+          Replay intro
+        </button>
       </nav>
     </header>
   );

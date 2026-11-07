@@ -58,6 +58,9 @@ try {
     const page = await context.newPage();
     const { errors, unavailableApis } = await monitor(page);
     await page.goto(baseUrl, { waitUntil: "domcontentloaded" });
+    await page.getByRole("button", { name: /skip intro/i }).click({
+      timeout: 10000,
+    });
     await page
       .locator("#profiles")
       .waitFor({ state: "attached", timeout: 10000 });
@@ -258,6 +261,7 @@ try {
   await motionPage.waitForTimeout(180);
   const reduced = await motionPage.evaluate(() => ({
     introVisible: Boolean(document.querySelector(".cinematic-intro")),
+    replayDisabled: document.querySelector(".nav-replay")?.disabled,
     titleVisible:
       getComputedStyle(document.querySelector(".hero-title")).visibility !==
       "hidden",
@@ -271,9 +275,42 @@ try {
     passed:
       !reduced.introVisible &&
       reduced.titleVisible &&
+      reduced.replayDisabled &&
       Number.parseFloat(reduced.capabilityTransition) <= 0.0001,
   });
   await motionContext.close();
+
+  const introContext = await browser.newContext({
+    viewport: { width: 1280, height: 900 },
+  });
+  const introPage = await introContext.newPage();
+  await introPage.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  await introPage
+    .locator(".cinematic-intro")
+    .waitFor({ state: "visible", timeout: 10000 });
+  const introTitle = await introPage.locator(".cinematic-name").getAttribute("aria-label");
+  await introPage
+    .locator(".cinematic-intro")
+    .waitFor({ state: "detached", timeout: 15000 });
+  const autoIntroCompletes = !(await introPage.locator(".cinematic-intro").count());
+  await introPage
+    .getByRole("button", { name: /replay cinematic introduction/i })
+    .click();
+  await introPage
+    .locator(".cinematic-intro")
+    .waitFor({ state: "visible", timeout: 3000 });
+  const replayWorks = await introPage
+    .getByRole("button", { name: /skip intro/i })
+    .isVisible();
+  await introPage.getByRole("button", { name: /skip intro/i }).click();
+  record("cinematic-intro", {
+    introTitle,
+    autoIntroCompletes,
+    replayWorks,
+    passed:
+      introTitle === "Uday Saha" && autoIntroCompletes && replayWorks,
+  });
+  await introContext.close();
 
   const referenceContext = await browser.newContext({
     viewport: { width: 1440, height: 1000 },
@@ -281,6 +318,9 @@ try {
   const referencePage = await referenceContext.newPage();
   const referenceMonitor = await monitor(referencePage);
   await referencePage.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  await referencePage.getByRole("button", { name: /skip intro/i }).click({
+    timeout: 10000,
+  });
   await referencePage.locator(".hero-dashboard").waitFor({ state: "visible" });
   await referencePage
     .locator(".scene-stage canvas")
@@ -301,16 +341,24 @@ try {
     ),
     cardCount: document.querySelectorAll(".capability-card").length,
     earthCanvas: Boolean(document.querySelector("canvas")),
+    glassDashboard:
+      getComputedStyle(document.querySelector(".hero-dashboard")).backdropFilter,
   }));
+  const dashboardTransformBefore = await referencePage
+    .locator(".hero-dashboard")
+    .evaluate((node) => getComputedStyle(node).transform);
   const sceneOpacityBefore = await referencePage
     .locator(".scene-stage")
     .evaluate((node) => getComputedStyle(node).opacity);
   await referencePage.mouse.wheel(0, 850);
-  await referencePage.waitForTimeout(700);
+  await referencePage.waitForTimeout(950);
   const scrollResult = await referencePage.evaluate(() => ({
     y: window.scrollY,
     sceneOpacity: getComputedStyle(document.querySelector(".scene-stage"))
       .opacity,
+    dashboardTransform: getComputedStyle(
+      document.querySelector(".hero-dashboard"),
+    ).transform,
   }));
   const landingPassed =
     landing.title === "I build tools with intent." &&
@@ -321,13 +369,16 @@ try {
     landing.entryButtons.length === 2 &&
     landing.cardCount === 6 &&
     landing.earthCanvas &&
+    landing.glassDashboard !== "none" &&
     scrollResult.y > 100 &&
+    dashboardTransformBefore !== scrollResult.dashboardTransform &&
     Number(scrollResult.sceneOpacity) > 0 &&
     Number(scrollResult.sceneOpacity) <= 1 &&
     referenceMonitor.errors.length === 0;
   record("reference-landing-and-scroll", {
     ...landing,
     sceneOpacityBefore,
+    dashboardTransformBefore,
     scrollResult,
     errors: referenceMonitor.errors,
     passed: landingPassed,
@@ -354,6 +405,9 @@ try {
   });
   const touchPage = await touchContext.newPage();
   await touchPage.goto(baseUrl, { waitUntil: "domcontentloaded" });
+  await touchPage.getByRole("button", { name: /skip intro/i }).click({
+    timeout: 10000,
+  });
   await touchPage.locator(".hero-dashboard").waitFor({ state: "visible" });
   const touchSession = await touchContext.newCDPSession(touchPage);
   await touchSession.send("Input.dispatchTouchEvent", {

@@ -1,6 +1,6 @@
 # Uday Saha — Developer Portfolio
 
-A violet-lit, interactive portfolio shaped by a cinematic product landing page: an immediate introduction, a glass dashboard with verified public stats, featured work, capability cards, and a softly illuminated 3D Earth.
+A violet-lit interactive portfolio with a short, skippable 3D cinematic intro, a translucent glass dashboard, featured work, capability cards, and a detailed Earth with luminous orbital paths.
 
 ## Run locally
 
@@ -13,8 +13,8 @@ Build the GitHub Pages release with `npm run build`. Vite writes to `dist/`, the
 
 ## The visual experience
 
-- The portfolio opens directly on the hero. A glass dashboard summarizes genuine coding and GitHub data and links to three featured projects. The following sections carry the violet light, soft beams, restrained motion, and rounded capability cards through the page.
-- The ambient 3D Earth uses NASA Earth Observatory's 3600 × 1800 Black Marble 2016 global map as an equirectangular texture. Three.js draws it on a rotating sphere with procedural clouds and an atmospheric rim. The map is under 800 KB.
+- A five-second cinematic intro reveals the 3D Earth and Uday’s name. Visitors can skip it at any time or replay it from the navigation. The page uses Lenis and GSAP for responsive scrolling, a scroll-linked dashboard tilt, and progressive section reveals.
+- The 3D Earth uses NASA Earth Observatory's 3600 × 1800 Black Marble 2016 global map as an equirectangular texture. Three.js renders the rotating sphere, procedural clouds, atmospheric rim, and delicate violet-blue orbital paths. The map is under 800 KB.
 - The bundled texture is NASA Earth Observatory imagery by Joshua Stevens, using Suomi NPP VIIRS data from Miguel Román, NASA GSFC. The [NASA source page](https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps/) documents the map, resolutions, and underlying observations.
 - Unsupported WebGL gets a labeled static Earth texture fallback. Reduced-motion settings stop automatic globe and cloud motion.
 
@@ -39,7 +39,7 @@ The separate searchable GitHub archive is an account view, not a fourth featured
 
 ## Quality checks
 
-`npm run build` creates and syncs the static release. `npm run test:responsive` uses installed Google Chrome to check 320, 375, 768, 1024, 1440, and 1920 px, overflow, navigation, the project count/order, archive filters, profile links, reduced motion, scrolling, reduced motion, and the WebGL fallback.
+`npm run build` creates and syncs the static release. `npm run test:responsive` uses installed Google Chrome to check 320, 375, 768, 1024, 1440, and 1920 px, overflow, navigation, the project count/order, archive filters, profile links, reduced motion, the cinematic intro and replay control, scroll-linked motion, reduced motion, and the WebGL fallback.
 
 ## Links
 

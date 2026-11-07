@@ -10,6 +10,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Navigation from "./components/Navigation.jsx";
+import CinematicIntro from "./components/CinematicIntro.jsx";
 import Hero from "./components/Hero.jsx";
 import CompetitiveProfiles from "./components/CompetitiveProfiles.jsx";
 import Projects from "./components/Projects.jsx";
@@ -20,6 +21,7 @@ import Footer from "./components/Footer.jsx";
 import TechnologyStrip from "./components/TechnologyStrip.jsx";
 import GitHubArchive from "./components/GitHubArchive.jsx";
 import AcademicJourney from "./components/AcademicJourney.jsx";
+import { portfolioData } from "./data/portfolioData.js";
 import { sceneMotion } from "./sceneState.js";
 
 const SceneEnvironment = lazy(
@@ -33,8 +35,11 @@ function userPrefersReducedMotion() {
 
 export default function App() {
   const rootRef = useRef(null);
+  const introReturnFocus = useRef(null);
   const [sceneReady, setSceneReady] = useState(false);
+  const [sceneStatus, setSceneStatus] = useState("WAITING FOR 3D SCENE");
   const [reducedMotion, setReducedMotion] = useState(userPrefersReducedMotion);
+  const [introDone, setIntroDone] = useState(() => userPrefersReducedMotion());
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -43,6 +48,7 @@ export default function App() {
       setReducedMotion(query.matches);
       if (query.matches) {
         setSceneReady(true);
+        setIntroDone(true);
       }
     };
     syncMotion();
@@ -51,9 +57,15 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    sceneMotion.introActive = false;
-    sceneMotion.introProgress = 1;
-  }, []);
+    sceneMotion.introActive = !introDone && !reducedMotion;
+    sceneMotion.introProgress = sceneMotion.introActive ? 0 : 1;
+    const updateProgress = (event) => {
+      sceneMotion.introProgress = event.detail;
+    };
+    window.addEventListener("portfolio:entry-progress", updateProgress);
+    return () =>
+      window.removeEventListener("portfolio:entry-progress", updateProgress);
+  }, [introDone, reducedMotion]);
 
   useEffect(() => {
     sceneMotion.visible = document.visibilityState === "visible";
@@ -77,7 +89,7 @@ export default function App() {
   useEffect(() => {
     if (reducedMotion) return undefined;
     const lenis = new Lenis({
-      duration: 0.9,
+      duration: 0.62,
       smoothWheel: true,
       syncTouch: false,
       autoRaf: false,
@@ -85,6 +97,7 @@ export default function App() {
     });
     const onScroll = () => ScrollTrigger.update();
     const tick = (time) => lenis.raf(time * 1000);
+    gsap.ticker.lagSmoothing(0);
     lenis.on("scroll", onScroll);
     gsap.ticker.add(tick);
 
@@ -103,7 +116,27 @@ export default function App() {
             );
           }
         },
+        onRefresh: (self) => {
+          sceneMotion.scroll = self.progress;
+        },
       });
+      gsap.fromTo(
+        ".hero-dashboard",
+        { y: 0, rotateX: 0, scale: 1 },
+        {
+          y: -54,
+          rotateX: 2,
+          scale: 0.965,
+          ease: "none",
+          transformOrigin: "50% 0%",
+          scrollTrigger: {
+            trigger: ".hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.65,
+          },
+        },
+      );
       gsap.utils.toArray("[data-reveal]").forEach((target) => {
         const motion = target.dataset.motion || "up";
         const initial = {
@@ -124,8 +157,8 @@ export default function App() {
             rotate: 0,
             rotateY: 0,
             scale: 1,
-            duration: 0.68,
-            ease: "power2.out",
+            duration: 0.82,
+            ease: "power3.out",
             scrollTrigger: { trigger: target, start: "top 88%", once: true },
           },
         );
@@ -146,24 +179,61 @@ export default function App() {
   useEffect(() => {
     if (reducedMotion || sceneReady) return undefined;
     const fallback = window.setTimeout(() => {
+      setSceneStatus("3D PREVIEW UNAVAILABLE · CONTINUING");
       setSceneReady(true);
-    }, 12000);
+    }, 7000);
     return () => window.clearTimeout(fallback);
   }, [reducedMotion, sceneReady]);
 
   const markSceneReady = useCallback(() => {
+    setSceneStatus("3D ENVIRONMENT READY");
     setSceneReady(true);
   }, []);
 
   const markSceneFallback = useCallback(() => {
+    setSceneStatus("3D PREVIEW UNAVAILABLE · CONTINUING");
     setSceneReady(true);
   }, []);
 
+  const enterExperience = useCallback((options = {}) => {
+    sceneMotion.introActive = false;
+    sceneMotion.introProgress = 1;
+    setIntroDone(true);
+    requestAnimationFrame(() => {
+      const target = introReturnFocus.current || document.querySelector("#hero-title");
+      target?.focus?.({ preventScroll: true });
+      introReturnFocus.current = null;
+      if (options.toProjects) {
+        document.querySelector("#work")?.scrollIntoView({
+          behavior: reducedMotion ? "auto" : "smooth",
+          block: "start",
+        });
+      }
+    });
+  }, [reducedMotion]);
+
+  const replayIntro = useCallback((trigger) => {
+    if (reducedMotion) return;
+    introReturnFocus.current = trigger || null;
+    sceneMotion.introActive = true;
+    sceneMotion.introProgress = 0;
+    setIntroDone(false);
+  }, [reducedMotion]);
+
   return (
     <div className="app-root" ref={rootRef}>
+      {!introDone && !reducedMotion && (
+        <CinematicIntro
+          identity={portfolioData.identity}
+          sceneStatus={sceneStatus}
+          ready={sceneReady}
+          onEnter={enterExperience}
+        />
+      )}
       <div
         className={"scene-stage" + (sceneReady ? " scene-ready" : "")}
         aria-hidden="true"
+        inert={!introDone && !reducedMotion}
       >
         <Suspense
           fallback={<div className="orb-fallback scene-loading-fallback" />}
@@ -176,8 +246,11 @@ export default function App() {
         <div className="scene-grain" />
         <div className="scene-vignette" />
       </div>
-      <div className="site-shell intro-complete">
-        <Navigation />
+      <div
+        className={"site-shell" + (introDone || reducedMotion ? " intro-complete" : "")}
+        inert={!introDone && !reducedMotion}
+      >
+        <Navigation onReplayIntro={reducedMotion ? undefined : replayIntro} />
         <main className="site-main" id="main">
           <Hero />
           <TechnologyStrip />

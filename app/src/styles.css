@@ -3376,6 +3376,218 @@ body {
     transition: none;
   }
 }
+
+/* Violet glass and kinetic depth pass */
+:root {
+  --glass-edge: #e5deff35;
+  --glass-fill: #171326a8;
+}
+.site-header {
+  background: linear-gradient(180deg, #080610b8, #08061070 74%, transparent);
+  border-bottom-color: #e5deff28;
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+}
+.scene-stage {
+  opacity: 0.5;
+}
+.scene-vignette {
+  background: radial-gradient(
+    ellipse at 48% 34%,
+    transparent 0,
+    #05040b2d 49%,
+    #05040bc2 100%
+  );
+}
+.hero-dashboard,
+.technology-strip,
+.project-art,
+.profile-card,
+.archive-console,
+.academic-stage,
+.capability-card,
+.contact {
+  border: 1px solid var(--glass-edge);
+  background-color: var(--glass-fill);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  box-shadow:
+    0 24px 78px #0007,
+    0 0 48px #8e77ff0b,
+    inset 0 1px #fff2,
+    inset 0 -1px #a592ff0b;
+}
+.hero-dashboard {
+  background:
+    linear-gradient(135deg, #171329c9, #0a0913b2 60%, #171329a6),
+    radial-gradient(ellipse at 88% 0, #a38cff22, transparent 44%);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.dashboard-topbar {
+  background: #ffffff06;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.dashboard-welcome {
+  background:
+    radial-gradient(ellipse at 88% 12%, #fff3, transparent 34%),
+    radial-gradient(ellipse at 14% 100%, #654de177, transparent 58%),
+    linear-gradient(135deg, #7b65e6d9, #393078bd 68%, #241d50c9);
+  backdrop-filter: blur(20px) saturate(155%);
+  -webkit-backdrop-filter: blur(20px) saturate(155%);
+  box-shadow:
+    0 20px 54px #17102e6b,
+    inset 0 1px #fff4,
+    inset 0 -1px #d4caff14;
+}
+.dashboard-project {
+  border-color: #ece7ff35;
+  background: linear-gradient(120deg, #ffffff13, #ffffff05 58%, #9885ff0a);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: inset 0 1px #fff2, 0 10px 28px #0002;
+}
+.dashboard-metric {
+  padding: 15px 17px;
+  border: 1px solid #e7dfff25;
+  border-radius: 13px;
+  background: linear-gradient(140deg, #ffffff0e, #ffffff03 66%, #9986ff08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px #fff2;
+}
+.technology-strip {
+  width: min(1100px, calc(100% - 10vw));
+  padding: 25px clamp(18px, 3vw, 38px) 28px;
+  border: 1px solid #e5deff29;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ffffff0d, #ffffff03 56%, #8e78ff0c);
+}
+.project-art {
+  background-color: #12101be0;
+  box-shadow:
+    0 28px 88px #0008,
+    inset 0 1px #ffffff35,
+    inset 0 -1px #b4a4ff21;
+}
+.profile-card,
+.archive-console,
+.capability-card {
+  background:
+    linear-gradient(140deg, #ffffff0f, #ffffff04 44%, #9886ff08),
+    linear-gradient(145deg, #141121be, #090811b2 82%);
+}
+.academic-stage {
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at 92% 6%, #a38cff13, transparent 42%),
+    linear-gradient(145deg, #ffffff0b, #ffffff02 52%, #8f7dff08);
+}
+.capability-card {
+  border-color: #e5deff32;
+  box-shadow:
+    0 22px 58px #0005,
+    inset 0 1px #fff3,
+    inset 0 -1px #b1a1ff13;
+}
+.capability-card:hover,
+.profile-card:hover,
+.dashboard-project:hover {
+  border-color: #c6b7ff9c;
+  box-shadow:
+    0 26px 70px #0007,
+    0 0 34px #9d86ff22,
+    inset 0 1px #fff5;
+}
+.contact {
+  background:
+    radial-gradient(ellipse at 52% 105%, #8a72ff63, transparent 48%),
+    linear-gradient(140deg, #ffffff0e, #ffffff03 44%, #9b83ff12),
+    linear-gradient(135deg, #171326c9, #090811bb 74%);
+}
+.cinematic-intro {
+  color: #f8f6ff;
+  background:
+    radial-gradient(ellipse at 50% 48%, #39277d24, transparent 46%),
+    linear-gradient(180deg, #07050f60, #08061135 58%, #07050f78);
+  backdrop-filter: blur(1px) saturate(140%);
+  -webkit-backdrop-filter: blur(1px) saturate(140%);
+}
+.intro-starveil {
+  background:
+    radial-gradient(circle at 19% 27%, #d7e9ff 0 1px, transparent 1.4px),
+    radial-gradient(circle at 79% 21%, #c5dfff 0 1px, transparent 1.5px),
+    radial-gradient(circle at 68% 78%, #b9d8ff 0 1px, transparent 1.4px),
+    radial-gradient(circle at 34% 80%, #fff 0 1px, transparent 1.5px),
+    radial-gradient(ellipse at 50% 48%, #27174d48, transparent 66%);
+  background-size: 311px 239px, 257px 331px, 349px 279px, 197px 307px, auto;
+}
+.intro-laser {
+  background: linear-gradient(90deg, transparent, #9a86ff, #d7ceff, #8abfff, transparent);
+  box-shadow: 0 0 28px #8a70ff77;
+}
+.cinematic-name {
+  background: linear-gradient(180deg, #fff 0%, #e0dcff 44%, #8e79d8 100%);
+  background-clip: text;
+  filter: drop-shadow(0 10px 40px #9b7aff55);
+}
+.cinematic-intro .intro-topline span:first-child,
+.intro-progress-fill {
+  color: #c9bbff;
+}
+.intro-status .status-light {
+  background: #ab94ff;
+  box-shadow: 0 0 12px #9777ff;
+}
+.intro-progress-fill {
+  background: linear-gradient(90deg, #795cf4, #b5a5ff, #9ad4ff);
+  box-shadow: 0 0 16px #9273ff9c;
+}
+.intro-particle:nth-child(3n) {
+  background: #c6baff;
+  box-shadow: 0 0 16px #9d82ff;
+}
+.intro-skip {
+  border-color: #ded4ff68;
+  border-radius: 999px;
+  background: #171326aa;
+  box-shadow: inset 0 1px #fff2, 0 8px 28px #0004;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.nav-replay {
+  border-radius: 999px;
+  background: #ffffff09;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.scroll-cue {
+  color: #c8c0e8;
+  animation: scroll-float 2.2s ease-in-out infinite;
+}
+@keyframes scroll-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(7px); }
+}
+@media (max-width: 900px) {
+  .mobile-nav {
+    border-color: #e5deff42;
+    background: #0c0a16d9;
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue,
+  .intro-starveil,
+  .intro-arrival svg {
+    animation: none !important;
+  }
+  .hero-dashboard {
+    will-change: auto;
+  }
+}
 .site-header > .nav-contact {
   display: flex;
   align-items: center;
