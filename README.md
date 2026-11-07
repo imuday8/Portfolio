@@ -1,6 +1,6 @@
-# Uday Saha — Beyond the ordinary
+# Uday Saha — Beyond the Horizon
 
-An interactive editorial portfolio with a GSAP 3D entry sequence, a procedural Three.js sculpture, a live public repository archive, and verified coding profile data.
+A cinematic, editorial portfolio that moves from a black-hole-inspired introduction to a true 3D Earth-at-night scene, then into three credited projects, real coding profiles, education, and contact.
 
 ## Run locally
 
@@ -9,39 +9,40 @@ npm install
 npm run dev
 ```
 
-Build the static GitHub Pages release with `npm run build`. Vite writes to `dist/`; `scripts/sync-build.mjs` mirrors the hashed entry and assets into the publishing root.
+Build the GitHub Pages release with `npm run build`. Vite writes to `dist/`, then `scripts/sync-build.mjs` mirrors the entry and hashed assets into the publishing root.
 
-## Entry experience
+## The visual experience
 
-- The first visit in a session presents a name flip, converging particles, a 0–100 visual entry sequence, and a Three.js camera move. Its counter is labeled as an entry sequence; actual WebGL readiness is reported separately.
-- The entry can be skipped, entered after the sequence, replayed from navigation, or bypassed on return visits. A WebGL failure switches to the 2D scene fallback and reports that state. Reduced-motion preferences skip the cinematic entry.
-- No video, audio, login form, or loading percentage is implied.
+- The approximately 11-second opening is a timed cinematic sequence, not an asset-loading estimate. It moves from stars and an accretion-disk study to a letter-by-letter name reveal and the Earth horizon. It skips with wheel, upward touch swipe, Arrow Down, Page Down, Escape, or the visible Skip Intro control. After the intro, scrolling is normal and reveals the portfolio.
+- The interactive 3D Earth uses NASA Earth Observatory's 3600 × 1800 Black Marble 2016 global map as an equirectangular texture. Three.js draws it on a rotating sphere with procedural clouds and an atmospheric rim. Scroll changes the globe rotation and camera path; stars move with restrained parallax. The map is under 800 KB.
+- The bundled texture is NASA Earth Observatory imagery by Joshua Stevens, using Suomi NPP VIIRS data from Miguel Román, NASA GSFC. The [NASA source page](https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps/) documents the map, resolutions, and underlying observations.
+- Unsupported WebGL gets a labeled static Earth texture fallback. Reduced-motion settings skip the cinematic intro and stop automatic globe and cloud motion.
 
-## Public GitHub archive
+## Featured projects
 
-The project fetches `https://api.github.com/users/imuday8/repos?per_page=100&type=owner&sort=updated`, filters out private entries, and presents the full current public list with search, language filters, stars, language, fork/archive labels, update dates, and verified deployment links. It caches successful listings in local storage for up to six hours. If GitHub is unavailable, the page uses the verified 7 November 2026 public-repository snapshot, or a saved listing when one exists. The profile card’s follower count is a dated snapshot; repository counts refresh from the public repository endpoint. It does not substitute invented repositories or profile statistics.
+Exactly three projects are featured, in the requested order:
 
-The public API returned these seven repositories on 7 November 2026: `Portfolio`, `pyreach`, `Hexamind`, `login_form_by_uday`, `login_form`, `Saha_LTD`, and `sahalimited`. The prompt-mentioned `College_git_project` was not in the public response, so it is not shown. Any private repositories are outside the public API request.
+1. **PyReach** — Team CodeSins' Python static call-path analysis tool. The sample interface is illustrative; the source parser does not execute scanned projects. Uday's contribution and both the team repository and his public fork are linked.
+2. **Portfolio** — this React, Three.js, GSAP, and Lenis experience. The project artwork is labeled as an editorial study rather than a screenshot.
+3. **Hexamind** — the team's multi-page emergency-care discovery prototype. Its live prototype and public source are linked. Hospital availability counts are simulated, and demo performance/usage claims are not independently verified; it is not a live care service.
 
-The Hexamind project notes come from its public `README.txt`. They describe the MedMatch AI multi-page emergency-care prototype and hospital finder. Its hospital bed/ICU counts are simulated; figures on the public demo page are not independently verified, and it is not a live care service. The portfolio’s UI illustration is labeled as a study, not a screenshot.
+The separate searchable GitHub archive is an account view, not a fourth featured project. It displays the verified seven-repository public snapshot when GitHub's unauthenticated API is rate-limited.
 
-## Competitive profiles
+## Verified details
 
-- LeetCode `Imuday08__`: 139 solved (45 Easy, 65 Medium, 29 Hard), 43-day current streak, 103 active days in 2026, global rank 1,284,422. Snapshot checked 7 November 2026 through LeetCode’s public GraphQL profile. The page marks it as a dated snapshot.
-- Codeforces `Imuday08_`: rating 1,016, maximum 1,025, Newbie rank, 8 rated contests. Current rating and contest progression refresh from Codeforces’ public API; rank colors follow the API rank.
-- GitHub `imuday8`: 7 public repositories and 1 follower in the 7 November 2026 snapshot. Profile counts refresh from GitHub’s public API.
-- The Codeforces/GitHub APIs are cached for six hours. The repository archive has its own six-hour cache and searchable full listing, with a dated public snapshot fallback.
-- No CodeChef, GeeksforGeeks, AtCoder, or HackerRank card is shown because no handle was provided. The previously supplied “110+ days” streak differs from LeetCode’s verified 43-day current streak; the portfolio uses 43.
+- LeetCode `Imuday08__`: 139 solved (45 Easy, 65 Medium, 29 Hard), 43-day current streak, 103 active days in 2026, global rank 1,284,422. Snapshot checked 7 November 2026. The public profile's current streak differed from the earlier user note of 110+ days, so the page uses the verified snapshot.
+- Codeforces `Imuday08_`: rating 1,016, max rating 1,025, Newbie rank, eight rated contests. The page uses the public API when available and a dated verified history otherwise.
+- GitHub `imuday8`: seven public repositories and one follower in the 7 November 2026 snapshot. The repository list can refresh from GitHub; follower count remains explicitly dated.
+- JEE Main percentile: 98.93. The project data has no verified JEE rank or exam year; those are omitted rather than inferred.
+- Education: B.Tech, Computer Science & Artificial Intelligence, Newton School of Technology, Rishihood University, 2026–2030.
+- CodeChef and GeeksforGeeks are omitted because no handles were supplied.
 
-## Academic details
+## Quality checks
 
-The existing profile configuration contains a JEE Main percentile of 98.93. It has no verified JEE rank or examination year, and the academic chapter marks those fields “Not provided” rather than inferring a year from the university program dates. Education is listed as B.Tech / Computer Science & Artificial Intelligence at Newton School of Technology, Rishihood University (2026–2030).
+`npm run build` creates and syncs the static release. `npm run test:responsive` uses installed Google Chrome to check 320, 375, 768, 1024, 1440, and 1920 px, overflow, navigation, the project count/order, archive filters, profile links, reduced motion, cinematic completion, scroll fast-forward, and replay.
 
-## Test and verify
+## Links
 
-```sh
-npm run build
-npm run test:responsive
-```
-
-The responsive browser check uses Google Chrome and covers 320, 375, 768, 1024, 1440, and 1920px widths, repository filters, navigation, the entry sequence and replay, reduced motion, archive completeness, and no horizontal overflow.
+- Live: <https://imuday8.github.io/Portfolio/>
+- Source: <https://github.com/imuday8/Portfolio>
+- NASA Black Marble source: <https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps/>

@@ -10,12 +10,10 @@ export default function AcademicJourney() {
       aria-labelledby="academic-title"
     >
       <div className="section-eyebrow" data-reveal>
-        <span className="mono-label">
-          CHAPTER 05 / THE JOURNEY BEHIND THE CODE
-        </span>
-        <span className="section-count mono-label">05 — 10</span>
+        <span className="mono-label">03 / ACHIEVEMENTS & EDUCATION</span>
+        <span className="section-count mono-label">03 — 06</span>
       </div>
-      <div className="academic-stage" data-reveal>
+      <div className="academic-stage" data-reveal data-motion="orbit">
         <div className="academic-orbit" aria-hidden="true">
           <i />
           <i />
@@ -23,38 +21,22 @@ export default function AcademicJourney() {
           <span>01</span>
         </div>
         <div className="academic-copy">
-          <p className="mono-label academic-kicker">
-            ACADEMIC CHECKPOINT / JEE MAIN
-          </p>
+          <p className="mono-label academic-kicker">JEE MAIN / PERCENTILE</p>
           <h2 className="academic-number" id="academic-title">
             {identity.jeeMainPercentile}
             <span>%ile</span>
           </h2>
           <p className="academic-caption">
-            A verified percentile, and one milestone on a much longer path.
+            One measured milestone. The next one is still being written.
           </p>
-          <div className="academic-facts">
-            <div>
-              <span className="mono-label">EXAM YEAR</span>
-              <strong>{identity.jeeMainYear || "Not provided"}</strong>
-            </div>
-            <div>
-              <span className="mono-label">JEE MAIN RANK</span>
-              <strong>
-                {identity.jeeMainRank
-                  ? `#${identity.jeeMainRank.toLocaleString("en-IN")}`
-                  : "Not provided"}
-              </strong>
-            </div>
-          </div>
         </div>
         <div className="academic-education">
-          <span className="mono-label">NOW / {identity.years}</span>
-          <h3>{identity.program}</h3>
-          <p>{identity.school}</p>
+          <span className="mono-label">CURRENT CHAPTER / {identity.years}</span>
+          <h3>{identity.school}</h3>
+          <p>{identity.program}</p>
           <p className="academic-note">
-            Rank and examination year are left blank because they are not
-            present in the verified profile details.
+            Computer Science & Artificial Intelligence, at the beginning of a
+            longer path through engineering and creative work.
           </p>
           <a href="#about">
             The person behind the process{" "}

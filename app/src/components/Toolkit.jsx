@@ -32,8 +32,8 @@ export default function Toolkit() {
       aria-labelledby="toolkit-title"
     >
       <div className="section-eyebrow" data-reveal>
-        <span className="mono-label">CHAPTER 08 / THE TOOLKIT</span>
-        <span className="section-count mono-label">08 — 10</span>
+        <span className="mono-label">07 / A FEW TOOLS IN THE KIT</span>
+        <span className="section-count mono-label">07 — 08</span>
       </div>
       <div className="section-title-row" data-reveal>
         <h2 className="section-title" id="toolkit-title">

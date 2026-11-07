@@ -217,8 +217,8 @@ export const portfolioData = {
       contribution:
         "Frontend & platform — dashboard, CLI reporter, synthetic fixtures, sample projects and GitHub Actions CI.",
     },
-    medmatch: {
-      name: "MedMatch AI",
+    hexamind: {
+      name: "Hexamind",
       team: "Team Hexamind",
       url: "https://hexamind-ai-neon.vercel.app/",
       repositoryName: "Hexamind",
@@ -234,12 +234,12 @@ export const portfolioData = {
         "Lead Full Stack Engineer — product flows and the web prototype.",
     },
     portfolio: {
-      name: "Beyond the ordinary",
+      name: "Portfolio",
       repositoryName: "Portfolio",
       repositoryUrl: "https://github.com/imuday8/Portfolio",
       url: "https://imuday8.github.io/Portfolio/",
       contribution:
-        "Design & engineering — React, WebGL, GSAP, and live public-profile integrations.",
+        "Design & engineering — React, Three.js, GSAP, and public-profile integrations.",
     },
   },
   skills: {

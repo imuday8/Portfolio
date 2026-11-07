@@ -4,7 +4,7 @@ import { portfolioData } from "../data/portfolioData.js";
 export default function Footer() {
   return (
     <footer className="site-footer section-frame">
-      <a className="brand-mark" href="#top" aria-label="Back to top">
+      <a className="brand-mark" href="#home" aria-label="Back to top">
         {portfolioData.identity.monogram}
         <i>.</i>
       </a>
@@ -18,6 +18,14 @@ export default function Footer() {
         rel="noopener noreferrer"
       >
         SOURCE / GITHUB <ArrowUpRight size={12} aria-hidden="true" />
+      </a>
+      <a
+        className="footer-link mono-label"
+        href="https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        EARTH TEXTURE / NASA <ArrowUpRight size={12} aria-hidden="true" />
       </a>
     </footer>
   );

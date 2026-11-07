@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ArrowDown } from "lucide-react";
 
-const particlePositions = [
+const particles = [
   [-42, -28],
   [-31, 17],
   [-25, -40],
@@ -31,112 +32,132 @@ export default function CinematicIntro({
   const rootRef = useRef(null);
   const skipRef = useRef(null);
   const countRef = useRef(null);
-  const [complete, setComplete] = useState(false);
   const name = identity.name.split("");
 
   useEffect(() => {
     if (!ready) return undefined;
+    const sequence = { progress: 1 };
+    countRef.current.textContent = "1%";
     const context = gsap.context(() => {
-      const sequence = { progress: 0 };
       const timeline = gsap.timeline({
         defaults: { ease: "power2.out" },
-        onComplete: () => {
-          try {
-            sessionStorage.setItem("uday-intro-seen", "1");
-          } catch {}
-          setComplete(true);
-        },
+        onComplete: () => onEnter(),
       });
       timeline
-        .to(
-          ".intro-laser",
-          {
-            scaleX: 1,
-            duration: 0.7,
-            ease: "power3.inOut",
-          },
+        .fromTo(
+          ".intro-starveil",
+          { opacity: 0 },
+          { opacity: 1, duration: 1.8, ease: "power1.out" },
           0,
         )
         .fromTo(
           ".intro-initialize",
           { autoAlpha: 0, y: 8 },
-          { autoAlpha: 1, y: 0, duration: 0.42 },
-          0.15,
+          { autoAlpha: 1, y: 0, duration: 0.55 },
+          0.75,
+        )
+        .fromTo(
+          ".intro-laser",
+          { scaleX: 0 },
+          { scaleX: 1, duration: 1.2, ease: "power3.inOut" },
+          1.2,
         )
         .fromTo(
           ".cinematic-letter",
-          { autoAlpha: 0, rotateY: 96, rotateX: 14, z: -72, y: 12 },
+          { autoAlpha: 0, rotateY: 100, rotateX: 12, z: -90, y: 12 },
           {
             autoAlpha: 1,
             rotateY: 0,
             rotateX: 0,
             z: 0,
             y: 0,
-            duration: 0.56,
-            stagger: 0.075,
-            ease: "back.out(1.35)",
+            duration: 0.68,
+            stagger: 0.12,
+            ease: "power3.out",
           },
-          0.72,
+          4.85,
         )
         .to(
           ".intro-particle",
           {
             left: "50%",
             top: "50%",
-            opacity: 0.85,
+            opacity: 0.74,
             scale: 1,
-            duration: 1.25,
+            duration: 1.5,
             stagger: { each: 0.025, from: "random" },
             ease: "power3.inOut",
           },
-          1.05,
-        )
-        .to(
-          ".intro-sweep",
-          { left: "112%", opacity: 0.75, duration: 0.9, ease: "power2.inOut" },
-          3.25,
+          5.15,
         )
         .fromTo(
-          ".intro-role, .intro-enter",
-          { autoAlpha: 0, y: 13 },
-          { autoAlpha: 1, y: 0, duration: 0.52, stagger: 0.12 },
-          3.65,
+          ".intro-role",
+          { autoAlpha: 0, y: 12 },
+          { autoAlpha: 1, y: 0, duration: 0.7 },
+          7.6,
+        )
+        .fromTo(
+          ".intro-arrival",
+          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 1, y: 0, duration: 0.6 },
+          9.25,
         )
         .to(
           sequence,
           {
             progress: 100,
-            duration: 5.3,
+            duration: 11,
             ease: "none",
             onUpdate: () => {
+              const progress = sequence.progress / 100;
               if (countRef.current)
                 countRef.current.textContent = `${Math.floor(sequence.progress)}%`;
               window.dispatchEvent(
                 new CustomEvent("portfolio:entry-progress", {
-                  detail: sequence.progress / 100,
+                  detail: progress,
                 }),
               );
             },
           },
-          0.4,
+          0,
         )
         .to(
           ".intro-progress-fill",
-          { scaleX: 1, duration: 5.3, ease: "none" },
-          0.4,
-        );
+          { scaleX: 1, duration: 11, ease: "none" },
+          0,
+        )
+        .to(rootRef.current, { autoAlpha: 0, duration: 0.72 }, 10.28);
     }, rootRef);
-    return () => {
-      context.revert();
-    };
-  }, [ready]);
+    return () => context.revert();
+  }, [onEnter, ready]);
 
   useEffect(() => {
     skipRef.current?.focus({ preventScroll: true });
+    let touchStartY = null;
+    const fastForward = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      onEnter({ toProjects: true });
+    };
+    const handleWheel = (event) => {
+      if (event.deltaY > 12) fastForward(event);
+    };
+    const handleTouchStart = (event) => {
+      touchStartY = event.touches[0]?.clientY ?? null;
+    };
+    const handleTouchMove = (event) => {
+      const currentY = event.touches[0]?.clientY;
+      if (touchStartY !== null && currentY < touchStartY - 28)
+        fastForward(event);
+    };
     const trapFocus = (event) => {
       if (event.key === "Escape") {
         event.preventDefault();
         onEnter();
+        return;
+      }
+      if (event.key === "ArrowDown" || event.key === "PageDown") {
+        fastForward(event);
         return;
       }
       if (event.key !== "Tab" || !rootRef.current) return;
@@ -154,8 +175,17 @@ export default function CinematicIntro({
         first.focus();
       }
     };
+    const root = rootRef.current;
+    root?.addEventListener("wheel", handleWheel, { passive: false });
+    root?.addEventListener("touchstart", handleTouchStart, { passive: true });
+    root?.addEventListener("touchmove", handleTouchMove, { passive: false });
     window.addEventListener("keydown", trapFocus);
-    return () => window.removeEventListener("keydown", trapFocus);
+    return () => {
+      root?.removeEventListener("wheel", handleWheel);
+      root?.removeEventListener("touchstart", handleTouchStart);
+      root?.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("keydown", trapFocus);
+    };
   }, [onEnter]);
 
   return (
@@ -166,17 +196,16 @@ export default function CinematicIntro({
       aria-modal="true"
       aria-labelledby="intro-name"
     >
+      <div className="intro-starveil" aria-hidden="true" />
       <div className="intro-grain" aria-hidden="true" />
       <div className="intro-topline">
-        <span className="mono-label">
-          {identity.name.toUpperCase()} / DIGITAL STUDIO
-        </span>
-        <span className="mono-label">ENTRY 001</span>
+        <span className="mono-label">{identity.name.toUpperCase()}</span>
+        <span className="mono-label">BEYOND THE HORIZON / 001</span>
       </div>
       <div className="intro-center">
         <div className="intro-laser" aria-hidden="true" />
         <p className="intro-initialize mono-label">
-          INITIALIZING CREATIVE UNIVERSE
+          INITIALIZING THE EXPERIENCE
         </p>
         <h1
           className="cinematic-name"
@@ -195,7 +224,7 @@ export default function CinematicIntro({
           <i className="intro-sweep" aria-hidden="true" />
         </h1>
         <div className="intro-particles" aria-hidden="true">
-          {particlePositions.map(([x, y], index) => (
+          {particles.map(([x, y], index) => (
             <i
               className="intro-particle"
               key={index}
@@ -203,27 +232,24 @@ export default function CinematicIntro({
             />
           ))}
         </div>
-        <p className="intro-role mono-label">{identity.role.toUpperCase()}</p>
-        <div className="intro-enter-wrap">
-          <button
-            className="intro-enter"
-            type="button"
-            disabled={!complete}
-            onClick={onEnter}
-          >
-            {complete ? "Explore my universe" : "Preparing the experience"}
-            <span aria-hidden="true">↗</span>
-          </button>
+        <p className="intro-role mono-label">
+          A STUDENT BUILDER / DELHI NCR, INDIA
+        </p>
+        <div className="intro-arrival mono-label">
+          <span>THE HORIZON IS IN VIEW</span>
+          <ArrowDown size={14} aria-hidden="true" />
         </div>
       </div>
       <div className="intro-bottomline">
         <div className="intro-status">
           <span className="status-light" aria-hidden="true" />
-          <span className="mono-label">SCENE STATUS · {sceneStatus}</span>
+          <span className="mono-label" role="status">
+            SCENE STATUS · {sceneStatus}
+          </span>
         </div>
-        <div className="intro-counter">
-          <span className="mono-label">ENTRY SEQUENCE</span>
-          <strong ref={countRef}>0%</strong>
+        <div className="intro-counter" aria-label="Cinematic sequence timeline">
+          <span className="mono-label">CINEMATIC SEQUENCE</span>
+          <strong ref={countRef}>1%</strong>
         </div>
       </div>
       <div className="intro-progress-track" aria-hidden="true">
@@ -233,7 +259,7 @@ export default function CinematicIntro({
         ref={skipRef}
         className="intro-skip"
         type="button"
-        onClick={onEnter}
+        onClick={() => onEnter()}
       >
         Skip intro <span aria-hidden="true">↗</span>
       </button>

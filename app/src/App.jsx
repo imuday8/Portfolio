@@ -15,7 +15,6 @@ import CompetitiveProfiles from "./components/CompetitiveProfiles.jsx";
 import Projects from "./components/Projects.jsx";
 import About from "./components/About.jsx";
 import Toolkit from "./components/Toolkit.jsx";
-import ExperimentalLab from "./components/ExperimentalLab.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import CinematicIntro from "./components/CinematicIntro.jsx";
@@ -132,12 +131,25 @@ export default function App() {
         },
       });
       gsap.utils.toArray("[data-reveal]").forEach((target) => {
+        const motion = target.dataset.motion || "up";
+        const initial = {
+          left: { x: -38, y: 4, rotateY: 2 },
+          right: { x: 38, y: 4, rotateY: -2 },
+          depth: { z: -58, scale: 0.96, y: 14 },
+          orbit: { x: -18, y: 20, rotate: -1.5 },
+          up: { y: 22 },
+        }[motion];
         gsap.fromTo(
           target,
-          { autoAlpha: 0, y: 22 },
+          { autoAlpha: 0, ...initial },
           {
             autoAlpha: 1,
+            x: 0,
             y: 0,
+            z: 0,
+            rotate: 0,
+            rotateY: 0,
+            scale: 1,
             duration: 0.68,
             ease: "power2.out",
             scrollTrigger: { trigger: target, start: "top 88%", once: true },
@@ -158,15 +170,15 @@ export default function App() {
   }, [reducedMotion]);
 
   useEffect(() => {
-    if (reducedMotion) return undefined;
+    if (reducedMotion || sceneReady) return undefined;
     const fallback = window.setTimeout(() => {
       setSceneStatus("3D PREVIEW UNAVAILABLE · CONTINUING IN 2D");
       setSceneReady(true);
-    }, 6000);
+    }, 12000);
     return () => window.clearTimeout(fallback);
-  }, [reducedMotion]);
+  }, [reducedMotion, sceneReady]);
 
-  const enterExperience = useCallback(() => {
+  const enterExperience = useCallback((options = {}) => {
     firstVisit.current = false;
     sceneMotion.introActive = false;
     sceneMotion.introProgress = 1;
@@ -180,6 +192,11 @@ export default function App() {
         introReturnFocus.current || document.querySelector("#hero-title");
       target?.focus?.({ preventScroll: true });
       introReturnFocus.current = null;
+      if (options.toProjects)
+        document.querySelector("#work")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
     });
   }, []);
 
@@ -252,7 +269,7 @@ export default function App() {
         >
           <SceneEnvironment
             onReady={markSceneReady}
-            onFallback={markSceneFallback}
+            onUnavailable={markSceneFallback}
           />
         </Suspense>
         <div className="scene-grain" />
@@ -266,12 +283,11 @@ export default function App() {
         <main className="site-main" id="main">
           <Hero />
           <Projects />
-          <GitHubArchive />
           <AcademicJourney />
           <CompetitiveProfiles />
-          <Toolkit />
+          <GitHubArchive />
           <About />
-          <ExperimentalLab />
+          <Toolkit />
           <Contact />
         </main>
         <Footer />

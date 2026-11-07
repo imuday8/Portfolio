@@ -6,7 +6,7 @@ const CACHE_KEY = "uday-public-repositories-v1";
 const CACHE_MAX_AGE = 6 * 60 * 60 * 1000;
 const verifiedDemos = {
   Portfolio: "https://imuday8.github.io/Portfolio/",
-  Hexamind: portfolioData.projects.medmatch.url,
+  Hexamind: portfolioData.projects.hexamind.url,
 };
 
 function readCache() {
@@ -150,8 +150,8 @@ export default function GitHubArchive() {
       aria-labelledby="github-title"
     >
       <div className="section-eyebrow" data-reveal>
-        <span className="mono-label">CHAPTER 04 / THE OPEN REPOSITORY</span>
-        <span className="section-count mono-label">04 — 10</span>
+        <span className="mono-label">05 / THE OPEN REPOSITORY</span>
+        <span className="section-count mono-label">05 — 08</span>
       </div>
       <div className="section-title-row archive-heading" data-reveal>
         <div>

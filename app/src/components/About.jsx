@@ -9,10 +9,8 @@ export default function About() {
       aria-labelledby="about-title"
     >
       <div className="section-eyebrow" data-reveal>
-        <span className="mono-label">
-          CHAPTER 09 / THE PERSON BEHIND THE PROCESS
-        </span>
-        <span className="section-count mono-label">09 — 10</span>
+        <span className="mono-label">06 / THE PERSON BEHIND THE PROCESS</span>
+        <span className="section-count mono-label">06 — 08</span>
       </div>
       <div className="about-layout">
         <div className="about-heading" data-reveal>

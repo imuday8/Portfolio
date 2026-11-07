@@ -534,8 +534,8 @@ export default function CompetitiveProfiles() {
       aria-labelledby="profiles-title"
     >
       <div className="section-eyebrow" data-reveal>
-        <span className="mono-label">CHAPTER 06 / DEVELOPER AT A GLANCE</span>
-        <span className="section-count mono-label">06 — 10</span>
+        <span className="mono-label">04 / CODING PRACTICE</span>
+        <span className="section-count mono-label">04 — 08</span>
       </div>
       <div className="section-title-row profile-heading" data-reveal>
         <div>

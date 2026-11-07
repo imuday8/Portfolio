@@ -4,7 +4,12 @@ import hexamindLogo from "../../public/hexamind-logo.png";
 
 function ProjectLink({ href, children }) {
   return (
-    <a className="project-link" href={href} target="_blank" rel="noreferrer">
+    <a
+      className="project-link"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {children}
       <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden="true" />
     </a>
@@ -61,19 +66,52 @@ function PyReachArt() {
   );
 }
 
-function MedMatchArt() {
+function PortfolioArt() {
+  return (
+    <div className="project-art portfolio-art" aria-hidden="true">
+      <div className="art-browser-bar portfolio-bar">
+        <span />
+        <span />
+        <span />
+        <i>UDAY SAHA / BEYOND THE HORIZON</i>
+        <small>LIVE EXPERIENCE</small>
+      </div>
+      <div className="portfolio-browser-scene">
+        <span className="mono-label">A DIGITAL STUDIO / 001</span>
+        <strong>
+          Beyond
+          <br />
+          <em>the horizon.</em>
+        </strong>
+        <div className="portfolio-browser-lines">
+          <i />
+          <i />
+          <i />
+        </div>
+        <span className="portfolio-browser-orbit" />
+        <span className="mono-label portfolio-browser-foot">
+          REACT / THREE.JS / GSAP
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function HexamindArt() {
   return (
     <div className="project-art medmatch-art" aria-hidden="true">
       <div className="art-browser-bar med-bar">
         <span />
         <span />
         <span />
-        <i>MEDMATCH / RESOURCE FINDER</i>
-        <small>CONCEPT</small>
+        <i>HEXAMIND / RESOURCE FINDER</i>
+        <small>PROTOTYPE</small>
       </div>
       <div className="hexamind-project-lockup">
         <img src={hexamindLogo} alt="" />
-        <span className="mono-label">MEDMATCH AI / TEAM HEXAMIND</span>
+        <span className="mono-label">
+          TEAM HEXAMIND / EMERGENCY-CARE DISCOVERY
+        </span>
       </div>
       <div className="med-grid">
         <div className="med-map" aria-hidden="true">
@@ -117,44 +155,14 @@ function MedMatchArt() {
       </div>
       <div className="project-art-bottom">
         <span className="mono-label">TEAM HEXAMIND / INTERFACE STUDY</span>
-        <span className="art-coordinate mono-label">02—03</span>
-      </div>
-    </div>
-  );
-}
-
-function PortfolioArt() {
-  return (
-    <div className="project-art portfolio-art" aria-hidden="true">
-      <div className="art-browser-bar portfolio-bar">
-        <span />
-        <span />
-        <span />
-        <i>UDAY SAHA / BEYOND THE ORDINARY</i>
-        <small>COVER STUDY</small>
-      </div>
-      <div className="portfolio-browser-scene">
-        <span className="mono-label">A DIGITAL STUDIO / 001</span>
-        <strong>
-          Creative
-          <br />
-          <em>Developer.</em>
-        </strong>
-        <div className="portfolio-browser-lines">
-          <i />
-          <i />
-          <i />
-        </div>
-        <span className="portfolio-browser-orbit" />
-        <span className="mono-label portfolio-browser-foot">
-          WEBGL / REACT / EDITORIAL
-        </span>
+        <span className="art-coordinate mono-label">03—03</span>
       </div>
     </div>
   );
 }
 
 export default function Projects() {
+  const { pyreach, portfolio, hexamind } = portfolioData.projects;
   return (
     <section
       className="projects section-frame content-section"
@@ -162,40 +170,45 @@ export default function Projects() {
       aria-labelledby="work-title"
     >
       <div className="section-eyebrow" data-reveal>
-        <span className="mono-label">CHAPTER 03 / SELECTED WORK</span>
-        <span className="section-count mono-label">03 — 10</span>
+        <span className="mono-label">02 / THREE PROJECT CHAPTERS</span>
+        <span className="section-count mono-label">02 — 06</span>
       </div>
       <div className="section-title-row" data-reveal>
         <h2 className="section-title" id="work-title">
-          Proof in the <em>process.</em>
+          Work with a <em>point of view.</em>
         </h2>
         <p className="section-deck">
-          Three live windows into the process: a team-built health prototype, a
-          security analysis tool, and this portfolio itself.
+          Three different questions, explored through software, systems, and the
+          way we see them.
         </p>
       </div>
-      <article className="project-feature" data-reveal>
+
+      <article
+        className="project-feature project-chapter"
+        data-reveal
+        data-motion="left"
+      >
         <PyReachArt />
         <div className="project-copy">
           <div className="project-meta mono-label">
-            <span>01 / HACK DAY SONIPAT</span>
-            <span>{portfolioData.projects.pyreach.team.toUpperCase()}</span>
+            <span>01 / TEAM CODESINS</span>
+            <span>STATIC ANALYSIS TOOL</span>
           </div>
           <h3>
-            {portfolioData.projects.pyreach.name}
+            {pyreach.name}
             <span className="period">.</span>
           </h3>
           <p className="project-lede">
-            Can a vulnerability actually be reached from an application?
+            Trace whether a vulnerability can be reached from an application
+            entry point.
           </p>
           <p className="project-body">
-            PyReach statically traces Python call paths from an app entry point
-            to vulnerable dependency functions. Each verdict comes with evidence
-            a developer can inspect.
+            PyReach statically follows Python call paths to vulnerable
+            dependency functions and presents the path as inspectable evidence.
           </p>
           <div className="role-line">
             <span className="mono-label">MY CONTRIBUTION</span>
-            <p>{portfolioData.projects.pyreach.contribution}</p>
+            <p>{pyreach.contribution}</p>
           </div>
           <div className="tech-row" aria-label="Technologies used">
             <span>Python</span>
@@ -203,85 +216,42 @@ export default function Projects() {
             <span>FastAPI</span>
             <span>JavaScript</span>
           </div>
-          <ProjectLink href={portfolioData.projects.pyreach.url}>
-            Explore Team CodeSins on GitHub
-          </ProjectLink>
-          <ProjectLink href={portfolioData.projects.pyreach.forkUrl}>
-            Open my public fork
-          </ProjectLink>
+          <div className="project-links">
+            <ProjectLink href={pyreach.url}>Team repository</ProjectLink>
+            <ProjectLink href={pyreach.forkUrl}>My public fork</ProjectLink>
+          </div>
           <p className="project-caveat">
-            The visual is an explanatory sample fixture, not a live scan.
-            PyReach parses source statically and does not execute scanned code.
+            The interface is an explanatory sample, not a live scan. PyReach
+            parses source statically and does not execute scanned code.
           </p>
         </div>
       </article>
-      <article className="project-secondary" data-reveal>
-        <div className="project-copy secondary-copy">
-          <div className="project-meta mono-label">
-            <span>
-              02 / {portfolioData.projects.medmatch.team.toUpperCase()}
-            </span>
-            <span>MULTI-PAGE PROTOTYPE</span>
-          </div>
-          <h3>
-            {portfolioData.projects.medmatch.name}
-            <span className="period">.</span>
-          </h3>
-          <p className="project-lede">
-            Emergency-care discovery, explored as a connected workflow.
-          </p>
-          <p className="project-body">
-            {portfolioData.projects.medmatch.description}
-          </p>
-          <div className="role-line">
-            <span className="mono-label">MY CONTRIBUTION</span>
-            <p>{portfolioData.projects.medmatch.contribution}</p>
-          </div>
-          <div className="tech-row">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-            <span>Node.js</span>
-          </div>
-          <ProjectLink href={portfolioData.projects.medmatch.url}>
-            Explore MedMatch AI
-          </ProjectLink>
-          <ProjectLink href={portfolioData.projects.medmatch.repositoryUrl}>
-            Browse the Hexamind source
-          </ProjectLink>
-          <ProjectLink href={portfolioData.projects.medmatch.repositoryReadme}>
-            Read project notes
-          </ProjectLink>
-          <p className="project-caveat">
-            The visual is an interface study, not a screenshot.{" "}
-            {portfolioData.projects.medmatch.dataNote} It is not medical
-            guidance.
-          </p>
-        </div>
-        <MedMatchArt />
-      </article>
-      <article className="project-portfolio" data-reveal>
+
+      <article
+        className="project-portfolio project-chapter"
+        data-reveal
+        data-motion="depth"
+      >
         <PortfolioArt />
         <div className="project-copy">
           <div className="project-meta mono-label">
-            <span>03 / PERSONAL PROJECT</span>
+            <span>02 / PERSONAL PROJECT</span>
             <span>LIVE ON GITHUB PAGES</span>
           </div>
           <h3>
-            {portfolioData.projects.portfolio.name}
+            {portfolio.name}
             <span className="period">.</span>
           </h3>
           <p className="project-lede">
-            An interactive portfolio built as a small digital exhibition.
+            An interactive portfolio staged as a journey from orbit to the work.
           </p>
           <p className="project-body">
-            A React experience that pairs an editorial reading rhythm with a
-            procedural WebGL sculpture, motion-led transitions, and public
-            profile data.
+            React and Three.js bring a NASA Black Marble Earth into an editorial
+            experience shaped by scroll, motion, and real project details.
           </p>
           <div className="role-line">
             <span className="mono-label">MY CONTRIBUTION</span>
-            <p>{portfolioData.projects.portfolio.contribution}</p>
+            <p>{portfolio.contribution}</p>
           </div>
           <div className="tech-row" aria-label="Technologies used">
             <span>React</span>
@@ -289,17 +259,59 @@ export default function Projects() {
             <span>GSAP</span>
             <span>Lenis</span>
           </div>
-          <ProjectLink href={portfolioData.projects.portfolio.url}>
-            Open the live portfolio
-          </ProjectLink>
-          <ProjectLink href={portfolioData.projects.portfolio.repositoryUrl}>
-            Browse the source
-          </ProjectLink>
-          <p className="project-caveat">
-            The browser frame is an editorial study, not a screen capture.
-          </p>
+          <div className="project-links">
+            <ProjectLink href={portfolio.url}>Open live portfolio</ProjectLink>
+            <ProjectLink href={portfolio.repositoryUrl}>
+              Browse source
+            </ProjectLink>
+          </div>
         </div>
       </article>
+
+      <article
+        className="project-secondary project-chapter"
+        data-reveal
+        data-motion="right"
+      >
+        <div className="project-copy secondary-copy">
+          <div className="project-meta mono-label">
+            <span>03 / {hexamind.team.toUpperCase()}</span>
+            <span>MULTI-PAGE PROTOTYPE</span>
+          </div>
+          <h3>
+            {hexamind.name}
+            <span className="period">.</span>
+          </h3>
+          <p className="project-lede">
+            Emergency-care discovery, explored as a connected workflow.
+          </p>
+          <p className="project-body">{hexamind.description}</p>
+          <div className="role-line">
+            <span className="mono-label">MY CONTRIBUTION</span>
+            <p>{hexamind.contribution}</p>
+          </div>
+          <div className="tech-row" aria-label="Technologies used">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>Node.js</span>
+          </div>
+          <div className="project-links">
+            <ProjectLink href={hexamind.url}>
+              Open the live prototype
+            </ProjectLink>
+            <ProjectLink href={hexamind.repositoryUrl}>
+              Browse Hexamind source
+            </ProjectLink>
+          </div>
+          <p className="project-caveat">
+            The display is an interface study, not a screenshot.{" "}
+            {hexamind.dataNote}
+          </p>
+        </div>
+        <HexamindArt />
+      </article>
+
       <div className="project-endnote mono-label" data-reveal>
         <span>TEAM WORK, CLEARLY CREDITED</span>
         <span>
