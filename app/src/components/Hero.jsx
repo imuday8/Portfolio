@@ -19,7 +19,7 @@ export default function Hero() {
         <p className="hero-byline mono-label">
           {portfolioData.identity.name} <span>·</span> BUILDER IN PROGRESS
         </p>
-        <h1 className="hero-title" id="hero-title">
+        <h1 className="hero-title" id="hero-title" tabIndex={-1}>
           <span className="hero-title-clip">
             <span className="hero-title-line hero-serif">Creative</span>
           </span>
@@ -47,7 +47,7 @@ export default function Hero() {
         </div>
       </div>
       <div className="hero-captions" aria-hidden="true">
-        <span>01 — 06 / THE MAKING OF A SIGNAL</span>
+        <span>02 — 10 / THE MAKING OF A SIGNAL</span>
         <span>AN INTERACTIVE PORTFOLIO BY UDAY SAHA</span>
       </div>
       <a className="scroll-cue" href="#work">

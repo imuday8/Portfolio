@@ -64,6 +64,7 @@ function HolographicSculpture() {
   const root = useRef(null);
   const shader = useRef(null);
   const rings = useRef(null);
+  const initialized = useRef(false);
   useFrame((state, delta) => {
     if (!sceneMotion.visible) return;
     const t = state.clock.elapsedTime;
@@ -72,10 +73,16 @@ function HolographicSculpture() {
     const narrow = window.innerWidth <= 390;
     const targetX = mobile
       ? narrow
-        ? 0.88
+        ? 1.4
         : 1.7
       : 2.55 - 0.35 * Math.sin(Math.min(scroll, 1) * Math.PI * 0.72);
     if (root.current) {
+      if (!sceneMotion.introActive && !initialized.current) {
+        const initialScale = mobile ? (narrow ? 0.3 : 0.52) : 0.84;
+        root.current.position.set(targetX, 0.06, 0);
+        root.current.scale.setScalar(initialScale);
+        initialized.current = true;
+      }
       root.current.position.x = THREE.MathUtils.damp(
         root.current.position.x,
         targetX,
@@ -88,7 +95,11 @@ function HolographicSculpture() {
         1.1,
         delta,
       );
-      const targetScale = mobile ? (narrow ? 0.3 : 0.52) : 0.84 - scroll * 0.12;
+      const introReveal = sceneMotion.introActive
+        ? 0.24 + sceneMotion.introProgress * 0.76
+        : 1;
+      const targetScale =
+        (mobile ? (narrow ? 0.3 : 0.52) : 0.84 - scroll * 0.12) * introReveal;
       const scale = THREE.MathUtils.damp(
         root.current.scale.x,
         targetScale,
@@ -194,6 +205,23 @@ function GalleryGround() {
 }
 
 function Scene() {
+  useFrame((state, delta) => {
+    if (!sceneMotion.introActive || sceneMotion.reducedMotion) return;
+    const dolly = Math.sin(sceneMotion.introProgress * Math.PI);
+    state.camera.position.x = THREE.MathUtils.damp(
+      state.camera.position.x,
+      Math.sin(sceneMotion.introProgress * Math.PI * 2) * 0.34,
+      1.35,
+      delta,
+    );
+    state.camera.position.z = THREE.MathUtils.damp(
+      state.camera.position.z,
+      8.8 - dolly * 1.8,
+      1.2,
+      delta,
+    );
+    state.camera.lookAt(0, 0.1, 0);
+  });
   return (
     <>
       <ambientLight intensity={0.48} />
@@ -222,15 +250,20 @@ function Scene() {
   );
 }
 
-export default function SceneEnvironment({ onReady }) {
-  const ready = useRef(false);
+function SceneFallback({ onFallback }) {
   useEffect(() => {
-    if (ready.current) return;
-    ready.current = true;
-    const handle = window.setTimeout(onReady, 140);
-    return () => window.clearTimeout(handle);
-  }, [onReady]);
+    onFallback();
+  }, [onFallback]);
+  return (
+    <div
+      className="orb-fallback scene-loading-fallback"
+      role="img"
+      aria-label="An abstract holographic sculpture; 3D preview is unavailable in this browser."
+    />
+  );
+}
 
+export default function SceneEnvironment({ onReady, onFallback }) {
   return (
     <Canvas
       dpr={window.innerWidth < 720 ? 1 : [1, 1.3]}
@@ -243,13 +276,7 @@ export default function SceneEnvironment({ onReady }) {
         depth: true,
       }}
       shadows={false}
-      fallback={
-        <div
-          className="orb-fallback"
-          role="img"
-          aria-label="An abstract holographic sculpture; 3D preview is unavailable in this browser."
-        />
-      }
+      fallback={<SceneFallback onFallback={onFallback} />}
       onCreated={() => onReady()}
     >
       <Scene />

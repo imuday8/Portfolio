@@ -9,8 +9,8 @@ export default function Contact() {
       aria-labelledby="contact-title"
     >
       <div className="section-eyebrow" data-reveal>
-        <span className="mono-label">CHAPTER 07 / THE NEXT CONVERSATION</span>
-        <span className="section-count mono-label">07 — 07</span>
+        <span className="mono-label">CHAPTER 10 / THE NEXT CONVERSATION</span>
+        <span className="section-count mono-label">10 — 10</span>
       </div>
       <div className="contact-body" data-reveal>
         <p className="mono-label contact-kicker">SOMETHING ON YOUR MIND?</p>

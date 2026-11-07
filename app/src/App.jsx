@@ -1,4 +1,11 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -11,7 +18,11 @@ import Toolkit from "./components/Toolkit.jsx";
 import ExperimentalLab from "./components/ExperimentalLab.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
+import CinematicIntro from "./components/CinematicIntro.jsx";
+import GitHubArchive from "./components/GitHubArchive.jsx";
+import AcademicJourney from "./components/AcademicJourney.jsx";
 import { sceneMotion } from "./sceneState.js";
+import { portfolioData } from "./data/portfolioData.js";
 
 const SceneEnvironment = lazy(
   () => import("./components/SceneEnvironment.jsx"),
@@ -33,8 +44,9 @@ function userPrefersReducedMotion() {
 export default function App() {
   const firstVisit = useRef(!hasSeenIntro() && !userPrefersReducedMotion());
   const rootRef = useRef(null);
-  const introTimeline = useRef(null);
+  const introReturnFocus = useRef(null);
   const [sceneReady, setSceneReady] = useState(false);
+  const [sceneStatus, setSceneStatus] = useState("WAITING FOR WEBGL SCENE");
   const [reducedMotion, setReducedMotion] = useState(userPrefersReducedMotion);
   const [introDone, setIntroDone] = useState(
     () => hasSeenIntro() || userPrefersReducedMotion(),
@@ -54,6 +66,20 @@ export default function App() {
     syncMotion();
     query.addEventListener?.("change", syncMotion);
     return () => query.removeEventListener?.("change", syncMotion);
+  }, []);
+
+  useEffect(() => {
+    sceneMotion.introActive = firstVisit.current;
+    sceneMotion.introProgress = firstVisit.current ? 0 : 1;
+    const updateIntroProgress = (event) => {
+      sceneMotion.introProgress = event.detail;
+    };
+    window.addEventListener("portfolio:entry-progress", updateIntroProgress);
+    return () =>
+      window.removeEventListener(
+        "portfolio:entry-progress",
+        updateIntroProgress,
+      );
   }, []);
 
   useEffect(() => {
@@ -96,6 +122,13 @@ export default function App() {
         end: "bottom bottom",
         onUpdate: (self) => {
           sceneMotion.scroll = self.progress;
+          const sceneStage = document.querySelector(".scene-stage");
+          if (sceneStage) {
+            const presence = 0.18 + 0.74 * Math.exp(-self.progress * 11);
+            sceneStage.style.opacity = String(
+              presence * (window.innerWidth <= 680 ? 0.76 : 1),
+            );
+          }
         },
       });
       gsap.utils.toArray("[data-reveal]").forEach((target) => {
@@ -126,57 +159,50 @@ export default function App() {
 
   useEffect(() => {
     if (reducedMotion) return undefined;
-    const fallback = window.setTimeout(() => setSceneReady(true), 1250);
+    const fallback = window.setTimeout(() => {
+      setSceneStatus("3D PREVIEW UNAVAILABLE · CONTINUING IN 2D");
+      setSceneReady(true);
+    }, 6000);
     return () => window.clearTimeout(fallback);
   }, [reducedMotion]);
 
-  useEffect(() => {
-    if (!sceneReady || introDone || reducedMotion) return undefined;
-    const context = gsap.context(() => {
-      introTimeline.current = gsap
-        .timeline({
-          defaults: { ease: "power2.out" },
-          onComplete: () => {
-            try {
-              sessionStorage.setItem("uday-intro-seen", "1");
-            } catch {}
-            setIntroDone(true);
-          },
-        })
-        .to(
-          ".boot-line",
-          { scaleX: 1, duration: 0.95, ease: "power3.inOut" },
-          0,
-        )
-        .fromTo(
-          ".boot-kicker",
-          { autoAlpha: 0, y: 10 },
-          { autoAlpha: 1, y: 0, duration: 0.55 },
-          0.18,
-        )
-        .fromTo(
-          ".boot-copy",
-          { autoAlpha: 0, y: 14, letterSpacing: "0.32em" },
-          { autoAlpha: 1, y: 0, letterSpacing: "0.16em", duration: 0.72 },
-          0.45,
-        )
-        .fromTo(
-          ".boot-subtitle",
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: 0.55 },
-          0.86,
-        )
-        .to(
-          ".boot-screen",
-          { autoAlpha: 0, duration: 0.65, ease: "power2.inOut" },
-          "+=0.72",
-        );
-    }, rootRef);
-    return () => {
-      context.revert();
-      introTimeline.current = null;
-    };
-  }, [sceneReady, introDone, reducedMotion]);
+  const enterExperience = useCallback(() => {
+    firstVisit.current = false;
+    sceneMotion.introActive = false;
+    sceneMotion.introProgress = 1;
+    try {
+      sessionStorage.setItem("uday-intro-seen", "1");
+    } catch {}
+    setSceneReady(true);
+    setIntroDone(true);
+    requestAnimationFrame(() => {
+      const target =
+        introReturnFocus.current || document.querySelector("#hero-title");
+      target?.focus?.({ preventScroll: true });
+      introReturnFocus.current = null;
+    });
+  }, []);
+
+  const replayIntro = useCallback(
+    (trigger) => {
+      if (reducedMotion) return;
+      introReturnFocus.current = trigger || null;
+      sceneMotion.introActive = true;
+      sceneMotion.introProgress = 0;
+      setIntroDone(false);
+    },
+    [reducedMotion],
+  );
+
+  const markSceneReady = useCallback(() => {
+    setSceneStatus("3D ENVIRONMENT READY");
+    setSceneReady(true);
+  }, []);
+
+  const markSceneFallback = useCallback(() => {
+    setSceneStatus("3D PREVIEW UNAVAILABLE · CONTINUING IN 2D");
+    setSceneReady(true);
+  }, []);
 
   useEffect(() => {
     if (!introDone || !firstVisit.current || reducedMotion) return undefined;
@@ -206,39 +232,28 @@ export default function App() {
     return () => context.revert();
   }, [introDone, reducedMotion]);
 
-  const skipIntro = () => {
-    introTimeline.current?.kill();
-    firstVisit.current = false;
-    try {
-      sessionStorage.setItem("uday-intro-seen", "1");
-    } catch {}
-    setSceneReady(true);
-    setIntroDone(true);
-  };
-
   return (
     <div className="app-root" ref={rootRef}>
       {!introDone && !reducedMotion && (
-        <div className="boot-screen" role="status" aria-live="polite">
-          <span className="boot-kicker mono-label">
-            UDAY SAHA / DIGITAL STUDIO · 001
-          </span>
-          <span className="boot-copy">WELCOME TO MY UNIVERSE</span>
-          <span className="boot-subtitle mono-label">
-            CREATIVE TECHNOLOGIST · DELHI NCR
-          </span>
-          <button type="button" className="boot-skip" onClick={skipIntro}>
-            Skip intro <span aria-hidden="true">↗</span>
-          </button>
-          <div className="boot-line" />
-        </div>
+        <CinematicIntro
+          identity={portfolioData.identity}
+          sceneStatus={sceneStatus}
+          ready={sceneReady}
+          onEnter={enterExperience}
+        />
       )}
       <div
         className={`scene-stage${sceneReady ? " scene-ready" : ""}`}
         aria-hidden="true"
+        inert={!introDone && !reducedMotion}
       >
-        <Suspense fallback={<div className="orb-fallback" />}>
-          <SceneEnvironment onReady={() => setSceneReady(true)} />
+        <Suspense
+          fallback={<div className="orb-fallback scene-loading-fallback" />}
+        >
+          <SceneEnvironment
+            onReady={markSceneReady}
+            onFallback={markSceneFallback}
+          />
         </Suspense>
         <div className="scene-grain" />
         <div className="scene-vignette" />
@@ -247,13 +262,15 @@ export default function App() {
         className={`site-shell${introDone || reducedMotion ? " intro-complete" : ""}`}
         inert={!introDone && !reducedMotion}
       >
-        <Navigation />
+        <Navigation onReplayIntro={reducedMotion ? undefined : replayIntro} />
         <main className="site-main" id="main">
           <Hero />
-          <CompetitiveProfiles />
           <Projects />
-          <About />
+          <GitHubArchive />
+          <AcademicJourney />
+          <CompetitiveProfiles />
           <Toolkit />
+          <About />
           <ExperimentalLab />
           <Contact />
         </main>

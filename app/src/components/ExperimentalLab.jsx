@@ -36,8 +36,8 @@ export default function ExperimentalLab() {
       aria-labelledby="lab-title"
     >
       <div className="section-eyebrow" data-reveal>
-        <span className="mono-label">CHAPTER 06 / EXPERIMENTAL LAB</span>
-        <span className="section-count mono-label">06 — 07</span>
+        <span className="mono-label">CHAPTER 07 / EXPERIMENTAL LAB</span>
+        <span className="section-count mono-label">07 — 10</span>
       </div>
       <div className="lab-grid" data-reveal>
         <div className="lab-copy">

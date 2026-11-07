@@ -1,5 +1,6 @@
 import { ArrowUpRight, MoveUpRight } from "lucide-react";
 import { portfolioData } from "../data/portfolioData.js";
+import hexamindLogo from "../../public/hexamind-logo.png";
 
 function ProjectLink({ href, children }) {
   return (
@@ -70,6 +71,10 @@ function MedMatchArt() {
         <i>MEDMATCH / RESOURCE FINDER</i>
         <small>CONCEPT</small>
       </div>
+      <div className="hexamind-project-lockup">
+        <img src={hexamindLogo} alt="" />
+        <span className="mono-label">MEDMATCH AI / TEAM HEXAMIND</span>
+      </div>
       <div className="med-grid">
         <div className="med-map" aria-hidden="true">
           <svg viewBox="0 0 460 240">
@@ -85,34 +90,65 @@ function MedMatchArt() {
           <span className="map-ring" />
         </div>
         <div className="med-list">
-          <span className="mono-label">SAMPLE FLOW / NOT LIVE</span>
-          <strong>Nearby care concepts</strong>
+          <span className="mono-label">PROTOTYPE INTERFACE / NOT LIVE</span>
+          <strong>Hospital finder</strong>
           <div>
             <i>01</i>
             <span>
-              Central Community<small>Illustrative record</small>
+              City filters<small>Prototype control</small>
             </span>
-            <b>1.1 km</b>
+            <b>UI</b>
           </div>
           <div>
             <i>02</i>
             <span>
-              Greenway General<small>Illustrative record</small>
+              Hospital search<small>Prototype flow</small>
             </span>
-            <b>2.4 km</b>
+            <b>UI</b>
           </div>
           <div>
             <i>03</i>
             <span>
-              Riverside Medical<small>Illustrative record</small>
+              Bed / ICU counts<small>Simulated values</small>
             </span>
-            <b>4.8 km</b>
+            <b>DEMO</b>
           </div>
         </div>
       </div>
       <div className="project-art-bottom">
         <span className="mono-label">TEAM HEXAMIND / INTERFACE STUDY</span>
         <span className="art-coordinate mono-label">02—03</span>
+      </div>
+    </div>
+  );
+}
+
+function PortfolioArt() {
+  return (
+    <div className="project-art portfolio-art" aria-hidden="true">
+      <div className="art-browser-bar portfolio-bar">
+        <span />
+        <span />
+        <span />
+        <i>UDAY SAHA / BEYOND THE ORDINARY</i>
+        <small>COVER STUDY</small>
+      </div>
+      <div className="portfolio-browser-scene">
+        <span className="mono-label">A DIGITAL STUDIO / 001</span>
+        <strong>
+          Creative
+          <br />
+          <em>Developer.</em>
+        </strong>
+        <div className="portfolio-browser-lines">
+          <i />
+          <i />
+          <i />
+        </div>
+        <span className="portfolio-browser-orbit" />
+        <span className="mono-label portfolio-browser-foot">
+          WEBGL / REACT / EDITORIAL
+        </span>
       </div>
     </div>
   );
@@ -127,15 +163,15 @@ export default function Projects() {
     >
       <div className="section-eyebrow" data-reveal>
         <span className="mono-label">CHAPTER 03 / SELECTED WORK</span>
-        <span className="section-count mono-label">03 — 07</span>
+        <span className="section-count mono-label">03 — 10</span>
       </div>
       <div className="section-title-row" data-reveal>
         <h2 className="section-title" id="work-title">
           Proof in the <em>process.</em>
         </h2>
         <p className="section-deck">
-          A couple of team builds that start with hard questions — and make the
-          reasoning easier to follow.
+          Three live windows into the process: a team-built health prototype, a
+          security analysis tool, and this portfolio itself.
         </p>
       </div>
       <article className="project-feature" data-reveal>
@@ -168,7 +204,10 @@ export default function Projects() {
             <span>JavaScript</span>
           </div>
           <ProjectLink href={portfolioData.projects.pyreach.url}>
-            Explore PyReach on GitHub
+            Explore Team CodeSins on GitHub
+          </ProjectLink>
+          <ProjectLink href={portfolioData.projects.pyreach.forkUrl}>
+            Open my public fork
           </ProjectLink>
           <p className="project-caveat">
             The visual is an explanatory sample fixture, not a live scan.
@@ -182,19 +221,17 @@ export default function Projects() {
             <span>
               02 / {portfolioData.projects.medmatch.team.toUpperCase()}
             </span>
-            <span>CONCEPT PROTOTYPE</span>
+            <span>MULTI-PAGE PROTOTYPE</span>
           </div>
           <h3>
             {portfolioData.projects.medmatch.name}
             <span className="period">.</span>
           </h3>
           <p className="project-lede">
-            Emergency-care discovery, designed around a stressful moment.
+            Emergency-care discovery, explored as a connected workflow.
           </p>
           <p className="project-body">
-            A full-stack concept exploring how hospital discovery, resource
-            visibility, and a calmer interface could share the same emergency
-            workflow.
+            {portfolioData.projects.medmatch.description}
           </p>
           <div className="role-line">
             <span className="mono-label">MY CONTRIBUTION</span>
@@ -207,14 +244,61 @@ export default function Projects() {
             <span>Node.js</span>
           </div>
           <ProjectLink href={portfolioData.projects.medmatch.url}>
-            Explore the concept prototype
+            Explore MedMatch AI
+          </ProjectLink>
+          <ProjectLink href={portfolioData.projects.medmatch.repositoryUrl}>
+            Browse the Hexamind source
+          </ProjectLink>
+          <ProjectLink href={portfolioData.projects.medmatch.repositoryReadme}>
+            Read project notes
           </ProjectLink>
           <p className="project-caveat">
-            Illustrative concept only — it is not connected to live hospitals
-            and is not medical guidance.
+            The visual is an interface study, not a screenshot.{" "}
+            {portfolioData.projects.medmatch.dataNote} It is not medical
+            guidance.
           </p>
         </div>
         <MedMatchArt />
+      </article>
+      <article className="project-portfolio" data-reveal>
+        <PortfolioArt />
+        <div className="project-copy">
+          <div className="project-meta mono-label">
+            <span>03 / PERSONAL PROJECT</span>
+            <span>LIVE ON GITHUB PAGES</span>
+          </div>
+          <h3>
+            {portfolioData.projects.portfolio.name}
+            <span className="period">.</span>
+          </h3>
+          <p className="project-lede">
+            An interactive portfolio built as a small digital exhibition.
+          </p>
+          <p className="project-body">
+            A React experience that pairs an editorial reading rhythm with a
+            procedural WebGL sculpture, motion-led transitions, and public
+            profile data.
+          </p>
+          <div className="role-line">
+            <span className="mono-label">MY CONTRIBUTION</span>
+            <p>{portfolioData.projects.portfolio.contribution}</p>
+          </div>
+          <div className="tech-row" aria-label="Technologies used">
+            <span>React</span>
+            <span>Three.js</span>
+            <span>GSAP</span>
+            <span>Lenis</span>
+          </div>
+          <ProjectLink href={portfolioData.projects.portfolio.url}>
+            Open the live portfolio
+          </ProjectLink>
+          <ProjectLink href={portfolioData.projects.portfolio.repositoryUrl}>
+            Browse the source
+          </ProjectLink>
+          <p className="project-caveat">
+            The browser frame is an editorial study, not a screen capture.
+          </p>
+        </div>
       </article>
       <div className="project-endnote mono-label" data-reveal>
         <span>TEAM WORK, CLEARLY CREDITED</span>

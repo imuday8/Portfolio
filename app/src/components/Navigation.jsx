@@ -1,21 +1,25 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, RotateCcw, X } from "lucide-react";
 
 const links = [
-  ["About", "#about"],
-  ["Profiles", "#profiles"],
   ["Projects", "#work"],
+  ["GitHub", "#github"],
+  ["Journey", "#journey"],
+  ["Profiles", "#profiles"],
+  ["About", "#about"],
   ["Skills", "#toolkit"],
 ];
 const trackedSections = [
-  ["About", "#about"],
-  ["Profiles", "#profiles"],
   ["Projects", "#work"],
+  ["GitHub", "#github"],
+  ["Journey", "#journey"],
+  ["Profiles", "#profiles"],
+  ["About", "#about"],
   ["Skills", "#toolkit"],
   ["Contact", "#contact"],
 ];
 
-export default function Navigation() {
+export default function Navigation({ onReplayIntro }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#top");
   const toggleRef = useRef(null);
@@ -73,6 +77,21 @@ export default function Navigation() {
         <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden="true" />
       </a>
       <button
+        className="nav-replay"
+        type="button"
+        onClick={(event) => onReplayIntro?.(event.currentTarget)}
+        disabled={!onReplayIntro}
+        aria-label="Replay cinematic introduction"
+        title={
+          onReplayIntro
+            ? "Replay intro"
+            : "Intro animation is off while reduced motion is enabled"
+        }
+      >
+        <RotateCcw size={13} aria-hidden="true" />
+        <span>Replay</span>
+      </button>
+      <button
         ref={toggleRef}
         className="menu-toggle"
         type="button"
@@ -101,6 +120,18 @@ export default function Navigation() {
             <ArrowUpRight size={16} aria-hidden="true" />
           </a>
         ))}
+        <button
+          className="mobile-replay"
+          type="button"
+          disabled={!onReplayIntro}
+          onClick={(event) => {
+            close();
+            onReplayIntro?.(event.currentTarget);
+          }}
+        >
+          <span>↺ /</span>
+          Replay intro
+        </button>
       </nav>
     </header>
   );

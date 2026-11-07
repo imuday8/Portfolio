@@ -9,6 +9,9 @@ export const portfolioData = {
     program: "B.Tech / Computer Science & Artificial Intelligence",
     years: "2026—2030",
     jeeMainPercentile: 98.93,
+    jeeMainRank: null,
+    jeeMainYear: null,
+    jeeAdvancedRank: null,
   },
   profiles: {
     leetcode: {
@@ -38,15 +41,142 @@ export const portfolioData = {
         rank: "newbie",
         maxRank: "newbie",
         ratedContests: 8,
+        contestHistory: [
+          {
+            contestName: "Codeforces Round 1119 (Div. 3)",
+            rank: 17705,
+            oldRating: 0,
+            newRating: 367,
+          },
+          {
+            contestName: "Codeforces Round 1122 (Div. 3)",
+            rank: 15249,
+            oldRating: 367,
+            newRating: 619,
+          },
+          {
+            contestName: "Codeforces Round 1123 (Div. 2)",
+            rank: 12897,
+            oldRating: 619,
+            newRating: 757,
+          },
+          {
+            contestName: "Codeforces Round 1124 (Div. 2)",
+            rank: 9466,
+            oldRating: 757,
+            newRating: 819,
+          },
+          {
+            contestName: "Codeforces Round 1125 (Div. 3)",
+            rank: 13736,
+            oldRating: 819,
+            newRating: 875,
+          },
+          {
+            contestName:
+              "DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2)",
+            rank: 6024,
+            oldRating: 875,
+            newRating: 972,
+          },
+          {
+            contestName:
+              "Codeforces Round 1127 (Div. 2, Based on Mexican Olympiad in Informatics 2026)",
+            rank: 2358,
+            oldRating: 972,
+            newRating: 1025,
+          },
+          {
+            contestName: "Codeforces Round 1129 (Div. 2)",
+            rank: 5808,
+            oldRating: 1025,
+            newRating: 1016,
+          },
+        ],
       },
     },
     github: {
       handle: "imuday8",
       url: "https://github.com/imuday8",
       apiUrl: "https://api.github.com/users/imuday8",
+      repositoriesApiUrl:
+        "https://api.github.com/users/imuday8/repos?per_page=100&type=owner&sort=updated",
       source: "GitHub public REST API",
       verifiedAt: "2026-11-07",
       stats: { publicRepos: 7, followers: 1 },
+      repositoriesVerifiedAt: "2026-11-07",
+      publicRepositoriesSnapshot: [
+        {
+          name: "Portfolio",
+          description: "",
+          language: "JavaScript",
+          stars: 0,
+          updatedAt: "2026-11-06T20:39:26Z",
+          url: "https://github.com/imuday8/Portfolio",
+          fork: false,
+          archived: false,
+        },
+        {
+          name: "pyreach",
+          description: "Hacktober fest",
+          language: "HTML",
+          stars: 0,
+          updatedAt: "2026-11-01T00:29:43Z",
+          url: "https://github.com/imuday8/pyreach",
+          fork: true,
+          archived: false,
+        },
+        {
+          name: "Hexamind",
+          description: "",
+          language: "HTML",
+          stars: 0,
+          updatedAt: "2026-07-23T18:43:18Z",
+          url: "https://github.com/imuday8/Hexamind",
+          fork: false,
+          archived: false,
+        },
+        {
+          name: "login_form_by_uday",
+          description: "",
+          language: "HTML",
+          stars: 0,
+          updatedAt: "2023-12-06T04:24:54Z",
+          url: "https://github.com/imuday8/login_form_by_uday",
+          fork: false,
+          archived: false,
+        },
+        {
+          name: "login_form",
+          description: "",
+          language: "",
+          stars: 0,
+          updatedAt: "2023-12-06T04:20:45Z",
+          url: "https://github.com/imuday8/login_form",
+          fork: false,
+          archived: false,
+        },
+        {
+          name: "Saha_LTD",
+          description: "its a business site",
+          language: "HTML",
+          stars: 0,
+          updatedAt: "2023-11-30T17:47:01Z",
+          url: "https://github.com/imuday8/Saha_LTD",
+          fork: false,
+          archived: false,
+        },
+        {
+          name: "sahalimited",
+          description: "its a business site",
+          language: "",
+          stars: 0,
+          updatedAt: "2023-11-30T17:39:05Z",
+          url: "https://github.com/imuday8/sahalimited",
+          fork: false,
+          archived: false,
+        },
+      ],
       featured: [
         {
           name: "Portfolio",
@@ -83,6 +213,7 @@ export const portfolioData = {
       name: "PyReach",
       team: "Team CodeSins",
       url: "https://github.com/thesilentghost07/pyreach",
+      forkUrl: "https://github.com/imuday8/pyreach",
       contribution:
         "Frontend & platform — dashboard, CLI reporter, synthetic fixtures, sample projects and GitHub Actions CI.",
     },
@@ -90,8 +221,25 @@ export const portfolioData = {
       name: "MedMatch AI",
       team: "Team Hexamind",
       url: "https://hexamind-ai-neon.vercel.app/",
+      repositoryName: "Hexamind",
+      repositoryUrl: "https://github.com/imuday8/Hexamind",
+      repositoryReadme:
+        "https://github.com/imuday8/Hexamind/blob/main/README.txt",
+      demoVerifiedAt: "2026-11-07",
+      description:
+        "A multi-page emergency-care discovery prototype with a city-filtered hospital finder and a Node.js demo backend.",
+      dataNote:
+        "The demo’s headline performance and usage metrics are not independently verified; bed/ICU counts are simulated. It is not a live care service.",
       contribution:
         "Lead Full Stack Engineer — product flows and the web prototype.",
+    },
+    portfolio: {
+      name: "Beyond the ordinary",
+      repositoryName: "Portfolio",
+      repositoryUrl: "https://github.com/imuday8/Portfolio",
+      url: "https://imuday8.github.io/Portfolio/",
+      contribution:
+        "Design & engineering — React, WebGL, GSAP, and live public-profile integrations.",
     },
   },
   skills: {

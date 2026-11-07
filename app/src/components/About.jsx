@@ -1,4 +1,4 @@
-import { ArrowUpRight, Asterisk } from "lucide-react";
+import { Asterisk } from "lucide-react";
 import { portfolioData } from "../data/portfolioData.js";
 
 export default function About() {
@@ -10,9 +10,9 @@ export default function About() {
     >
       <div className="section-eyebrow" data-reveal>
         <span className="mono-label">
-          CHAPTER 04 / THE PERSON BEHIND THE PROCESS
+          CHAPTER 09 / THE PERSON BEHIND THE PROCESS
         </span>
-        <span className="section-count mono-label">04 — 07</span>
+        <span className="section-count mono-label">09 — 10</span>
       </div>
       <div className="about-layout">
         <div className="about-heading" data-reveal>
@@ -53,40 +53,6 @@ export default function About() {
               </span>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="about-proof" data-reveal>
-        <div className="proof-block">
-          <span className="proof-number">
-            {portfolioData.identity.jeeMainPercentile}
-            <small>%ile</small>
-          </span>
-          <span className="mono-label">JEE MAIN / 2026</span>
-        </div>
-        <div className="proof-block">
-          <span className="proof-overline mono-label">CURRENTLY STUDYING</span>
-          <strong>{portfolioData.identity.program}</strong>
-          <span className="proof-sub">{portfolioData.identity.school}</span>
-        </div>
-        <div className="proof-block proof-link-block">
-          <span className="proof-overline mono-label">
-            SHOW UP, SOLVE, REPEAT
-          </span>
-          <a
-            href={portfolioData.profiles.codeforces.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Codeforces profile <ArrowUpRight size={15} aria-hidden="true" />
-          </a>
-          <a
-            href={portfolioData.profiles.leetcode.url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LeetCode profile <ArrowUpRight size={15} aria-hidden="true" />
-          </a>
-          <span className="proof-sub">Two views of the same practice.</span>
         </div>
       </div>
     </section>

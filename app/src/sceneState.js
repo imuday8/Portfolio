@@ -5,4 +5,6 @@ export const sceneMotion = {
   palette: 0,
   visible: true,
   reducedMotion: false,
+  introProgress: 1,
+  introActive: false,
 };
