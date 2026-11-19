@@ -33,14 +33,12 @@ Vite writes the production site to `dist/`. Then `scripts/sync-build.mjs` copies
 - JEE Main percentile: 98.93.
 - LeetCode: solved total, difficulty breakdown, and current daily streak refresh from the public profile API.
 - Codeforces: current rating, peak rating, rank, and rated contest count refresh from the official public API.
-- GitHub snapshot: seven public repositories and one follower.
+- GitHub snapshot: seven public repositories.
 - Education: B.Tech in CS & AI at Newton School of Technology, Rishihood University, Delhi NCR.
 
 LeetCode and Codeforces refresh when the page opens and every five minutes while visible. The Vercel function at `/api/coding-stats` fetches only the configured public handles, with no login or API key. It caches successful responses for five minutes, isolates upstream failures, and keeps previously fetched data when possible. Static GitHub Pages uses the same public Vercel endpoint.
 
 The browser keeps the latest successful values in local storage. If an API is unavailable, the card shows saved data with its timestamp instead of resetting to zero. The bundled fallback was fetched on 19 November 2026: 415 LeetCode problems and Codeforces rating 1096. Refresh this optional fallback using `node scripts/update-coding-snapshot.mjs`; normal live updates do not require commits.
-
-The LeetCode card tracks progress toward 1,000 total questions by 19 January 2027. The remaining count and daily pace update with the solved total. The current streak is computed from the UTC submission calendar (including the previous year); LeetCode's calendar `streak` field is retained separately as the longest streak.
 
 JEE Main is an academic milestone; GitHub figures retain their labeled 7 November 2026 snapshot.
 

@@ -1722,15 +1722,6 @@
         .metric-sync { margin-top:1rem; color:#aab3c8; font:400 .65rem/1.5 'JetBrains Mono',monospace; }
         .metric-sync::before { content:""; display:inline-block; width:5px; height:5px; border-radius:50%; margin-right:7px; background:#f6bd55; vertical-align:middle; }
         .metric-sync[data-state="updated"]::before { background:#37c998; box-shadow:0 0 8px #37c99855; }
-        .coding-goal { margin-top:1.4rem; padding:1rem; border:1px solid rgba(255,170,64,.16); background:rgba(255,170,64,.035); border-radius:14px; }
-        .coding-goal-heading,.coding-goal-meta { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:.4rem 1rem; font:500 .7rem/1.5 'JetBrains Mono',monospace; color:#b3bdcf; }
-        .coding-goal-heading { color:#ece4d8; }
-        .coding-goal-heading strong { color:#f6bd55; font-weight:600; }
-        .coding-goal progress { display:block; appearance:none; border:0; width:100%; height:5px; border-radius:99px; overflow:hidden; margin:.7rem 0; background:rgba(255,255,255,.08); accent-color:#f6bd55; }
-        .coding-goal progress::-webkit-progress-bar { background:rgba(255,255,255,.08); border-radius:99px; }
-        .coding-goal progress::-webkit-progress-value { background:linear-gradient(90deg,#e69235,#f6cf78); border-radius:99px; }
-        .coding-goal progress::-moz-progress-bar { background:#f6bd55; border-radius:99px; }
-        .coding-goal-meta { font-size:.6rem; }
         .profiles-heading { width:min(calc(100% - 2rem),1200px); margin:0 auto 2rem; }
         .profiles-grid { margin-top:1.2rem; }
         #profiles .profiles-grid a { background:rgba(14,16,31,.76); border-color:rgba(177,157,255,.17); }
@@ -1743,9 +1734,10 @@
         .intro-v7::before { content:""; position:absolute; inset:-35%; z-index:1; background:radial-gradient(ellipse at center,transparent 42%,rgba(3,4,12,.72) 80%); pointer-events:none; }
         .intro-stars { position:absolute; inset:0; z-index:1; opacity:.72; background-image:radial-gradient(1px 1px at 12% 22%,#fff 99%,transparent),radial-gradient(1px 1px at 79% 18%,#aca2ff 99%,transparent),radial-gradient(2px 2px at 64% 74%,#fff 99%,transparent),radial-gradient(1px 1px at 31% 83%,#90dfff 99%,transparent),radial-gradient(1px 1px at 87% 60%,#fff 99%,transparent); background-size:270px 230px; animation:starDrift 20s linear infinite; }
         @keyframes starDrift { to { transform:translate3d(-24px,18px,0); } }
-        .intro-core { position:absolute; z-index:1; width:min(44vw,440px); aspect-ratio:1; border-radius:50%; opacity:0; background:radial-gradient(circle at 48% 50%,#03040b 0 24%,#0a0918 27%,rgba(129,99,255,.86) 29%,rgba(28,22,66,.88) 31%,transparent 61%); filter:drop-shadow(0 0 34px rgba(159,124,255,.4)); transform:scale(.36); transition:opacity 1s,transform 1.2s cubic-bezier(.16,1,.3,1); }
-        .intro-core::before,.intro-core::after { content:""; position:absolute; inset:12%; border:1px solid rgba(205,192,255,.53); border-radius:50%; transform:rotateX(72deg); box-shadow:0 0 35px rgba(150,123,255,.24); }
-        .intro-core::after { inset:24%; border-color:rgba(111,218,255,.36); transform:rotateY(68deg); }
+        .intro-core { position:absolute; z-index:1; width:min(34vw,340px); aspect-ratio:1; border-radius:50%; opacity:0; background:radial-gradient(circle at 25% 22%,#d5c6b1 0,transparent 45%),radial-gradient(circle at 78% 65%,#02030a 8%,transparent 72%),repeating-linear-gradient(176deg,#8b7c70 0 6px,#b2a191 8px 14px,#736974 17px 20px); box-shadow:inset -55px -20px 70px #010207,inset 8px 4px 14px #ddd1bd33; transform:scale(.36); transition:opacity 1s,transform 1.2s; }
+        .intro-v7.webgl-ready .intro-core { display:none; }
+        .intro-core::before { content:""; position:absolute; inset:-38%; border:25px solid #a4937d55; border-radius:50%; transform:rotateZ(-24deg) rotateX(72deg); }
+
         .intro-v7[data-stage="2"] .intro-core,.intro-v7[data-stage="3"] .intro-core { opacity:1; transform:scale(1); }
         .intro-content { z-index:2; width:min(90vw,1080px); text-align:center; position:relative; z-index:2; transform:translateY(2rem); transition:transform 1s cubic-bezier(.16,1,.3,1); }
         .intro-v7[data-stage="3"] .intro-content { transform:translateY(-1.6rem) scale(1.02); }
@@ -1863,7 +1855,6 @@
                     <div class="float-badge"><span class="badge-dot blue"></span>C++ / Python</div>
                     <div class="float-badge"><span class="badge-dot purple"></span>Full-Stack</div>
                     <div class="float-badge"><span class="badge-dot cyan"></span>AI & ML</div>
-                    <div class="float-badge"><span class="badge-dot pink"></span>Cybersecurity</div>
                 </div>
             </div>
         </div>
@@ -1876,8 +1867,8 @@
     <!-- Marquee -->
     <div class="marquee-section">
         <div class="marquee-track" id="marqueeTrack">
-            <div class="marquee-item">Software Developer <span class="dot"></span> CS & AI Student <span class="dot"></span> Competitive Programmer <span class="dot"></span> Problem Solver <span class="dot"></span> Full-Stack Dev <span class="dot"></span> Open Source <span class="dot"></span> Backend Engineer <span class="dot"></span></div>
-            <div class="marquee-item">Software Developer <span class="dot"></span> CS & AI Student <span class="dot"></span> Competitive Programmer <span class="dot"></span> Problem Solver <span class="dot"></span> Full-Stack Dev <span class="dot"></span> Open Source <span class="dot"></span> Backend Engineer <span class="dot"></span></div>
+            <div class="marquee-item">Software Developer <span class="dot"></span> CS & AI Student <span class="dot"></span> Competitive Programmer <span class="dot"></span> Problem Solver <span class="dot"></span> Full-Stack Dev <span class="dot"></span> Open Source <span class="dot"></span></div>
+            <div class="marquee-item">Software Developer <span class="dot"></span> CS & AI Student <span class="dot"></span> Competitive Programmer <span class="dot"></span> Problem Solver <span class="dot"></span> Full-Stack Dev <span class="dot"></span> Open Source <span class="dot"></span></div>
         </div>
     </div>
 
@@ -1891,7 +1882,7 @@
                 </h2>
                 <p class="rv rv-d2">
                     I'm Uday Saha, a passionate Computer Science and AI undergraduate interested in
-                    software engineering, artificial intelligence, cybersecurity, and problem-solving.
+                    software engineering, artificial intelligence and problem-solving.
                     I enjoy building practical applications, exploring new technologies, and developing
                     efficient software solutions.
                 </p>
@@ -1957,14 +1948,7 @@
                     <button type="button" class="skill-tag" aria-pressed="false">React.js</button><button type="button" class="skill-tag" aria-pressed="false">Redux</button>
                 </div>
             </div>
-            <div class="skill-card rv rv-d3">
-                <div class="skill-icon i-cyan">⚙️</div>
-                <div class="skill-card-title">Backend</div>
-                <div class="skill-tags">
-                    <button type="button" class="skill-tag" aria-pressed="false">Node.js</button><button type="button" class="skill-tag" aria-pressed="false">Express.js</button>
-                    <button type="button" class="skill-tag" aria-pressed="false">FastAPI</button>
-                </div>
-            </div>
+
             <div class="skill-card rv rv-d1">
                 <div class="skill-icon i-pink">🗄️</div>
                 <div class="skill-card-title">Database</div>
@@ -2052,11 +2036,6 @@
                 <div class="solve-breakdown" role="img" aria-label="121 easy, 240 medium, and 54 hard problems solved"><i></i><i></i><i></i></div>
                 <div class="solve-legend"><span><b data-stat="easy">121</b> Easy</span><span><b data-stat="medium">240</b> Medium</span><span><b data-stat="hard">54</b> Hard</span></div>
                 <div class="metric-footer"><span class="metric-chip" data-current-streak title="Consecutive submission days based on LeetCode’s UTC calendar"><span aria-hidden="true">🔥</span> <strong data-stat="streak">56-day</strong> current streak</span></div>
-                <div class="coding-goal">
-                    <div class="coding-goal-heading"><span>Road to 1,000</span><strong data-stat="goal-count">415 / 1,000</strong></div>
-                    <progress data-goal-progress max="1000" value="415" aria-label="LeetCode progress toward 1,000 solved questions"></progress>
-                    <div class="coding-goal-meta"><span data-stat="goal-note">585 to go</span><span>Target · 19 Jan 2027</span></div>
-                </div>
                 <p class="metric-sync" data-sync-status aria-live="polite">Fetching latest profile…</p>
                 <a class="metric-link" href="https://leetcode.com/u/Imuday08__/" target="_blank" rel="noopener noreferrer">View LeetCode profile</a>
             </article>
@@ -2075,7 +2054,6 @@
                 <div class="metric-number">7 <span>repositories</span></div>
                 <p class="metric-note">A growing collection of experiments, coursework, and projects built in public.</p>
                 <div class="repo-pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-                <div class="metric-footer"><span class="metric-chip"><strong>1</strong> follower · dated snapshot</span></div>
                 <a class="metric-link" href="https://github.com/imuday8" target="_blank" rel="noopener noreferrer">Explore GitHub</a>
             </article>
         </div>
@@ -2173,8 +2151,6 @@
             <div class="career-card rv rv-d1"><div class="career-icon">🚀</div><div class="career-title">Software Engineering</div></div>
             <div class="career-card rv rv-d2"><div class="career-icon">🌐</div><div class="career-title">Full-Stack Development</div></div>
             <div class="career-card rv rv-d3"><div class="career-icon">🤖</div><div class="career-title">AI & Machine Learning</div></div>
-            <div class="career-card rv rv-d1"><div class="career-icon">🔐</div><div class="career-title">Cybersecurity</div></div>
-            <div class="career-card rv rv-d2"><div class="career-icon">⚡</div><div class="career-title">Backend Engineering</div></div>
             <div class="career-card rv rv-d3"><div class="career-icon">🌍</div><div class="career-title">Open Source & GSoC</div></div>
         </div>
     </section>
@@ -2579,26 +2555,57 @@ import('https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js').then(
         starGeometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
         starGeometry.setAttribute('color', new THREE.BufferAttribute(colors,3));
         const stars = new THREE.Points(starGeometry, new THREE.PointsMaterial({size:.035,vertexColors:true,transparent:true,opacity:.82,sizeAttenuation:true})); scene.add(stars);
-        const core = new THREE.Mesh(new THREE.SphereGeometry(.62,32,24), new THREE.MeshBasicMaterial({color:0x02030a})); core.position.z = -.2; core.visible = false; scene.add(core);
-        const diskGeo = new THREE.TorusGeometry(1.12,.16,10,96);
-        const diskMat = new THREE.MeshBasicMaterial({color:0x9b77ff,transparent:true,opacity:.82,wireframe:false});
-        const disk = new THREE.Mesh(diskGeo,diskMat); disk.rotation.x = Math.PI*.34; disk.scale.set(1.45,.75,1); disk.visible = false; scene.add(disk);
-        const halo = new THREE.Mesh(new THREE.TorusGeometry(1.62,.012,4,120),new THREE.MeshBasicMaterial({color:0x90dfff,transparent:true,opacity:.46})); halo.rotation.x=Math.PI*.38; halo.visible=false; scene.add(halo);
+        // A lit, banded gas giant with thin particulate rings and a shadowed night side.
+        ambient.intensity = .15;
+        key.color.set(0xffe8c4); key.position.set(-4,3,5);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.1;
+        const sunlight = new THREE.DirectionalLight(0xffedcf, 2.8);
+        sunlight.position.set(-3,2,4); scene.add(sunlight);
+        const surface = document.createElement('canvas'); surface.width=1024; surface.height=512;
+        const ctx=surface.getContext('2d');
+        for(let y=0;y<512;y++) {
+            const band=Math.sin(y*.12)*9+Math.sin(y*.43)*4+Math.sin(y*.035)*13;
+            for(let x=0;x<1024;x++) {
+                const turbulence=Math.sin(x*.025+Math.sin(y*.07)*2)*2+Math.random()*3;
+                const tone=band+turbulence;
+                ctx.fillStyle=`rgb(${155+tone},${140+tone},${121+tone})`; ctx.fillRect(x,y,1,1);
+            }
+        }
+        const texture = new THREE.CanvasTexture(surface); texture.colorSpace=THREE.SRGBColorSpace;
+        const core = new THREE.Mesh(new THREE.SphereGeometry(.92,64,48), new THREE.MeshStandardMaterial({map:texture,roughness:1,metalness:0}));
+        core.rotation.z=-.32; core.visible=false; scene.add(core);
+        const diskGeo = new THREE.RingGeometry(1.24,2.05,160);
+        const diskMat = new THREE.ShaderMaterial({
+            side:THREE.DoubleSide,transparent:true,depthWrite:false,
+            vertexShader:`varying vec2 ringPosition; void main(){ringPosition=position.xy;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+            fragmentShader:`varying vec2 ringPosition; void main(){
+                float r=length(ringPosition); float grain=fract(sin(r*1842.7)*43758.5);
+                float bands=.55+.18*sin(r*110.)+.13*sin(r*347.);
+                float gap=1.-.92*exp(-pow((r-1.72)*65.,2.));
+                float edge=smoothstep(1.24,1.29,r)*(1.-smoothstep(2.,2.05,r));
+                float shadow=mix(.15,1.,smoothstep(-.2,.6,ringPosition.x+ringPosition.y*.7));
+                vec3 dust=mix(vec3(.32,.29,.26),vec3(.74,.67,.55),bands)*shadow;
+                gl_FragColor=vec4(dust,edge*gap*(bands*.7+grain*.17));
+            }`
+        });
+        const disk = new THREE.Mesh(diskGeo,diskMat); disk.rotation.set(1.12,-.15,-.32); disk.visible=false; scene.add(disk);
+        overlay.classList.add('webgl-ready');
         const resize=()=>{ if(!renderer||disposed)return; renderer.setSize(innerWidth,innerHeight,false); camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); };
         addEventListener('resize',resize,{passive:true});
         const born=performance.now();
         const draw=now=>{
             if(disposed)return;
             const stage=Number(overlay.dataset.stage||1); const t=(now-born)*.001;
-            const reveal=stage>=2?1:0; core.visible=!!reveal; disk.visible=!!reveal; halo.visible=!!reveal;
-            disk.rotation.z=t*.16; halo.rotation.z=-t*.08; stars.rotation.y=Math.sin(t*.12)*.025;
+            const reveal=stage>=2?1:0; core.visible=!!reveal; disk.visible=!!reveal;
+            core.rotation.y=t*.035; stars.rotation.y=Math.sin(t*.12)*.025;
             camera.position.x += ((stage>=4?1.15:0)-camera.position.x)*.012;
             camera.position.z += ((stage>=4?11.4:10)-camera.position.z)*.012;
-            key.intensity=stage>=2?31+Math.sin(t*1.6)*3:5+Math.sin(t*1.4)*2;
+            key.intensity=stage>=2?7:0;
             renderer.render(scene,camera); frame=requestAnimationFrame(draw);
         };
         frame=requestAnimationFrame(draw);
-        const cleanup=()=>{ disposed=true; cancelAnimationFrame(frame); removeEventListener('resize',resize); starGeometry.dispose(); diskGeo.dispose(); renderer.dispose(); };
+        const cleanup=()=>{ disposed=true; cancelAnimationFrame(frame); removeEventListener('resize',resize); starGeometry.dispose(); diskGeo.dispose(); diskMat.dispose(); core.geometry.dispose(); core.material.dispose(); texture.dispose(); renderer.dispose(); };
         overlay.addEventListener('transitionend',e=>{if(e.target===overlay && overlay.classList.contains('is-leaving'))cleanup();},{once:true});
     } catch (_) { if(renderer) renderer.dispose(); canvas.hidden=true; }
 }).catch(() => { const c=document.getElementById('introWebgl'); if(c)c.hidden=true; });

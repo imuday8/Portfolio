@@ -2,8 +2,6 @@ import snapshot from './data/coding-stats.json';
 
 const CACHE_KEY = 'uday-coding-stats-v1';
 const REFRESH_MS = 5 * 60 * 1000;
-const goal = 1000;
-const deadline = Date.parse('2027-01-19T23:59:59+05:30');
 const format = new Intl.NumberFormat('en-IN');
 const nonnegative = value => Number.isInteger(value) && value >= 0;
 const valid = (name, value) => value && Number.isFinite(Date.parse(value.updatedAt)) && (name === 'leetcode'
@@ -31,11 +29,6 @@ function render(name, value, saved = false) {
     const streak = card.querySelector('[data-current-streak]');
     streak.hidden = !nonnegative(value.currentStreak);
     if (!streak.hidden) setText(card, 'streak', `${value.currentStreak}-day`);
-    const remaining = Math.max(0, goal - value.totalSolved);
-    const daysLeft = Math.max(0, Math.ceil((deadline - Date.now()) / 86400000));
-    setText(card, 'goal-count', `${format.format(value.totalSolved)} / ${format.format(goal)}`);
-    setText(card, 'goal-note', !remaining ? 'Goal reached — keep building.' : `${format.format(remaining)} to go${daysLeft ? ` · aim for ${Math.ceil(remaining / daysLeft)} a day` : ' · keep going'}`);
-    card.querySelector('[data-goal-progress]').value = Math.min(goal, value.totalSolved);
   } else {
     setText(card, 'rating', format.format(value.rating));
     setText(card, 'peak', format.format(value.maxRating));
