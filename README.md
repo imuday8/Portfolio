@@ -46,4 +46,4 @@ The intro has no sound toggle. Its synthesized audio cues are enabled by default
 
 The public LeetCode calendar also supplies the rolling 365-day submission total. The daily-challenge streak (123 days in the supplied 19 November screenshot) is separately labeled with that date: the public GraphQL API does not expose another user’s signed-in `streakCounter`. It is not advanced by elapsed time. The public submission streak continues to refresh automatically.
 
-The intro Earth uses the [Three.js example Earth texture](https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg), bundled locally, with a 23.44° axial tilt, axial rotation, sunlight and a blue atmospheric limb.
+The intro Earth uses the [Three.js example Earth texture](https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg), bundled locally, with a 23.44° axial tilt, axial rotation, bright sunlight, blue oceans and a cloud layer.
