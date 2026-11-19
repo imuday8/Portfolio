@@ -1,12 +1,22 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import statsHandler from './api/coding-stats.js';
 
 export default defineConfig({
   root: 'app',
   base: './',
   publicDir: false,
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), {
+    name: 'coding-stats-dev-api',
+    configureServer(server) {
+      server.middlewares.use('/api/coding-stats', (req, res) => {
+        res.status = code => { res.statusCode = code; return res; };
+        res.json = data => res.end(JSON.stringify(data));
+        statsHandler(req, res).catch(() => { res.statusCode = 503; res.end('{}'); });
+      });
+    },
+  }],
   build: {
     outDir: '../dist',
     emptyOutDir: true,

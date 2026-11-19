@@ -1707,7 +1707,7 @@
         .metric-chip strong { color:#fff; font-weight:700; }
         .metric-chip a { color:inherit; text-decoration:none; }
         .metric-chip a:hover { color:#fff; }
-        .solve-breakdown { display:grid; grid-template-columns:45fr 66fr 29fr; height:7px; gap:3px; margin:1.2rem 0 .65rem; position:relative; z-index:1; }
+        .solve-breakdown { display:grid; grid-template-columns:121fr 240fr 54fr; height:7px; gap:3px; margin:1.2rem 0 .65rem; position:relative; z-index:1; }
         .solve-breakdown i { display:block; border-radius:99px; background:#37c998; box-shadow:0 0 14px rgba(55,201,152,.23); }
         .solve-breakdown i:nth-child(2) { background:#f6bd55; box-shadow:0 0 14px rgba(246,189,85,.18); }
         .solve-breakdown i:nth-child(3) { background:#fa777d; box-shadow:0 0 14px rgba(250,119,125,.18); }
@@ -1718,6 +1718,19 @@
         .metric-link { display:inline-flex; align-items:center; gap:.5rem; margin-top:1.45rem; color:#f0edff; text-decoration:none; font:600 .8rem 'Space Grotesk',sans-serif; position:relative; z-index:1; }
         .metric-link::after { content:"↗"; color:#b2a1ff; transition:transform .2s; }
         .metric-link:hover::after { transform:translate(3px,-3px); }
+        .metric-number b { font-weight:inherit; font-variant-numeric:tabular-nums; }
+        .metric-sync { margin-top:1rem; color:#aab3c8; font:400 .65rem/1.5 'JetBrains Mono',monospace; }
+        .metric-sync::before { content:""; display:inline-block; width:5px; height:5px; border-radius:50%; margin-right:7px; background:#f6bd55; vertical-align:middle; }
+        .metric-sync[data-state="updated"]::before { background:#37c998; box-shadow:0 0 8px #37c99855; }
+        .coding-goal { margin-top:1.4rem; padding:1rem; border:1px solid rgba(255,170,64,.16); background:rgba(255,170,64,.035); border-radius:14px; }
+        .coding-goal-heading,.coding-goal-meta { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:.4rem 1rem; font:500 .7rem/1.5 'JetBrains Mono',monospace; color:#b3bdcf; }
+        .coding-goal-heading { color:#ece4d8; }
+        .coding-goal-heading strong { color:#f6bd55; font-weight:600; }
+        .coding-goal progress { display:block; appearance:none; border:0; width:100%; height:5px; border-radius:99px; overflow:hidden; margin:.7rem 0; background:rgba(255,255,255,.08); accent-color:#f6bd55; }
+        .coding-goal progress::-webkit-progress-bar { background:rgba(255,255,255,.08); border-radius:99px; }
+        .coding-goal progress::-webkit-progress-value { background:linear-gradient(90deg,#e69235,#f6cf78); border-radius:99px; }
+        .coding-goal progress::-moz-progress-bar { background:#f6bd55; border-radius:99px; }
+        .coding-goal-meta { font-size:.6rem; }
         .profiles-heading { width:min(calc(100% - 2rem),1200px); margin:0 auto 2rem; }
         .profiles-grid { margin-top:1.2rem; }
         #profiles .profiles-grid a { background:rgba(14,16,31,.76); border-color:rgba(177,157,255,.17); }
@@ -2020,7 +2033,7 @@
     <!-- Dedicated profile performance dashboard -->
     <section id="stats" class="stats-section">
         <div class="stats-heading rv">
-            <div class="section-label">Signals · snapshot 07 Nov 2026</div>
+            <div class="section-label">Signals · practice &amp; milestones</div>
             <h2 class="section-title">Progress, <span class="gradient-text">in practice</span></h2>
             <p class="hero-desc">A focused view of my academic milestone, problem-solving practice, contest rating, and open-source footprint.</p>
         </div>
@@ -2035,18 +2048,25 @@
             <article class="metric-card metric-leetcode rv rv-d1" data-index="02">
                 <div class="metric-top"><span class="metric-platform">LeetCode</span><span class="metric-status">@Imuday08__</span></div>
                 <p class="metric-title">Problems solved</p>
-                <div class="metric-number">140 <span>solved</span></div>
-                <div class="solve-breakdown" role="img" aria-label="45 easy, 66 medium, and 29 hard problems solved"><i></i><i></i><i></i></div>
-                <div class="solve-legend"><span><b>45</b> Easy</span><span><b>66</b> Medium</span><span><b>29</b> Hard</span></div>
-                <div class="metric-footer"><span class="metric-chip">🔥 <strong>111-day</strong> current streak</span></div>
+                <div class="metric-number"><b data-stat="solved">415</b> <span>solved</span></div>
+                <div class="solve-breakdown" role="img" aria-label="121 easy, 240 medium, and 54 hard problems solved"><i></i><i></i><i></i></div>
+                <div class="solve-legend"><span><b data-stat="easy">121</b> Easy</span><span><b data-stat="medium">240</b> Medium</span><span><b data-stat="hard">54</b> Hard</span></div>
+                <div class="metric-footer"><span class="metric-chip" data-current-streak title="Consecutive submission days based on LeetCode’s UTC calendar"><span aria-hidden="true">🔥</span> <strong data-stat="streak">56-day</strong> current streak</span></div>
+                <div class="coding-goal">
+                    <div class="coding-goal-heading"><span>Road to 1,000</span><strong data-stat="goal-count">415 / 1,000</strong></div>
+                    <progress data-goal-progress max="1000" value="415" aria-label="LeetCode progress toward 1,000 solved questions"></progress>
+                    <div class="coding-goal-meta"><span data-stat="goal-note">585 to go</span><span>Target · 19 Jan 2027</span></div>
+                </div>
+                <p class="metric-sync" data-sync-status aria-live="polite">Fetching latest profile…</p>
                 <a class="metric-link" href="https://leetcode.com/u/Imuday08__/" target="_blank" rel="noopener noreferrer">View LeetCode profile</a>
             </article>
             <article class="metric-card metric-codeforces rv rv-d2" data-index="03">
                 <div class="metric-top"><span class="metric-platform">Codeforces</span><span class="metric-status">@Imuday08_</span></div>
                 <p class="metric-title">Current contest rating</p>
-                <div class="metric-number">1016 <span>rating</span></div>
-                <p class="metric-note">Newbie · building consistency one contest at a time.</p>
-                <div class="metric-footer"><span class="metric-chip">Peak <strong>1025</strong></span><span class="metric-chip"><strong>8</strong> rated contests</span></div>
+                <div class="metric-number"><b data-stat="rating">1096</b> <span>rating</span></div>
+                <p class="metric-note"><span data-stat="rank">Newbie</span> · building consistency one contest at a time.</p>
+                <div class="metric-footer"><span class="metric-chip">Peak <strong data-stat="peak">1096</strong></span><span class="metric-chip" data-contest-count><strong data-stat="contests">10</strong> rated contests</span></div>
+                <p class="metric-sync" data-sync-status aria-live="polite">Fetching latest profile…</p>
                 <a class="metric-link" href="https://codeforces.com/profile/Imuday08_" target="_blank" rel="noopener noreferrer">View Codeforces profile</a>
             </article>
             <article class="metric-card metric-github rv rv-d3" data-index="04">
@@ -2584,5 +2604,6 @@ import('https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js').then(
 }).catch(() => { const c=document.getElementById('introWebgl'); if(c)c.hidden=true; });
 </script>
 
+<script type="module" src="./coding-stats.js"></script>
 </body>
 </html>
