@@ -1,11 +1,13 @@
-# Uday Saha — Portfolio
+# [Portfolio](https://portfolio-imuday08-git.vercel.app/)
+
+**[Open Uday Saha’s live portfolio ↗](https://portfolio-imuday08-git.vercel.app/)**
 
 Uday Saha's portfolio with a cinematic intro, animated project sections, technical skills, and academic and coding profile highlights.
 
 ## Live portfolio
 
 - [Portfolio on ONEWHO](https://imuday08.isonewho.codes/)
-- [Vercel deployment](https://portfolio-git-portfolio-refresh-2026-11-hexamindhealth.vercel.app/)
+- [Vercel deployment](https://portfolio-imuday08-git.vercel.app/)
 - [GitHub Pages](https://imuday8.github.io/Portfolio/)
 
 ## Run locally
