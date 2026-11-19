@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { currentStreak, fetchLeetCode, fetchCodeforces, getCodingStats } from '../lib/coding-stats.js';
+import { currentStreak, yearlySubmissions, fetchLeetCode, fetchCodeforces, getCodingStats } from '../lib/coding-stats.js';
 import handler from '../api/coding-stats.js';
 
 const day = date => Date.parse(`${date}T00:00:00Z`) / 1000;
@@ -76,4 +76,10 @@ test('public endpoint refuses mutations without contacting upstreams', async () 
   await handler({ method: 'POST' }, res);
   assert.equal(res.statusCode, 405);
   assert.equal(headers.Allow, 'GET, HEAD');
+});
+
+test('yearly submissions sums attempts within 365 UTC dates, excluding future and older days', () => {
+  const today = Date.parse('2026-11-19T12:00:00Z');
+  const base = Math.floor(today / 86400000) * 86400;
+  assert.equal(yearlySubmissions({ [base]: 12, [base - 364 * 86400]: 950, [base - 365 * 86400]: 5, [base + 86400]: 7 }, today), 962);
 });

@@ -6,9 +6,10 @@
     "medium": 240,
     "hard": 54,
     "currentStreak": 56,
+    "yearlySubmissions": 962,
     "longestStreak": 56,
     "totalActiveDays": 116,
-    "updatedAt": "2026-11-19T17:39:22.733Z"
+    "updatedAt": "2026-11-19T17:48:01.404Z"
   },
   "codeforces": {
     "username": "Imuday08_",
@@ -16,6 +17,6 @@
     "maxRating": 1096,
     "rank": "newbie",
     "ratedContests": 10,
-    "updatedAt": "2026-11-19T17:39:24.979Z"
+    "updatedAt": "2026-11-19T17:48:03.757Z"
   }
 }

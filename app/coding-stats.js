@@ -1,6 +1,6 @@
 import snapshot from './data/coding-stats.json';
 
-const CACHE_KEY = 'uday-coding-stats-v1';
+const CACHE_KEY = 'uday-coding-stats-v2';
 const REFRESH_MS = 5 * 60 * 1000;
 const format = new Intl.NumberFormat('en-IN');
 const nonnegative = value => Number.isInteger(value) && value >= 0;
@@ -26,6 +26,9 @@ function render(name, value, saved = false) {
     const breakdown = card.querySelector('.solve-breakdown');
     breakdown.style.gridTemplateColumns = [value.easy, value.medium, value.hard].map(count => `${Math.max(count, 0.001)}fr`).join(' ');
     breakdown.setAttribute('aria-label', `${value.easy} easy, ${value.medium} medium, and ${value.hard} hard problems solved`);
+    const submissions = card.querySelector('[data-yearly-submissions]');
+    submissions.hidden = !nonnegative(value.yearlySubmissions);
+    if (!submissions.hidden) setText(card, 'yearly-submissions', format.format(value.yearlySubmissions));
     const streak = card.querySelector('[data-current-streak]');
     streak.hidden = !nonnegative(value.currentStreak);
     if (!streak.hidden) setText(card, 'streak', `${value.currentStreak}-day`);
